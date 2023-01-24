@@ -1,0 +1,62 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ProfileService.GRPC";
+
+
+// импортируем нужные пакеты
+import "google/protobuf/duration.proto"; 
+import "google/protobuf/timestamp.proto";
+
+package profile;
+
+// The Profiler service definition.
+service Profiler {
+
+  rpc GetPersonalData (PersonalRequest) returns (PersonalDataResponce);
+
+  rpc GetTransactions (PersonalRequest) returns (TransactionsResponce);
+
+  rpc GetDiscounts (PersonalRequest) returns (DiscountsResponce);
+}	
+
+// The request message containing the user's id.
+message PersonalRequest {
+  string id = 1;
+}
+
+// The response message containing the PersonalData.
+message PersonalDataResponce {
+  string id = 1;
+  string name = 2;
+  string surname = 3;
+  string phone = 4;
+  string email = 5;
+}
+
+message Transaction {
+	string id = 1;
+	double amount = 2;
+	google.protobuf.Timestamp datatime = 3; 
+}
+
+message TransactionsResponce
+{
+	repeated Transaction transactions = 1;
+}
+
+enum DiscountType {
+	AMOUNT = 0;
+	DISCOUNT = 1;
+}
+
+message Discount{
+	string id = 1;
+	DiscountType type = 2;
+	double amount = 3;
+	double discount = 4;	
+}
+
+message DiscountsResponce{
+	repeated Discount discount = 1;	
+}
+
