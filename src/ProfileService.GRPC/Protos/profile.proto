@@ -2,30 +2,31 @@
 
 option csharp_namespace = "ProfileService.GRPC";
 
-
-// импортируем нужные пакеты
-import "google/protobuf/duration.proto"; 
-import "google/protobuf/timestamp.proto";
-
 package profile;
 
 // The Profiler service definition.
 service Profiler {
 
-  rpc GetPersonalData (PersonalRequest) returns (PersonalDataResponce);
+  rpc GetPersonalDataById (ProfileByIdRequest) 
+	returns (PersonalDataResponce);
 
-  rpc GetTransactions (PersonalRequest) returns (TransactionsResponce);
+  rpc UpdatePersonalDataById (PersonalDataRequest) 
+	returns (BasicVoidResponce);
 
-  rpc GetDiscounts (PersonalRequest) returns (DiscountsResponce);
+  rpc GetDiscounts (ProfileByIdRequest) 
+	returns (DiscountsResponce);
+
+  rpc UpdateDiscount (Discount) 
+	returns (BasicVoidResponce);
 }	
 
 // The request message containing the user's id.
-message PersonalRequest {
+message ProfileByIdRequest {
   string id = 1;
 }
 
 // The response message containing the PersonalData.
-message PersonalDataResponce {
+message PersonalDataRequest {
   string id = 1;
   string name = 2;
   string surname = 3;
@@ -33,15 +34,15 @@ message PersonalDataResponce {
   string email = 5;
 }
 
-message Transaction {
+message PersonalDataResponce {
 	string id = 1;
-	double amount = 2;
-	google.protobuf.Timestamp datatime = 3; 
+	string name = 2;
+	string surname = 3;
+	string phone = 4;
+	string email = 5;
 }
 
-message TransactionsResponce
-{
-	repeated Transaction transactions = 1;
+message BasicVoidResponce {
 }
 
 enum DiscountType {
@@ -51,9 +52,10 @@ enum DiscountType {
 
 message Discount{
 	string id = 1;
-	DiscountType type = 2;
-	double amount = 3;
-	double discount = 4;	
+	bool isalreadyused = 2;
+	DiscountType type = 3;
+	double amount = 4;
+	double discount = 5;	
 }
 
 message DiscountsResponce{

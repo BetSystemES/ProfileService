@@ -1,30 +1,44 @@
+using AutoMapper;
 using Grpc.Core;
 using Google.Protobuf.WellKnownTypes;
 using ProfileService.GRPC;
+using ProfileService.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ProfileService.GRPC.Services
 {
     public class ProfileService : Profiler.ProfilerBase
     {
         private readonly ILogger<ProfileService> _logger;
-        public ProfileService(ILogger<ProfileService> logger)
+        private readonly IMapper _mapper;
+
+        public ProfileService(ILogger<ProfileService> logger, IMapper mapper)
         {
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public override Task<PersonalDataResponce> GetPersonalData(PersonalRequest request, ServerCallContext context)
+        public override Task<PersonalDataResponce> GetPersonalDataById(ProfileByIdRequest request, ServerCallContext context)
         {
             return Task.FromResult(new PersonalDataResponce());
         }
 
-        public override Task<TransactionsResponce> GetTransactions(PersonalRequest request, ServerCallContext context)
+        public override Task<BasicVoidResponce> UpdatePersonalDataById(PersonalDataRequest request, ServerCallContext context)
         {
-            return Task.FromResult(new TransactionsResponce());
+            return Task.FromResult(new BasicVoidResponce());
         }
 
-        public override Task<DiscountsResponce> GetDiscounts(PersonalRequest request, ServerCallContext context)
+        public override Task<DiscountsResponce> GetDiscounts(ProfileByIdRequest request, ServerCallContext context)
         {
             return Task.FromResult(new DiscountsResponce());
         }
+
+        public override Task<BasicVoidResponce> UpdateDiscount(Discount request, ServerCallContext context)
+        {
+            return Task.FromResult(new BasicVoidResponce());
+        }
+
+       
     }
 }
