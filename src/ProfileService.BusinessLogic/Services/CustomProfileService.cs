@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProfileService.BusinessLogic
 {
-    public  class MyProfileService : IProfileService
+    public  class CustomProfileService : IProfileService
     {
         private readonly IRepository<PersonalData> _personalDataRepository;
         private readonly IRepository<Bonus> _bonusRepository;
@@ -14,12 +14,18 @@ namespace ProfileService.BusinessLogic
 
         private readonly IDataContext _context;
 
-        public MyProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IProvider<Bonus> bonusProvider, IDataContext context)
+        public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IProvider<Bonus> bonusProvider, IDataContext context)
         {
             _personalDataRepository = personalDataRepository;
             _bonusRepository = bonusRepository;
             _bonusProvider = bonusProvider;
             _context = context;
+        }
+
+        public async Task AddPersonalData(PersonalData personalData, CancellationToken token)
+        {
+            await _personalDataRepository.Add(personalData, token);
+            await _context.SaveChanges(token);
         }
 
         public async Task<PersonalData> GetPersonalDataById(Guid guid, CancellationToken token)
@@ -34,6 +40,12 @@ namespace ProfileService.BusinessLogic
             await _context.SaveChanges(token);
         }
 
+        public async Task AddDiscount(Bonus bonus, CancellationToken token)
+        {
+            await _bonusRepository.Add(bonus, token);
+            await _context.SaveChanges(token);
+        }
+
         public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
         {
             var result = await _bonusProvider.FindByProfileId(guid, token);
@@ -45,5 +57,9 @@ namespace ProfileService.BusinessLogic
             await _bonusRepository.Update(bonus, token);
             await _context.SaveChanges(token);
         }
+
+       
+
+       
     }
 }

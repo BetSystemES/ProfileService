@@ -7,10 +7,16 @@ package profile;
 // The Profiler service definition.
 service Profiler {
 
+	rpc AddPersonalData (PersonalDataRequest) 
+		returns (BasicVoidResponce);
+
   rpc GetPersonalDataById (ProfileByIdRequest) 
 	returns (PersonalDataResponce);
 
   rpc UpdatePersonalData (PersonalDataRequest) 
+	returns (BasicVoidResponce);
+
+	rpc AddDiscount (Discount) 
 	returns (BasicVoidResponce);
 
   rpc GetDiscounts (ProfileByIdRequest) 
@@ -46,8 +52,9 @@ message BasicVoidResponce {
 }
 
 enum DiscountType {
-	AMOUNT = 0;
-	DISCOUNT = 1;
+	UNSPECIFIED =0;
+	AMOUNT = 1;
+	DISCOUNT = 2;
 }
 
 message Discount{

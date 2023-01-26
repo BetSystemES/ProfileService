@@ -9,5 +9,7 @@ namespace ProfileService.BusinessLogic
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         [Required] public string Email { get; set; }
+
+        public List<Bonus> Bonuses { get; set; }
     }
 }

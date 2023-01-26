@@ -8,7 +8,8 @@ namespace ProfileService.BusinessLogic
 {
     public interface IRepository<T> where T : class
     {
-        Task <T> Get(Guid guid, CancellationToken cancellationToken);
+        Task Add(T item, CancellationToken token);
+        Task<T> Get(Guid guid, CancellationToken cancellationToken);
         Task Update(T item, CancellationToken cancellationToken);
     }
 }

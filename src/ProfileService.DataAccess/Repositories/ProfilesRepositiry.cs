@@ -19,6 +19,12 @@ namespace ProfileService.DataAccess.Repositories
             _entities = entities;
         }
 
+        public Task Add(PersonalData item, CancellationToken token)
+        {
+            _entities.Add(item);
+            return Task.CompletedTask;
+        }
+
         public Task<PersonalData> Get(Guid guid, CancellationToken cancellationToken)
         {
             return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
