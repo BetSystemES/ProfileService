@@ -19,7 +19,12 @@ namespace ProfileService.DataAccess.Configuration
             builder.Property(x => x.BonusId).ValueGeneratedNever();
 
 
-            builder.Property(x => x.PersonalId);
+            builder.Property(x => x.PersonalId).IsRequired();
+
+            builder.HasOne(x => x.PersonalData)
+                .WithMany(y => y.Bonuses)
+                .HasForeignKey(z => z.PersonalId);
+
             builder.Property(x => x.isAlreadyUsed);
             builder.Property(x => x.DiscountType);
             builder.Property(x => x.Amount);

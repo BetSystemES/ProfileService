@@ -20,15 +20,15 @@ namespace ProfileService.DataAccess
         public static IServiceCollection AddPostgreSqlContext(this IServiceCollection services,
             Action<DbContextOptionsBuilder> options)
         {
-            services.AddDbContextPool<ProfileContext>(options);
+            services.AddDbContextPool<ProfileDbContext>(options);
 
-            services.AddScoped<IDataContext, UserProfileContext>();
+            services.AddScoped<IDataContext, ProfileDataContext>();
 
             services.AddScoped(serviceProvider =>
-                serviceProvider.GetRequiredService<ProfileContext>()
+                serviceProvider.GetRequiredService<ProfileDbContext>()
                     .Set<Bonus>());
             services.AddScoped(serviceProvider =>
-                serviceProvider.GetRequiredService<ProfileContext>()
+                serviceProvider.GetRequiredService<ProfileDbContext>()
                     .Set<PersonalData>());
 
             return services;

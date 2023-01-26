@@ -8,13 +8,13 @@ using ProfileService.DataAccess.Configuration;
 
 namespace ProfileService.DataAccess.EF
 {
-    public class UserProfileContext : IDataContext
+    public class ProfileDataContext : IDataContext
     {
-        private readonly ProfileContext _profileContext;
+        private readonly ProfileDbContext _profileDbContext;
 
-        public UserProfileContext(ProfileContext profileContext)
+        public ProfileDataContext(ProfileDbContext profileDbContext)
         {
-            _profileContext = profileContext;
+            _profileDbContext = profileDbContext;
         }
 
         /// <summary>Saves the changes.</summary>
@@ -24,7 +24,7 @@ namespace ProfileService.DataAccess.EF
         /// </returns>
         public Task SaveChanges(CancellationToken token)
         {
-            return _profileContext.SaveChangesAsync(token);
+            return _profileDbContext.SaveChangesAsync(token);
         }
     }
 

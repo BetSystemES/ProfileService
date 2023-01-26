@@ -24,6 +24,10 @@ namespace ProfileService.DataAccess.Configuration
             builder.Property(x => x.PhoneNumber);
             builder.Property(x => x.Email).IsRequired();
 
+            builder.HasMany(x => x.Bonuses)
+                .WithOne(y => y.PersonalData)
+                .HasForeignKey(z => z.PersonalId);
+
             builder.ToTable("PersonalData");
         }
     }

@@ -11,12 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 
-var connectionString =  builder.Configuration.GetSection("PostgreSql:ConnectionString").ToString();
-var password = builder.Configuration.GetSection("PostgreSql:DbPassword");
+var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
-builder.Services.AddPostgreSqlContext(options => options.UseNpgsql(connectionString));
-builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddPostgreSqlContext(options =>
+{
+    options.UseNpgsql(connectionString);
+});
 
+builder.Services.AddDbContext<ProfileDbContext>(options => options.UseNpgsql(connectionString));
 
 // Add services to the container.
 builder.Services

@@ -11,7 +11,7 @@ namespace ProfileService.GRPC.Configuration
                 config.AddProfile<DataAccessProfile>();
             });
 
-            services.AddScoped<IProfileService, MyProfileService>();
+            services.AddScoped<IProfileService, CustomProfileService>();
 
             return services;
         }

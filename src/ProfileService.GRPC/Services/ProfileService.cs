@@ -23,6 +23,20 @@ namespace ProfileService.GRPC.Services
             _profileService = profileService;
         }
 
+        public override async Task<BasicVoidResponce> AddPersonalData(PersonalDataRequest request, ServerCallContext context)
+        {
+            var token = context.CancellationToken;
+
+            //map
+            PersonalData personalData = _mapper.Map<PersonalData>(request);
+
+            //profile service
+            await _profileService.AddPersonalData(personalData, token);
+
+            return new BasicVoidResponce();
+        }
+
+
         public override async Task<PersonalDataResponce> GetPersonalDataById(ProfileByIdRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
@@ -48,6 +62,18 @@ namespace ProfileService.GRPC.Services
 
             //profile service
             await _profileService.UpdatePersonalData(personalData, token);
+
+            return new BasicVoidResponce();
+        }
+
+        public override async Task<BasicVoidResponce> AddDiscount(Discount request, ServerCallContext context)
+        {
+            var token = context.CancellationToken;
+            //map
+            Bonus bonus = _mapper.Map<Bonus>(request);
+
+            //profile service
+            await _profileService.AddDiscount(bonus, token);
 
             return new BasicVoidResponce();
         }

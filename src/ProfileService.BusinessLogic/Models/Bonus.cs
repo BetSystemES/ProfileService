@@ -7,7 +7,8 @@ namespace ProfileService.BusinessLogic
     {
         [Key] public Guid BonusId { get; set; }
 
-        public Guid PersonalId { get; set; } //???
+        [Required] public Guid PersonalId { get; set; }
+        public PersonalData PersonalData { get; set; }
 
         public bool isAlreadyUsed { get; set; } = false;
         public DiscountType DiscountType { get; set; }
@@ -17,7 +18,8 @@ namespace ProfileService.BusinessLogic
 
     public enum DiscountType
     {
-        Amount = 0,
-        Discount = 1
+        Unspecified = 0, 
+        Amount = 1,
+        Discount = 2
     }
 }
