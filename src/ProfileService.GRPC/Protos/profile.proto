@@ -7,32 +7,75 @@ package profile;
 // The Profiler service definition.
 service Profiler {
 
-	rpc AddPersonalData (PersonalDataRequest) 
-		returns (BasicVoidResponce);
+	rpc AddPersonalData (AddPersonalDataRequest) 
+		returns (AddPersonalDataResponce);
 
-  rpc GetPersonalDataById (ProfileByIdRequest) 
-	returns (PersonalDataResponce);
+  rpc GetPersonalDataById (GetPersonalDataByIdRequest) 
+		returns (GetPersonalDataByIdResponce);
 
-  rpc UpdatePersonalData (PersonalDataRequest) 
-	returns (BasicVoidResponce);
+  rpc UpdatePersonalData (UpdatePersonalDataRequest) 
+	returns (UpdatePersonalDataResponce);
 
-	rpc AddDiscount (Discount) 
-	returns (BasicVoidResponce);
+	rpc AddDiscount (AddDiscountRequest) 
+	returns (AddDiscountResponce);
 
-  rpc GetDiscounts (ProfileByIdRequest) 
-	returns (DiscountsResponce);
+  rpc GetDiscounts (GetDiscountsRequest) 
+	returns (GetDiscountsResponce);
 
-  rpc UpdateDiscount (Discount) 
-	returns (BasicVoidResponce);
+  rpc UpdateDiscount (UpdateDiscountRequest) 
+	returns (UpdateDiscountResponce);
 }	
+
+
+message AddPersonalDataRequest{
+	PersonalProfile personalprofile = 1;
+}
+message AddPersonalDataResponce{
+	VoidResponce voidresponce = 1;
+}
+
+message GetPersonalDataByIdRequest{
+	ProfileByIdRequest profilebyidrequest = 1;
+}
+message GetPersonalDataByIdResponce{
+	PersonalProfile personalprofile = 1;
+}
+
+message UpdatePersonalDataRequest{
+	PersonalProfile personalprofile = 1;
+}
+message UpdatePersonalDataResponce{
+	ProfileByIdRequest profilebyidrequest = 1;
+}
+
+message AddDiscountRequest{
+	Discount discount = 1;
+}
+message AddDiscountResponce{
+	VoidResponce voidresponce = 1;
+}
+
+message GetDiscountsRequest{
+	ProfileByIdRequest profilebyidrequest = 1;
+}
+message GetDiscountsResponce{
+	repeated Discount discounts = 1;
+}
+
+message UpdateDiscountRequest{
+	Discount discount = 1;
+}
+message UpdateDiscountResponce{
+	VoidResponce voidresponce = 1;
+}
 
 // The request message containing the user's id.
 message ProfileByIdRequest {
   string id = 1;
 }
 
-// The response message containing the PersonalData.
-message PersonalDataRequest {
+// The response message containing the PersonalProfile.
+message PersonalProfile {
   string id = 1;
   string name = 2;
   string surname = 3;
@@ -40,21 +83,14 @@ message PersonalDataRequest {
   string email = 5;
 }
 
-message PersonalDataResponce {
-	string id = 1;
-	string name = 2;
-	string surname = 3;
-	string phone = 4;
-	string email = 5;
-}
 
-message BasicVoidResponce {
+message VoidResponce {
 }
 
 enum DiscountType {
-	UNSPECIFIED =0;
-	AMOUNT = 1;
-	DISCOUNT = 2;
+	DISCOUNT_TYPE_UNSPECIFIED =0;
+	DISCOUNT_TYPE_AMOUNT = 1;
+	DISCOUNT_TYPE_DISCOUNT = 2;
 }
 
 message Discount{
@@ -64,8 +100,3 @@ message Discount{
 	double amount = 4;
 	double discount = 5;	
 }
-
-message DiscountsResponce{
-	repeated Discount discount = 1;	
-}
-
