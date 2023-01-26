@@ -9,11 +9,6 @@ Business Models
    phone 
    email 
 }
- Transaction {
-	 id 
-	 amount 
-	 datatime 
-}
 
 enum DiscountType {
 	AMOUNT = 0;
@@ -21,23 +16,24 @@ enum DiscountType {
 }
 
  Discount{
-	 id 
+	 id
+	 isalreadyused
 	 type 
 	 amount 
 	 discount 	
 }
 
-
-
 Description of Methons of GRPC Service
 
 
 Function of requesting personal data by user ID
-    rpc GetPersonalData (PersonalRequest) returns (PersonalDataResponce);
+    rpc GetPersonalDataById (ProfileByIdRequest) returns (PersonalDataResponce);
 
-Function of requesting personal account transactions by by user ID
-  rpc GetTransactions (PersonalRequest) returns (TransactionsResponce);
+Function of updating personal data
+  rpc UpdatePersonalData (PersonalDataRequest) returns (BasicVoidResponce);
 
-
-Function of requesting personal discounts  by user ID
-  rpc GetDiscounts (PersonalRequest) returns (DiscountsResponce);
+Function of requesting personal discounts by user ID
+  rpc GetDiscounts (ProfileByIdRequest) returns (DiscountsResponce);
+  
+Function of updating discounts
+  rpc UpdateDiscount (Discount) returns (BasicVoidResponce);
