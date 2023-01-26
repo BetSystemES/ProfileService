@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using ProfileService.GRPC.Services;
+using ProfileService.DataAccess;
+using Npgsql;
+using ProfileService.DataAccess.EF;
+using ProfileService.GRPC.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,10 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 
+var connectionString =  builder.Configuration.GetSection("PostgreSql:ConnectionString").ToString();
+var password = builder.Configuration.GetSection("PostgreSql:DbPassword");
+
+builder.Services.AddPostgreSqlContext(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ProfileContext>(options => options.UseNpgsql(connectionString));
 
 
 // Add services to the container.
-builder.Services.AddGrpc();
+builder.Services
+    .AddRepositories()
+    .AddProviders()
+    .AddInfrastructureServices()
+    .AddGrpc();
 
 var app = builder.Build();
 

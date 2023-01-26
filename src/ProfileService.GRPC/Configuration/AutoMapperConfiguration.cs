@@ -22,6 +22,17 @@ namespace ProfileService.GRPC.Configuration
                 .ReverseMap();
             CreateMap<PersonalDataResponce, PersonalData>()
                 .ReverseMap();
+
+            CreateMap<IEnumerable<Bonus>, DiscountsResponce>()
+                .ReverseMap();
+            CreateMap<DiscountsResponce, IEnumerable<Bonus>>()
+                .ReverseMap();
+
+            CreateMap<Bonus, Discount>()
+                .ReverseMap();
+            CreateMap<Discount, Bonus>()
+                .ReverseMap();
+
             CreateMap<Guid, string>()
                 .ConvertUsing(s => s.ToString());
             CreateMap<string, Guid>()

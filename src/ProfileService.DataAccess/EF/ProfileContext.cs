@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 using ProfileService.BusinessLogic;
-
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProfileService.DataAccess.Configuration;
@@ -15,7 +13,6 @@ namespace ProfileService.DataAccess.EF
         public DbSet<PersonalData> Profiles { get; set; }
         public DbSet<Bonus> Bonuses { get; set; }
 
-        
         public ProfileContext(DbContextOptions<ProfileContext> options) : base(options)
         {
             Database.EnsureCreated();
@@ -38,5 +35,4 @@ namespace ProfileService.DataAccess.EF
             }
         }
     }
-
 }

@@ -1,5 +1,4 @@
 ﻿using ProfileService.BusinessLogic;
-using ProfileService.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +19,9 @@ namespace ProfileService.DataAccess.Repositories
             _entities = entities;
         }
 
-        public Task<PersonalData> Get(int id, CancellationToken cancellationToken)
+        public Task<PersonalData> Get(Guid guid, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_entities.FindAsync(id).Result);
+            return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
         }
 
         public Task Update(PersonalData item, CancellationToken cancellationToken)

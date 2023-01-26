@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProfileService.BusinessLogic;
 using ProfileService.DataAccess.EF;
-using ProfileService.DataAccess.Interfaces;
 
 namespace ProfileService.DataAccess.Repositories
 {
-    public class BonusesRepositiry : IRepository<Bonus>, IProvider<Bonus>
+    public class BonusesRepositiry : IRepository<Bonus>
     {
         private readonly DbSet<Bonus> _entities;
 
@@ -19,14 +18,10 @@ namespace ProfileService.DataAccess.Repositories
             _entities = entities;
         }
 
-        public Task<IEnumerable<Bonus>> FindByProfileId(Guid id, CancellationToken cancellationToken)
+        public async Task<Bonus> Get(Guid guid, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken).Result.AsEnumerable());
-        }
-
-        public Task<Bonus> Get(int id, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(_entities.FindAsync(id).Result);
+             //return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
+             return await _entities.FindAsync(guid.ToString());
         }
 
         public Task Update(Bonus item, CancellationToken cancellationToken)

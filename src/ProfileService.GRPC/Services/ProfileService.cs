@@ -2,9 +2,10 @@ using AutoMapper;
 using Grpc.Core;
 using Google.Protobuf.WellKnownTypes;
 using ProfileService.GRPC;
-using ProfileService.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ProfileService.BusinessLogic;
+using System;
 
 namespace ProfileService.GRPC.Services
 {
@@ -13,30 +14,70 @@ namespace ProfileService.GRPC.Services
         private readonly ILogger<ProfileService> _logger;
         private readonly IMapper _mapper;
 
-        public ProfileService(ILogger<ProfileService> logger, IMapper mapper)
+        private readonly IProfileService _profileService;
+
+        public ProfileService(ILogger<ProfileService> logger, IMapper mapper, IProfileService profileService)
         {
             _logger = logger;
             _mapper = mapper;
+            _profileService = profileService;
         }
 
-        public override Task<PersonalDataResponce> GetPersonalDataById(ProfileByIdRequest request, ServerCallContext context)
+        public override async Task<PersonalDataResponce> GetPersonalDataById(ProfileByIdRequest request, ServerCallContext context)
         {
-            return Task.FromResult(new PersonalDataResponce());
+            var token = context.CancellationToken;
+            
+            //map
+            Guid guid = _mapper.Map<Guid>(request.Id);
+
+            //profile service
+            var item = await _profileService.GetPersonalDataById(guid, token);
+
+            //map back
+            PersonalDataResponce personalDataResponce = _mapper.Map<PersonalDataResponce>(item);
+
+            return personalDataResponce;
         }
 
-        public override Task<BasicVoidResponce> UpdatePersonalDataById(PersonalDataRequest request, ServerCallContext context)
+        public override async Task<BasicVoidResponce> UpdatePersonalData(PersonalDataRequest request, ServerCallContext context)
         {
-            return Task.FromResult(new BasicVoidResponce());
+            var token = context.CancellationToken;
+
+            //map
+            PersonalData personalData = _mapper.Map<PersonalData>(request);
+
+            //profile service
+            await _profileService.UpdatePersonalData(personalData, token);
+
+            return new BasicVoidResponce();
         }
 
-        public override Task<DiscountsResponce> GetDiscounts(ProfileByIdRequest request, ServerCallContext context)
+        public override async Task<DiscountsResponce> GetDiscounts(ProfileByIdRequest request, ServerCallContext context)
         {
-            return Task.FromResult(new DiscountsResponce());
+            var token = context.CancellationToken;
+
+            //map
+            Guid guid = _mapper.Map<Guid>(request.Id);
+
+            //profile service
+            var items = await _profileService.GetDiscounts(guid, token);
+
+            //map back
+            DiscountsResponce discountsResponce = _mapper.Map<DiscountsResponce>(items);
+
+            return discountsResponce;
         }
 
-        public override Task<BasicVoidResponce> UpdateDiscount(Discount request, ServerCallContext context)
+        public override async Task<BasicVoidResponce> UpdateDiscount(Discount request, ServerCallContext context)
         {
-            return Task.FromResult(new BasicVoidResponce());
+            var token = context.CancellationToken;
+            //map
+            Bonus bonus = _mapper.Map<Bonus>(request);
+
+            //profile service
+            await _profileService.UpdateDiscount(bonus, token);
+
+            return new BasicVoidResponce();
         }
 
        

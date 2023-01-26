@@ -10,7 +10,7 @@ service Profiler {
   rpc GetPersonalDataById (ProfileByIdRequest) 
 	returns (PersonalDataResponce);
 
-  rpc UpdatePersonalDataById (PersonalDataRequest) 
+  rpc UpdatePersonalData (PersonalDataRequest) 
 	returns (BasicVoidResponce);
 
   rpc GetDiscounts (ProfileByIdRequest) 

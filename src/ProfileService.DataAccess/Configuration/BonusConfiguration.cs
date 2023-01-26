@@ -9,8 +9,6 @@ using ProfileService.BusinessLogic;
 
 namespace ProfileService.DataAccess.Configuration
 {
-   
-
     public class BonusConfiguration : IEntityTypeConfiguration<Bonus>
     {
         /// <summary>Configures the entity of type <span class="typeparameter">TEntity</span>.</summary>

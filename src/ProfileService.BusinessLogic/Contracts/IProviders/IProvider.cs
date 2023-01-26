@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfileService.DataAccess.Interfaces
+namespace ProfileService.BusinessLogic
 {
     public interface IProvider<T> where T :class
     {

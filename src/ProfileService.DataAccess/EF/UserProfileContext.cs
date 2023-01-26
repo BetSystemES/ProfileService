@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 using ProfileService.BusinessLogic;
-
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProfileService.DataAccess.Configuration;
-using ProfileService.DataAccess.Interfaces;
 
 
 namespace ProfileService.DataAccess.EF
