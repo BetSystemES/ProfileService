@@ -14,18 +14,14 @@ namespace ProfileService.GRPC.Configuration
         /// <summary>Initializes a new instance of the <see cref="DataAccessProfile" /> class.</summary>
         public DataAccessProfile()
         {
-            CreateMap<PersonalData, PersonalDataRequest>()
+            CreateMap<PersonalData, PersonalProfile>()
                 .ReverseMap();
-            CreateMap<PersonalData, PersonalDataResponce>()
+            CreateMap<PersonalProfile, PersonalData>()
                 .ReverseMap();
-            CreateMap<PersonalDataRequest, PersonalData>()
+          
+            CreateMap<IEnumerable<Bonus>, GetDiscountsResponce>()
                 .ReverseMap();
-            CreateMap<PersonalDataResponce, PersonalData>()
-                .ReverseMap();
-
-            CreateMap<IEnumerable<Bonus>, DiscountsResponce>()
-                .ReverseMap();
-            CreateMap<DiscountsResponce, IEnumerable<Bonus>>()
+            CreateMap<GetDiscountsResponce, IEnumerable<Bonus>>()
                 .ReverseMap();
 
             CreateMap<Bonus, Discount>()

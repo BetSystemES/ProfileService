@@ -23,87 +23,90 @@ namespace ProfileService.GRPC.Services
             _profileService = profileService;
         }
 
-        public override async Task<BasicVoidResponce> AddPersonalData(PersonalDataRequest request, ServerCallContext context)
+        public override async Task<AddPersonalDataResponce> AddPersonalData(AddPersonalDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
             //map
-            PersonalData personalData = _mapper.Map<PersonalData>(request);
+            PersonalData personalData = _mapper.Map<PersonalData>(request.Personalprofile);
 
             //profile service
             await _profileService.AddPersonalData(personalData, token);
 
-            return new BasicVoidResponce();
+            return new AddPersonalDataResponce();
         }
-
-
-        public override async Task<PersonalDataResponce> GetPersonalDataById(ProfileByIdRequest request, ServerCallContext context)
+        
+        public override async Task<GetPersonalDataByIdResponce> GetPersonalDataById(GetPersonalDataByIdRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             
             //map
-            Guid guid = _mapper.Map<Guid>(request.Id);
+            Guid guid = _mapper.Map<Guid>(request.Profilebyidrequest.Id);
 
             //profile service
             var item = await _profileService.GetPersonalDataById(guid, token);
 
             //map back
-            PersonalDataResponce personalDataResponce = _mapper.Map<PersonalDataResponce>(item);
 
-            return personalDataResponce;
+            PersonalProfile personalProfile = _mapper.Map<PersonalProfile>(item);
+
+            return new GetPersonalDataByIdResponce
+            {
+                Personalprofile = personalProfile
+            };
         }
 
-        public override async Task<BasicVoidResponce> UpdatePersonalData(PersonalDataRequest request, ServerCallContext context)
+        public override async Task<UpdatePersonalDataResponce> UpdatePersonalData(UpdatePersonalDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
             //map
-            PersonalData personalData = _mapper.Map<PersonalData>(request);
+            PersonalData personalData = _mapper.Map<PersonalData>(request.Personalprofile);
 
             //profile service
             await _profileService.UpdatePersonalData(personalData, token);
 
-            return new BasicVoidResponce();
+            return new UpdatePersonalDataResponce();
         }
 
-        public override async Task<BasicVoidResponce> AddDiscount(Discount request, ServerCallContext context)
+        public override async Task<AddDiscountResponce> AddDiscount(AddDiscountRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             //map
-            Bonus bonus = _mapper.Map<Bonus>(request);
+            Bonus bonus = _mapper.Map<Bonus>(request.Discount);
 
             //profile service
             await _profileService.AddDiscount(bonus, token);
 
-            return new BasicVoidResponce();
+            return new AddDiscountResponce();
         }
 
-        public override async Task<DiscountsResponce> GetDiscounts(ProfileByIdRequest request, ServerCallContext context)
+        public override async Task<GetDiscountsResponce> GetDiscounts(GetDiscountsRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
             //map
-            Guid guid = _mapper.Map<Guid>(request.Id);
+            Guid guid = _mapper.Map<Guid>(request.Profilebyidrequest.Id);
 
             //profile service
             var items = await _profileService.GetDiscounts(guid, token);
 
             //map back
-            DiscountsResponce discountsResponce = _mapper.Map<DiscountsResponce>(items);
+            GetDiscountsResponce getDiscountsResponce = _mapper.Map<GetDiscountsResponce>(items);
 
-            return discountsResponce;
+            return getDiscountsResponce;
         }
 
-        public override async Task<BasicVoidResponce> UpdateDiscount(Discount request, ServerCallContext context)
+        public override async Task<UpdateDiscountResponce> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             //map
-            Bonus bonus = _mapper.Map<Bonus>(request);
+            Bonus bonus = _mapper.Map<Bonus>(request.Discount);
 
             //profile service
             await _profileService.UpdateDiscount(bonus, token);
 
-            return new BasicVoidResponce();
+            return new UpdateDiscountResponce();
         }
 
        
