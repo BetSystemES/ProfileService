@@ -37,3 +37,20 @@ Function of requesting personal discounts by user ID
   
 Function of updating discounts
   rpc UpdateDiscount (Discount) returns (BasicVoidResponce);
+  
+  '''
+  Example of PersonalProfile Entity
+  
+  {
+	"PersonalProfile" : 
+	{
+   "id" : "8f902da9-e152-4864-8b5d-3c36a3c6f496",
+   "name" : "Pavel",
+   "surname" : "K",
+   "phone" : "444333222",
+   "email" : "PavelK@google.com"
+}
+}
+'''
+  
+  
