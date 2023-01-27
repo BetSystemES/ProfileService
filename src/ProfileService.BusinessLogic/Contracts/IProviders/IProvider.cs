@@ -9,6 +9,6 @@ namespace ProfileService.BusinessLogic
 {
     public interface IProvider<T> where T :class
     {
-        Task<IEnumerable<T>> FindByProfileId(Guid id, CancellationToken cancellationToken);
+        Task<List<T>> FindByProfileId(Guid id, CancellationToken cancellationToken);
     }
 }
