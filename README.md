@@ -1,7 +1,7 @@
 # ProfileService
 
 Business Models
-
+```
  PersonalData {
    id 
    name 
@@ -9,12 +9,15 @@ Business Models
    phone 
    email 
 }
-
+```
+```
 enum DiscountType {
-	AMOUNT = 0;
-	DISCOUNT = 1;
+	DISCOUNT_TYPE_UNSPECIFIED = 0;
+	DISCOUNT_TYPE_AMOUNT = 1;
+	DISCOUNT_TYPE_DISCOUNT = 2;
 }
-
+```
+```
  Discount{
 	 id
 	 isalreadyused
@@ -22,21 +25,35 @@ enum DiscountType {
 	 amount 
 	 discount 	
 }
+```
+
 
 Description of Methons of GRPC Service
-
+```
+Function of add personal data
+	rpc AddPersonalData (AddPersonalDataRequest) 
+		returns (AddPersonalDataResponce);
 
 Function of requesting personal data by user ID
-    rpc GetPersonalDataById (ProfileByIdRequest) returns (PersonalDataResponce);
+	rpc GetPersonalDataById (GetPersonalDataByIdRequest) 
+		returns (GetPersonalDataByIdResponce);
 
 Function of updating personal data
-  rpc UpdatePersonalData (PersonalDataRequest) returns (BasicVoidResponce);
+	rpc UpdatePersonalData (UpdatePersonalDataRequest) 
+		returns (UpdatePersonalDataResponce);
+
+Function of add discount
+	rpc AddDiscount (AddDiscountRequest) 
+		returns (AddDiscountResponce);
 
 Function of requesting personal discounts by user ID
-  rpc GetDiscounts (ProfileByIdRequest) returns (DiscountsResponce);
+	rpc GetDiscounts (GetDiscountsRequest) 
+		returns (GetDiscountsResponce);
   
 Function of updating discounts
-  rpc UpdateDiscount (Discount) returns (BasicVoidResponce);
+	rpc UpdateDiscount (UpdateDiscountRequest) 
+		returns (UpdateDiscountResponce);
+  ```
   
   ```
   Example of PersonalProfile proto-entity
@@ -52,5 +69,13 @@ Function of updating discounts
 	}
 }
 ```
-  
-  
+
+```
+Example of ProfileByIdRequest  proto-entity
+{
+	"profilebyidrequest" : 
+	{
+   "id" : "8f902da9-e152-4864-8b5d-3c36a3c6f496"
+	}
+}
+```
