@@ -31,7 +31,6 @@ message AddPersonalDataRequest{
 	PersonalProfile personalprofile = 1;
 }
 message AddPersonalDataResponce{
-	VoidResponce voidresponce = 1;
 }
 
 message GetPersonalDataByIdRequest{
@@ -52,7 +51,6 @@ message AddDiscountRequest{
 	Discount discount = 1;
 }
 message AddDiscountResponce{
-	VoidResponce voidresponce = 1;
 }
 
 message GetDiscountsRequest{
@@ -66,7 +64,6 @@ message UpdateDiscountRequest{
 	Discount discount = 1;
 }
 message UpdateDiscountResponce{
-	VoidResponce voidresponce = 1;
 }
 
 // The request message containing the user's id.
@@ -81,10 +78,6 @@ message PersonalProfile {
   string surname = 3;
   string phone = 4;
   string email = 5;
-}
-
-
-message VoidResponce {
 }
 
 enum DiscountType {
