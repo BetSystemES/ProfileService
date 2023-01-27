@@ -57,9 +57,6 @@ namespace ProfileService.BusinessLogic
             await _bonusRepository.Update(bonus, token);
             await _context.SaveChanges(token);
         }
-
-       
-
-       
+        
     }
 }
