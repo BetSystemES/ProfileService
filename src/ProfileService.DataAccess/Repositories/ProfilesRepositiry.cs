@@ -25,9 +25,10 @@ namespace ProfileService.DataAccess.Repositories
             return Task.CompletedTask;
         }
 
-        public Task<PersonalData> Get(Guid guid, CancellationToken cancellationToken)
+        public async Task<PersonalData> Get(Guid guid, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
+            //return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
+            return  await _entities.FindAsync(guid);
         }
 
         public Task Update(PersonalData item, CancellationToken cancellationToken)

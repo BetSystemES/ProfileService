@@ -88,15 +88,16 @@ message VoidResponce {
 }
 
 enum DiscountType {
-	DISCOUNT_TYPE_UNSPECIFIED =0;
+	DISCOUNT_TYPE_UNSPECIFIED = 0;
 	DISCOUNT_TYPE_AMOUNT = 1;
 	DISCOUNT_TYPE_DISCOUNT = 2;
 }
 
-message Discount{
+message Discount {
 	string id = 1;
-	bool isalreadyused = 2;
-	DiscountType type = 3;
-	double amount = 4;
-	double discount = 5;	
+	string personalid = 2;
+	bool isalreadyused = 3;
+	DiscountType type = 4;
+	double amount = 5;
+	double discountvalue = 6;	
 }

@@ -17,9 +17,10 @@ namespace ProfileService.DataAccess.Providers
             _entities = entities;
         }
 
-        public Task<IEnumerable<Bonus>> FindByProfileId(Guid id, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Bonus>> FindByProfileId(Guid id, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken).Result.AsEnumerable());
+            //return Task.FromResult(_entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken).Result.AsEnumerable());
+            return await _entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken);
         }
     }
 }

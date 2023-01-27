@@ -8,7 +8,9 @@ namespace ProfileService.GRPC.Configuration
         {
             services.AddAutoMapper(config =>
             {
-                config.AddProfile<DataAccessProfile>();
+                //config.AddProfile<DataAccessProfile>();
+                //config.AddProfile<DataAccessProfile2>();
+                config.AddProfile<DataAccessProfile3>();
             });
 
             services.AddScoped<IProfileService, CustomProfileService>();
