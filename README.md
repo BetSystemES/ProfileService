@@ -20,10 +20,11 @@ enum DiscountType {
 ```
  Discount{
 	 id
+	 personalid
 	 isalreadyused
 	 type 
 	 amount 
-	 discount 	
+	 discountvalue 	
 }
 ```
 
@@ -79,3 +80,19 @@ Example of ProfileByIdRequest  proto-entity
 	}
 }
 ```
+
+```
+Example of Discount proto-entity
+{
+	"discount" : 
+	{
+	 "id" : "34c92d2c-1f47-4a04-bffa-71101718b56d",
+   "personalid" : "8f902da9-e152-4864-8b5d-3c36a3c6f496",
+   "isalreadyused" : true,
+   "type" : "DISCOUNT_TYPE_AMOUNT",
+   "amount" : 50.0,
+   "discountvalue" : 30.0
+	}
+}
+```
+
