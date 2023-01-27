@@ -38,8 +38,8 @@ Function of requesting personal discounts by user ID
 Function of updating discounts
   rpc UpdateDiscount (Discount) returns (BasicVoidResponce);
   
-  '''
-  Example of PersonalProfile Entity
+  ```
+  Example of PersonalProfile proto-entity
   
   {
 	"PersonalProfile" : 
@@ -49,8 +49,8 @@ Function of updating discounts
    "surname" : "K",
    "phone" : "444333222",
    "email" : "PavelK@google.com"
+	}
 }
-}
-'''
+```
   
   
