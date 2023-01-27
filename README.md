@@ -42,7 +42,7 @@ Function of updating discounts
   Example of PersonalProfile proto-entity
   
   {
-	"PersonalProfile" : 
+	"personalprofile" : 
 	{
    "id" : "8f902da9-e152-4864-8b5d-3c36a3c6f496",
    "name" : "Pavel",
