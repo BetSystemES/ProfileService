@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProfileService.BusinessLogic;
 using System;
+using Google.Protobuf.Collections;
+using System.Collections.Generic;
 
 namespace ProfileService.GRPC.Services
 {
@@ -92,9 +94,13 @@ namespace ProfileService.GRPC.Services
             var items = await _profileService.GetDiscounts(guid, token);
 
             //map back
-            GetDiscountsResponce getDiscountsResponce = _mapper.Map<GetDiscountsResponce>(items);
+            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>,IEnumerable<Discount>>(items);
 
-            return getDiscountsResponce;
+            GetDiscountsResponce responce = new GetDiscountsResponce();
+
+            responce.Discounts.AddRange(discounts);
+
+            return responce;
         }
 
         public override async Task<UpdateDiscountResponce> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)

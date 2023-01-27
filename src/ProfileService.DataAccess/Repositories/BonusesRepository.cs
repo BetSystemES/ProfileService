@@ -27,7 +27,7 @@ namespace ProfileService.DataAccess.Repositories
         public async Task<Bonus> Get(Guid guid, CancellationToken cancellationToken)
         {
              //return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
-             return await _entities.FindAsync(guid.ToString());
+             return await _entities.FindAsync(guid);
         }
 
         public Task Update(Bonus item, CancellationToken cancellationToken)
