@@ -85,7 +85,8 @@ namespace ProfileService.GRPC.Configuration
                         opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.PhoneNumber,
                     opt =>
-                    opt.MapFrom(src => src.Phone));
+                    opt.MapFrom(src => src.Phone))
+                .ForMember(x => x.Bonuses, opt => opt.Ignore());
 
 
             CreateMap<PersonalData, PersonalProfile>()
@@ -95,7 +96,7 @@ namespace ProfileService.GRPC.Configuration
                 .ForMember(dest => dest.Phone,
                     opt =>
                         opt.MapFrom(src => src.PhoneNumber));
-
+                
             //CreateMap<IEnumerable<Bonus>, IEnumerable<Discount>>()
             //    .ReverseMap();
             //CreateMap<IEnumerable<Discount>, IEnumerable<Bonus>>()
@@ -113,7 +114,9 @@ namespace ProfileService.GRPC.Configuration
                         opt.MapFrom(src => src.Discountvalue))
                 .ForMember(dest => dest.DiscountType,
                     opt =>
-                        opt.MapFrom(src => src.Type));
+                        opt.MapFrom(src => src.Type))
+                .ForMember(x => x.PersonalData, opt => opt.Ignore());
+                
 
             CreateMap<Bonus, Discount>()
                 .ForMember(dest => dest.Id,
