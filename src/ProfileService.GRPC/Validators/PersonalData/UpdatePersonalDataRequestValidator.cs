@@ -1,0 +1,26 @@
+﻿using FluentValidation;
+using ProfileService.GRPC.ValidationRules;
+
+namespace ProfileService.GRPC.Validators.PersonalData
+{
+    /// <summary>
+    /// Validation rules for <seealso cref="UpdatePersonalDataRequest"/>
+    /// </summary>
+    public class UpdatePersonalDataRequestValidator : AbstractValidator<UpdatePersonalDataRequest>
+    {
+        /// <summary>UpdatePersonalDataRequestValidator"/> class.
+        /// </summary>
+        public UpdatePersonalDataRequestValidator()
+        {
+            RuleFor(e => e.Personalprofile.Id)
+                .MustBeValidGuid();
+
+            RuleFor(e => e.Personalprofile.Name)
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(e => e.Personalprofile.Email)
+                .EmailAddress();
+        }
+    }
+}
