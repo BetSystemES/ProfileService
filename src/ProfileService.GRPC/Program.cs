@@ -4,6 +4,7 @@ using ProfileService.DataAccess;
 using Npgsql;
 using ProfileService.DataAccess.EF;
 using ProfileService.GRPC.Configuration;
+using ProfileService.GRPC.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,11 @@ builder.Services
     .AddRepositories()
     .AddProviders()
     .AddInfrastructureServices()
-    .AddGrpc();
+    .AddGrpc(options =>
+    {
+        options.Interceptors.Add<ErrorHandlingInterceptor>();
+        options.Interceptors.Add<ValidationInterceptor>();
+    });
 
 var app = builder.Build();
 

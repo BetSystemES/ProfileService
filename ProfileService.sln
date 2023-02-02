@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.BusinessLogi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.IntegrationTests", "ProfileService.IntegrationTests\ProfileService.IntegrationTests.csproj", "{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.UnitTests", "ProfileService.UnitTests\ProfileService.UnitTests.csproj", "{52D3810E-FCE7-4559-A00E-9819B8A867A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D3810E-FCE7-4559-A00E-9819B8A867A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D3810E-FCE7-4559-A00E-9819B8A867A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D3810E-FCE7-4559-A00E-9819B8A867A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D3810E-FCE7-4559-A00E-9819B8A867A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
