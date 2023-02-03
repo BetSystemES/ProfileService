@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProfileService.IntegrationTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

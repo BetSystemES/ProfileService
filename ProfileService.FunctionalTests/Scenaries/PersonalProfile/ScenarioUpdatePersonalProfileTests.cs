@@ -25,20 +25,42 @@ namespace ProfileService.FunctionalTests.Scenaries
         [Fact()]
         public async Task ScenarioUpdatePersonalProfile()
         {
+            string id = Guid.NewGuid().ToString();
+
             PersonalProfile personalProfile = new()
             {
-                Id = "8f902da9-e152-4864-8b5d-3c36a3c6f496",
+                Id = id,
                 Name = "Pavel",
                 Surname = "P",
                 Phone = "444333222",
                 Email = "PavelK@google.com"
             };
 
-            string id = personalProfile.Id;
+            PersonalProfile personalProfile2 = new()
+            {
+                Id = id,
+                Name = "Pavel",
+                Surname = "K",
+                Phone = "444333222",
+                Email = "PavelK@google.com"
+            };
+
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),
                 testMethodName: $"UpdatePersonalProfile");
+
+            var addPersonalDataResponse = await scenario
+                .Step($"Add PersonalData",
+                    async () =>
+                    {
+                        var request = new AddPersonalDataRequest()
+                        {
+                            Personalprofile = personalProfile
+                        };
+
+                        return await _client.AddPersonalDataAsync(request);
+                    });
 
             var updatePersonalDataResponse = await scenario
                 .Step($"Update PersonalProfile",
@@ -46,7 +68,7 @@ namespace ProfileService.FunctionalTests.Scenaries
                 {
                     var request = new UpdatePersonalDataRequest()
                     {
-                        Personalprofile = personalProfile
+                        Personalprofile = personalProfile2
                     };
 
                     return await _client.UpdatePersonalDataAsync(request);
@@ -68,7 +90,7 @@ namespace ProfileService.FunctionalTests.Scenaries
             result
                 .Should()
                 .NotBeNull()
-                .Equals(personalProfile);
+                .Equals(personalProfile2);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ProfileService.GRPC.Configuration
 {
-    public static class AppConfigurations
+    public static partial class AppConfiguration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {

@@ -6,13 +6,15 @@ using ProfileService.DataAccess.EF;
 using ProfileService.GRPC.Configuration;
 using ProfileService.GRPC.Interceptors;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args)
+    .AddAppSettings()
+    .AddSerialLogger();
 
 // Additional configuration is required to successfully run gRPC on macOS.
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 
-var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
+var connectionString = builder.Configuration.GetConnectionString("ProfileDb");
 
 builder.Services.AddPostgreSqlContext(options =>
 {

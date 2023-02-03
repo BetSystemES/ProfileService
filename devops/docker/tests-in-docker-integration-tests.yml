@@ -1,0 +1,71 @@
+---
+
+version: "3.8"
+
+services:
+  profile_test_postgres:
+    container_name: ProfileService_TestPostgres
+    image: postgres:13.3
+    pull_policy: if_not_present
+    environment:
+      - POSTGRES_DB=ProfileDbIntegrationTest
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d ProfileDbIntegrationTest"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    logging:
+      driver: none
+
+  profile_test_migrator:
+    container_name: ProfileService_TestMigrator
+    image: mcr.microsoft.com/dotnet/sdk:6.0
+    pull_policy: if_not_present
+    environment:
+      - ASPNETCORE_ENVIRONMENT=IntegrationTest
+      - DbConn=Host=profile_test_postgres;Port=5432;Database=ProfileDbIntegrationTest;User Id=postgres;Password=postgres
+    volumes:
+      - ./../../src:/app-migrator/src
+      - ./../../devops:/app-migrator/devops
+    command:
+      [
+        "dotnet",
+        "run",
+        "--project",
+       "/app-migrator/src/ProfileService.DatabaseMigrator/ProfileService.DatabaseMigrator.csproj",
+        "--connection-string-source",
+        "env",
+        "--connection-string-env-variable-name",
+        "DbConn"
+      ]
+    depends_on:
+      profile_test_postgres:
+        condition: service_healthy
+
+  integration_tests:
+    container_name: ProfileService_IntegrationTests
+    build:
+      context: ./../../
+      dockerfile: ./ProfileService.IntegrationTests/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=IntegrationTest
+      - ProfileService_ConnectionStrings__ProfileDb=Host=profile_test_postgres;Port=5432;Database=ProfileDbIntegrationTest;User Id=postgres;Password=postgres
+    depends_on:
+      profile_test_migrator:
+        condition: service_completed_successfully
+
+  
+volumes:
+  postgres_volume:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

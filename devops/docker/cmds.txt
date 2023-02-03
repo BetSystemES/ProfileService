@@ -1,0 +1,5 @@
+docker compose -f ./tests-in-docker.yml up --build
+
+docker compose -f ./tests-in-docker-integration-tests.yml up --build
+
+docker compose -f ./tests-in-docker-functional-tests.yml up --build

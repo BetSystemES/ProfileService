@@ -24,25 +24,47 @@ namespace ProfileService.FunctionalTests.Scenaries
         }
 
         [Fact()]
-        public async Task ScenarioUpdateDiscount()
+        public async Task ScenarioAddDiscount()
         {
-           
+
+            string personalId= Guid.NewGuid().ToString();
+            string discountId = Guid.NewGuid().ToString();
+
+            PersonalProfile personalProfile = new()
+            {
+                Id = personalId,
+                Name = "Pavel",
+                Surname = "K",
+                Phone = "444333222",
+                Email = "PavelK@google.com"
+            };
+
             Discount discount = new Discount()
             {
-                Id = "34c92d2c-1f47-4a04-bffa-71101718b56d",
-                Personalid = "8f902da9-e152-4864-8b5d-3c36a3c6f496",
+                Id = discountId,
+                Personalid = personalId,
                 Isalreadyused = false,
                 Type =  DiscountType.Amount,
                 Amount = 50,
                 Discountvalue = 6,
             };
-        
-
-            string personalId = discount.Personalid;
+            
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),
                 testMethodName: $"AddDiscount");
+
+            var addPersonalDataResponse = await scenario
+                .Step($"Add PersonalData",
+                    async () =>
+                    {
+                        var request = new AddPersonalDataRequest()
+                        {
+                            Personalprofile = personalProfile
+                        };
+
+                        return await _client.AddPersonalDataAsync(request);
+                    });
 
             var addDiscountResponse = await scenario
                 .Step($"Add Discount",
