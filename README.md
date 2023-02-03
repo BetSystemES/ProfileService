@@ -1,5 +1,18 @@
 # ProfileService
 
+
+ProfileService Methods
+
+| Method       | Description    |
+| ------------- |-------------|
+| AddPersonalData()      | Function of add personal data |
+| GetPersonalDataById()      | Function of requesting personal data by user ID      |
+| UpdatePersonalData() | Function of updating personal data      |
+| AddDiscount()      | Function of add discount for profile |
+| GetDiscounts()      | Function of requesting personal discounts by user ID      |
+| UpdateDiscount() | Function of updating discount      |
+
+
 Business Models
 ```
  PersonalData {
