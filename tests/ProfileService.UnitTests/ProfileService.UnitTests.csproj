@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ProfileService.GRPC\ProfileService.GRPC.csproj" />
+    <ProjectReference Include="..\..\src\ProfileService.GRPC\ProfileService.GRPC.csproj" />
   </ItemGroup>
 
 </Project>

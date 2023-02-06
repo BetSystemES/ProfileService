@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProfileService.BusinessLogic\ProfileService.BusinessLogic.csproj" />
+    <ProjectReference Include="..\..\src\ProfileService.BusinessLogic\ProfileService.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>
