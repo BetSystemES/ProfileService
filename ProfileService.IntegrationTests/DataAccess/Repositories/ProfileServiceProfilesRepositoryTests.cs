@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using ProfileService.BusinessLogic;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
@@ -72,7 +74,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
                 PersonalId = personalId,
                 Name = "Pavel",
                 Surname = "P",
-                PhoneNumber = "444333222",
+                PhoneNumber = "111222333",
                 Email = "PavelK@google.com"
             };
 
@@ -80,10 +82,15 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _personalDataRepository.Add(initialPersonalData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            await _personalDataRepository.Update(expectedResult, _ctoken);
+            var actualResult = await _personalDataRepository.Get(personalId, _ctoken);
+
+            actualResult.Surname= expectedResult.Surname;
+            actualResult.PhoneNumber= expectedResult.PhoneNumber;
+
+            await _personalDataRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _personalDataRepository.Get(personalId, _ctoken);
+            actualResult = await _personalDataRepository.Get(personalId, _ctoken);
 
             // Assert
             actualResult.Should()
