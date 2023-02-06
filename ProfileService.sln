@@ -11,11 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.GRPC", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.BusinessLogicTests", "src\ProfileService.BusinessLogicTests\ProfileService.BusinessLogicTests.csproj", "{7A113E6F-A41B-4884-A4F3-C1E1F3BF26B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.IntegrationTests", "ProfileService.IntegrationTests\ProfileService.IntegrationTests.csproj", "{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.IntegrationTests", "ProfileService.IntegrationTests\ProfileService.IntegrationTests.csproj", "{8EF1A4A0-5AE8-4E20-A21E-876E77622FB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.UnitTests", "ProfileService.UnitTests\ProfileService.UnitTests.csproj", "{52D3810E-FCE7-4559-A00E-9819B8A867A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.UnitTests", "ProfileService.UnitTests\ProfileService.UnitTests.csproj", "{52D3810E-FCE7-4559-A00E-9819B8A867A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.FunctionalTests", "ProfileService.FunctionalTests\ProfileService.FunctionalTests.csproj", "{731DC1F1-CB30-44C4-A6D1-F6A265FCD31C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.FunctionalTests", "ProfileService.FunctionalTests\ProfileService.FunctionalTests.csproj", "{731DC1F1-CB30-44C4-A6D1-F6A265FCD31C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileService.DatabaseMigrator", "src\ProfileService.DatabaseMigrator\ProfileService.DatabaseMigrator.csproj", "{20A653AB-5626-4468-97AD-423378BF305A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{731DC1F1-CB30-44C4-A6D1-F6A265FCD31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{731DC1F1-CB30-44C4-A6D1-F6A265FCD31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{731DC1F1-CB30-44C4-A6D1-F6A265FCD31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A653AB-5626-4468-97AD-423378BF305A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A653AB-5626-4468-97AD-423378BF305A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A653AB-5626-4468-97AD-423378BF305A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A653AB-5626-4468-97AD-423378BF305A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

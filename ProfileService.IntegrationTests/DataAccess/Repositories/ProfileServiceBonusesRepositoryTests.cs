@@ -30,22 +30,34 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task AddBonus_Should_Return_Result()
         {
             // Arrange
+            var personalId = Guid.NewGuid();
+            PersonalData personalData = new PersonalData()
+            {
+                PersonalId = personalId,
+                Name = "Pavel",
+                Surname = "K",
+                PhoneNumber = "444333222",
+                Email = "PavelK@google.com"
+            };
+
+            var bonusId = Guid.NewGuid();
+
             Bonus expectedResult = new Bonus()
             {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                BonusId = bonusId,
+                PersonalId = personalId,
                 isAlreadyUsed = true,
                 DiscountType = DiscountType.Amount,
                 Amount = 50,
                 Discount = 30
             };
 
-            var bonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d");
-
             // Act
+            await _personalDataRepository.Add(personalData, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
-            //await _bonusRepository.Add(expectedResult, _ctoken);
-            //await _context.SaveChanges(_ctoken);
+            await _bonusRepository.Add(expectedResult, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
             var actualResult = await _bonusRepository.Get(bonusId, _ctoken);
 
@@ -59,10 +71,22 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task UpdateBonus_Should_Return_UpdatedResult()
         {
             // Arrange
+            var personalId = Guid.NewGuid();
+            PersonalData personalData = new PersonalData()
+            {
+                PersonalId = personalId,
+                Name = "Pavel",
+                Surname = "K",
+                PhoneNumber = "444333222",
+                Email = "PavelK@google.com"
+            };
+
+            var bonusId = Guid.NewGuid();
+
             Bonus initialBonus = new Bonus()
             {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                BonusId = bonusId,
+                PersonalId = personalId,
                 isAlreadyUsed = false,
                 DiscountType = DiscountType.Amount,
                 Amount = 50,
@@ -71,19 +95,20 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             Bonus expectedResult = new Bonus()
             {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                BonusId = bonusId,
+                PersonalId = personalId,
                 isAlreadyUsed = true,
                 DiscountType = DiscountType.Amount,
                 Amount = 50,
                 Discount = 30
             };
 
-            var bonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d");
-
             // Act
-            //await _bonusRepository.Add(initialBonus, _ctoken);
-            //await _context.SaveChanges(_ctoken);
+            await _personalDataRepository.Add(personalData, _ctoken);
+            await _context.SaveChanges(_ctoken);
+
+            await _bonusRepository.Add(initialBonus, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
             await _bonusRepository.Update(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);

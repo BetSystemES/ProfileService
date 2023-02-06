@@ -30,21 +30,19 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task AddProfile_Should_Return_Result()
         {
             // Arrange
+            var personalId = Guid.NewGuid();
             PersonalData expectedResult = new PersonalData()
             {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                PersonalId = personalId,
                 Name = "Pavel",
-                Surname = "P",
+                Surname = "K",
                 PhoneNumber = "444333222",
                 Email = "PavelK@google.com"
             };
 
-            var personalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496");
-
             // Act
-            
-            //await _personalDataRepository.Add(expectedResult, _ctoken);
-            //await _context.SaveChanges(_ctoken);
+            await _personalDataRepository.Add(expectedResult, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
             var actualResult = await _personalDataRepository.Get(personalId, _ctoken);
 
@@ -58,9 +56,11 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task UpdateProfile_Should_Return_UpdatedResult()
         {
             // Arrange
+            var personalId = Guid.NewGuid();
+
             PersonalData initialPersonalData = new PersonalData()
             {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                PersonalId = personalId,
                 Name = "Pavel",
                 Surname = "K",
                 PhoneNumber = "444333222",
@@ -69,18 +69,16 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             PersonalData expectedResult = new PersonalData()
             {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                PersonalId = personalId,
                 Name = "Pavel",
                 Surname = "P",
                 PhoneNumber = "444333222",
                 Email = "PavelK@google.com"
             };
 
-            var personalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496");
-
             // Act
-            //await _personalDataRepository.Add(initialPersonalData, _ctoken);
-            //await _context.SaveChanges(_ctoken);
+            await _personalDataRepository.Add(initialPersonalData, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
             await _personalDataRepository.Update(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);

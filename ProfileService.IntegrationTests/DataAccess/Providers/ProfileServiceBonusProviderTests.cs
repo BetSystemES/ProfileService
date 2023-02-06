@@ -35,26 +35,39 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         public async Task FindByProfileId_Should_Return_Result()
         {
             // Arrange
+            var personalId = Guid.NewGuid();
+            PersonalData personalData = new PersonalData()
+            {
+                PersonalId = personalId,
+                Name = "Pavel",
+                Surname = "K",
+                PhoneNumber = "444333222",
+                Email = "PavelK@google.com"
+            };
+
+            var bonusId = Guid.NewGuid();
+
             Bonus bonus = new Bonus()
             {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
+                BonusId = bonusId,
+                PersonalId = personalId,
                 isAlreadyUsed = true,
                 DiscountType = DiscountType.Amount,
                 Amount = 50,
                 Discount = 30
             };
 
-            var profileId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496");
-
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
 
-            //await _bonusRepository.Add(bonus, _ctoken);
-            //await _context.SaveChanges(_ctoken);
+            await _personalDataRepository.Add(personalData, _ctoken);
+            await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusProvider.FindByProfileId(profileId, _ctoken);
+            await _bonusRepository.Add(bonus, _ctoken);
+            await _context.SaveChanges(_ctoken);
+
+            var actualResult = await _bonusProvider.FindByProfileId(personalId, _ctoken);
 
             // Assert
             actualResult.Should()

@@ -25,26 +25,16 @@ namespace ProfileService.FunctionalTests.Scenaries
         [Fact()]
         public async Task ScenarioGetPersonaProfileById()
         {
-
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            string id = Guid.NewGuid().ToString();
 
             PersonalProfile personalProfile = new()
             {
-                Id = "8f902da9-e152-4864-8b5d-3c36a3c6f496",
+                Id = id,
                 Name = "Pavel",
                 Surname = "K",
                 Phone = "444333222",
                 Email = "PavelK@google.com"
             };
-
-            string id = personalProfile.Id;
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),

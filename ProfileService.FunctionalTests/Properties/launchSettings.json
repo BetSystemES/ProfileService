@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProfileService.FunctionalTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
