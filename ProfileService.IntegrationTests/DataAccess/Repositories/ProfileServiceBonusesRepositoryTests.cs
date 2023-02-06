@@ -87,6 +87,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             {
                 BonusId = bonusId,
                 PersonalId = personalId,
+                PersonalData = personalData,
                 isAlreadyUsed = false,
                 DiscountType = DiscountType.Amount,
                 Amount = 50,
@@ -97,9 +98,10 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             {
                 BonusId = bonusId,
                 PersonalId = personalId,
+                PersonalData = personalData,
                 isAlreadyUsed = true,
                 DiscountType = DiscountType.Amount,
-                Amount = 50,
+                Amount = 0,
                 Discount = 30
             };
 
@@ -110,10 +112,15 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            await _bonusRepository.Update(expectedResult, _ctoken);
+            var actualResult = await _bonusRepository.Get(bonusId, _ctoken);
+
+            actualResult.isAlreadyUsed = true;
+            actualResult.Amount = 0;
+
+            await _bonusRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusRepository.Get(bonusId, _ctoken);
+            actualResult = await _bonusRepository.Get(bonusId, _ctoken);
 
             // Assert
             actualResult.Should()

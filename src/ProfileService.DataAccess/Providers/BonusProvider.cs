@@ -27,7 +27,7 @@ namespace ProfileService.DataAccess.Providers
 
             var result = await _entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken);
 
-            _logger.LogTrace("Find bonuses from database by profile Id. Count={Count}", result.Count);
+            _logger.LogTrace("Find bonuses from database by profile Id:{id}. Count={Count}", id, result.Count);
 
             return result;
         }
