@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProfileService.DatabaseMigrator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

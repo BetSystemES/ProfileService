@@ -1,0 +1,50 @@
+﻿---
+version: "3"
+
+services:
+  profileservice_db_postgres:
+    container_name: ProfileService_DB_Postgres
+    image: postgres:13.3
+    env_file: .env
+    ports:
+      - 5555:5432
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d ProfileDb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - .\\volumes\\postgres-data\\:/var/lib/postgresql/data
+
+  profileservice_postgres_migrator:
+    container_name: ProfileService_Postgres_Migrator
+    build:
+      context: ./../
+      dockerfile: ./src/ProfileService.DatabaseMigrator/Dockerfile
+    env_file: .env
+    command:
+       [
+        "dotnet",
+        "ProfileService.DatabaseMigrator.dll",
+        "--connection-string-source=env",
+        "--connection-string-env-variable-name=ProfileService_ConnectionStrings__ProfileDb"
+      ]
+    depends_on:
+      profileservice_db_postgres:
+        condition: service_healthy
+
+  profileservice_grpc_service:
+    container_name: ProfileService_GRPC_Service
+    build:
+      context: ./../
+      dockerfile: ./src/ProfileService.Grpc/Dockerfile
+    env_file: .env
+    ports:
+      - 5064:80
+    depends_on:
+      profileservice_postgres_migrator:
+        condition: service_completed_successfully
+      profileservice_db_postgres:
+        condition: service_healthy
