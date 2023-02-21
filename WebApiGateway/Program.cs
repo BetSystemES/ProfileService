@@ -1,8 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using ProfileService;
-using ProfileService.BusinessLogic;
-using ProfileService.DataAccess.EF;
-using ProfileService.DataAccess;
 using WebApiGateway.AppDependencies;
 using WebApiGateway.Configuration;
 using WebApiGateway.Configuration.SeriLog;

@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProfileService.DataAccess.EF;
-using ProfileService.DataAccess;
-
-namespace WebApiGateway.AppDependencies
+﻿namespace WebApiGateway.AppDependencies
 {
     public static partial class AppDependenciesConfiguration
     {
@@ -15,8 +11,7 @@ namespace WebApiGateway.AppDependencies
                 .Services
                 .AddHttpContextAccessor()
                 .AddSwagger()
-                .AddGrpcClients(appSettings)
-                .AddDbConnect(configuration);
+                .AddGrpcClients(appSettings);
         }
     }
 }
