@@ -1,5 +1,4 @@
-﻿
-using WebApiGateway.Mapper;
+﻿using WebApiGateway.Mapper;
 
 namespace WebApiGateway.Configuration
 {

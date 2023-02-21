@@ -1,13 +1,9 @@
 using AutoMapper;
-using Google.Protobuf.Collections;
-using Grpc.Core;
 using Grpc.Net.ClientFactory;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProfileService.BusinessLogic;
 using ProfileService.GRPC;
+using Swashbuckle.AspNetCore.Annotations;
 using WebApiGateway.Models;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using static ProfileService.GRPC.Profiler;
 
 namespace WebApiGateway.Controllers
@@ -31,6 +27,7 @@ namespace WebApiGateway.Controllers
 
         // GET api/bonus/"guid"
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Successfully get bonus(es)", typeof(List<DiscountModel>))]
         public async Task<ActionResult<List<DiscountModel>>> Get([FromRoute]string id)
         {
             var profileClient = _grpcClientFactory.CreateClient<ProfilerClient>("ProfileGrpcClient");
@@ -46,7 +43,7 @@ namespace WebApiGateway.Controllers
 
             var result = await profileClient.GetDiscountsAsync(request , cancellationToken: token);
 
-            var response = _mapper.Map<IEnumerable<Discount>, RepeatedField<DiscountModel>>(result.Discounts);
+            List<DiscountModel> response = _mapper.Map<IEnumerable<Discount>, List<DiscountModel>>(result.Discounts);
 
             return Ok(response);
         }

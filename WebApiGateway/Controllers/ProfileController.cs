@@ -1,7 +1,5 @@
 using AutoMapper;
-using Grpc.Core;
 using Grpc.Net.ClientFactory;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.GRPC;
 using WebApiGateway.Models;
