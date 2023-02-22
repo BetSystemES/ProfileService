@@ -23,7 +23,8 @@ namespace ProfileService.DataAccess.Repositories
 
         public Task Add(Bonus item, CancellationToken token)
         {
-             var result = _entities.Add(item);
+            ArgumentNullException.ThrowIfNull(item, nameof(item));
+            var result = _entities.Add(item);
              _logger.LogTrace("Add Bonus item with BonusId:{bonusId} and PersonalId:{personalId} to database",item.BonusId, item.PersonalId );
              return Task.CompletedTask;
         }
@@ -38,6 +39,7 @@ namespace ProfileService.DataAccess.Repositories
 
         public Task Update(Bonus item, CancellationToken cancellationToken)
         {
+            ArgumentNullException.ThrowIfNull(item, nameof(item));
             _entities.Update(item);
             _logger.LogTrace("Update Bonus item with BonusId:{bonusId} and PersonalId:{personalId} in database", item.BonusId, item.PersonalId);
             return Task.CompletedTask;
