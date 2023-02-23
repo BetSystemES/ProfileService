@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using ProfileService.BusinessLogic;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
 {

@@ -8,6 +8,7 @@ using ProfileService.BusinessLogic;
 using System;
 using Google.Protobuf.Collections;
 using System.Collections.Generic;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.GRPC.Services
 {

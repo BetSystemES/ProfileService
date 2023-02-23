@@ -1,4 +1,5 @@
-﻿using ProfileService.BusinessLogic;
+﻿using FluentValidation;
+using ProfileService.BusinessLogic;
 
 namespace ProfileService.GRPC.Configuration
 {
@@ -8,12 +9,12 @@ namespace ProfileService.GRPC.Configuration
         {
             services.AddAutoMapper(config =>
             {
-                //config.AddProfile<DataAccessProfile>();
-                //config.AddProfile<DataAccessProfile2>();
-                config.AddProfile<DataAccessProfile3>();
+                config.AddProfile<DataAccessProfile>();
             });
 
             services.AddScoped<IProfileService, CustomProfileService>();
+
+            services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
             return services;
         }

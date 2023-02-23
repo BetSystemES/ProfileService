@@ -8,6 +8,7 @@ using ProfileService.DataAccess.EF;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 using Microsoft.Extensions.Logging;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Repositories
 {

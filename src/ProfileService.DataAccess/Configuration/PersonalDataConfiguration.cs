@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProfileService.BusinessLogic;
 using System.ComponentModel.DataAnnotations;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Configuration
 {

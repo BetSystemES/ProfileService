@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using ProfileService.BusinessLogic;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
 {

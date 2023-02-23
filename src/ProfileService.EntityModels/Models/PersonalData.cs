@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProfileService.BusinessLogic
+namespace ProfileService.EntityModels.Models
 {
     public class PersonalData
     {

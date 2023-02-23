@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ProfileService.BusinessLogic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Providers
 {
