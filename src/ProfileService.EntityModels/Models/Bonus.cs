@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
 
-namespace ProfileService.BusinessLogic
+namespace ProfileService.EntityModels.Models
 {
     public class Bonus
     {

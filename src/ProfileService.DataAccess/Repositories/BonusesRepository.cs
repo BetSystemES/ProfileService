@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProfileService.BusinessLogic;
 using ProfileService.DataAccess.EF;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Repositories
 {

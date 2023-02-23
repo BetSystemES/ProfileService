@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using System.ComponentModel.DataAnnotations;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.BusinessLogic.Tests
 {

@@ -6,6 +6,7 @@ using ProfileService.BusinessLogic;
 using ProfileService.DataAccess.EF;
 using ProfileService.DataAccess.Providers;
 using ProfileService.DataAccess.Repositories;
+using ProfileService.EntityModels.Models;
 
 
 namespace ProfileService.DataAccess

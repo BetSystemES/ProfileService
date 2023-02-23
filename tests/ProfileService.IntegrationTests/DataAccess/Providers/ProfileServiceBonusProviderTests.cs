@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using ProfileService.BusinessLogic;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.IntegrationTests.DataAccess.Providers
 {

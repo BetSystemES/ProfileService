@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProfileService.BusinessLogic;
+using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Configuration
 {
