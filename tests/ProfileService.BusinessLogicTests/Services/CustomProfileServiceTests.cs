@@ -20,7 +20,10 @@ namespace ProfileService.BusinessLogic.Tests
 
         private readonly Mock<IRepository<PersonalData>> _mockPersonalDataRepository;
         private readonly Mock<IRepository<Bonus>> _mockBonusRepository;
+        private readonly Mock<IFinder<Bonus>> _mockBonusFinder;
+
         private readonly Mock<IProvider<Bonus>> _mockBonusProvider;
+        private readonly Mock<IProvider<PersonalData>> _mockPersonalDataProvider;
 
         private readonly Mock<IDataContext> _mockContext;
 
@@ -29,7 +32,9 @@ namespace ProfileService.BusinessLogic.Tests
             //Init moqs for IRepository IRepository IProvider IDataContext
             _mockPersonalDataRepository = new();
             _mockBonusRepository = new();
+            _mockBonusFinder = new();
             _mockBonusProvider = new ();
+            _mockPersonalDataProvider = new ();
 
             _mockContext = new ();
 
@@ -37,7 +42,9 @@ namespace ProfileService.BusinessLogic.Tests
             _profileService = new CustomProfileService(
                 _mockPersonalDataRepository.Object,
                 _mockBonusRepository.Object,
+                _mockBonusFinder.Object,
                 _mockBonusProvider.Object,
+                _mockPersonalDataProvider.Object,
                 _mockContext.Object);
         }
 
@@ -90,7 +97,7 @@ namespace ProfileService.BusinessLogic.Tests
 
             //Init methods for mocks
 
-            _mockPersonalDataRepository
+            _mockPersonalDataProvider
                 .Setup(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
@@ -101,7 +108,7 @@ namespace ProfileService.BusinessLogic.Tests
 
             //Assert
             //Verify method use
-            _mockPersonalDataRepository
+            _mockPersonalDataProvider
                 .Verify(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
 
             Assert.Equal(expectedResult, actualResult);
@@ -196,7 +203,7 @@ namespace ProfileService.BusinessLogic.Tests
 
 
             //Init methods for mocks
-            _mockBonusProvider
+            _mockBonusFinder
                 .Setup(_ => _.FindByProfileId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
@@ -206,7 +213,7 @@ namespace ProfileService.BusinessLogic.Tests
 
             //Assert
             //Verify method use
-            _mockBonusProvider
+            _mockBonusFinder
                 .Verify(_ => _.FindByProfileId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
             
             Assert.Equal(expectedResult, actualResult);

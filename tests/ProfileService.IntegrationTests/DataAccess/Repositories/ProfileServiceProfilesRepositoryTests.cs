@@ -15,16 +15,22 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IRepository<PersonalData> _personalDataRepository;
         private readonly IRepository<Bonus> _bonusRepository;
+        private readonly IFinder<Bonus> _bonusFinder;
         private readonly IProvider<Bonus> _bonusProvider;
+        private readonly IProvider<PersonalData> _personalDataProvider;
 
         private readonly IDataContext _context;
+
         public ProfileServiceProfilesRepositoryTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
 
             _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IRepository<PersonalData>>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IRepository<Bonus>>();
+            _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
+
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
+            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<PersonalData>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -47,7 +53,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _personalDataRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _personalDataRepository.Get(personalId, _ctoken);
+            var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
 
             // Assert
             actualResult.Should()
@@ -83,7 +89,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _personalDataRepository.Add(initialPersonalData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _personalDataRepository.Get(personalId, _ctoken);
+            var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
 
             actualResult.Surname= expectedResult.Surname;
             actualResult.PhoneNumber= expectedResult.PhoneNumber;
@@ -91,7 +97,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _personalDataRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            actualResult = await _personalDataRepository.Get(personalId, _ctoken);
+            actualResult = await _personalDataProvider.Get(personalId, _ctoken);
 
             // Assert
             actualResult.Should()

@@ -11,15 +11,21 @@ namespace ProfileService.BusinessLogic
     {
         private readonly IRepository<PersonalData> _personalDataRepository;
         private readonly IRepository<Bonus> _bonusRepository;
-        private  readonly IProvider<Bonus> _bonusProvider;
+        private readonly IFinder<Bonus> _bonusFinder;
+
+        private readonly IProvider<Bonus> _bonusProvider;
+        private readonly IProvider<PersonalData> _personalDataProvider;
+
 
         private readonly IDataContext _context;
 
-        public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IProvider<Bonus> bonusProvider, IDataContext context)
+        public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<PersonalData> personalDataProvider, IDataContext context)
         {
             _personalDataRepository = personalDataRepository;
             _bonusRepository = bonusRepository;
+            _bonusFinder = bonusFinder;
             _bonusProvider = bonusProvider;
+            _personalDataProvider = personalDataProvider;
             _context = context;
         }
 
@@ -31,7 +37,7 @@ namespace ProfileService.BusinessLogic
 
         public async Task<PersonalData> GetPersonalDataById(Guid guid, CancellationToken token)
         {
-            var result = await _personalDataRepository.Get(guid, token);
+            var result = await _personalDataProvider.Get(guid, token);
             return result;
         }
 
@@ -49,7 +55,7 @@ namespace ProfileService.BusinessLogic
 
         public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
         {
-            var result = await _bonusProvider.FindByProfileId(guid, token);
+            var result = await _bonusFinder.FindByProfileId(guid, token);
             return result.ToList();
         }
 

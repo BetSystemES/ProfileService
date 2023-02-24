@@ -12,12 +12,12 @@ using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Repositories
 {
-    public class ProfilesRepositiry : IRepository<PersonalData>
+    public class ProfilesRepository : IRepository<PersonalData>
     {
         private readonly DbSet<PersonalData> _entities;
-        private readonly ILogger<ProfilesRepositiry> _logger;
+        private readonly ILogger<ProfilesRepository> _logger;
 
-        public ProfilesRepositiry(DbSet<PersonalData> entities, ILogger<ProfilesRepositiry> logger )
+        public ProfilesRepository(DbSet<PersonalData> entities, ILogger<ProfilesRepository> logger )
         {
             _entities = entities;
             _logger = logger;
@@ -29,13 +29,6 @@ namespace ProfileService.DataAccess.Repositories
             _entities.Add(item);
             _logger.LogTrace("Add PersonalData item with Id:{guid} to database", item.PersonalId );
             return Task.CompletedTask;
-        }
-
-        public async Task<PersonalData> Get(Guid guid, CancellationToken cancellationToken)
-        {
-            var result = await _entities.FindAsync(guid);
-            _logger.LogTrace("Get PersonalData item from database by Id:{guid}", guid);
-            return result;
         }
 
         public Task Update(PersonalData item, CancellationToken cancellationToken)

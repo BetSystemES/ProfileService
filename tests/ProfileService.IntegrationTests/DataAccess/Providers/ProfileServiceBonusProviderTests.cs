@@ -18,7 +18,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
 
         private readonly IRepository<PersonalData> _personalDataRepository;
         private readonly IRepository<Bonus> _bonusRepository;
-        private readonly IProvider<Bonus> _bonusProvider;
+        private readonly IFinder<Bonus> _bonusFinder;
 
         private readonly IDataContext _context;
         public ProfileServiceBonusProviderTests(GrpcAppFactory factory)
@@ -27,7 +27,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
 
             _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IRepository<PersonalData>>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IRepository<Bonus>>();
-            _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
+            _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -68,7 +68,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             await _bonusRepository.Add(bonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusProvider.FindByProfileId(personalId, _ctoken);
+            var actualResult = await _bonusFinder.FindByProfileId(personalId, _ctoken);
 
             // Assert
             actualResult.Should()

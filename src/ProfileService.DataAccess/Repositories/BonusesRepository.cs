@@ -11,12 +11,12 @@ using ProfileService.EntityModels.Models;
 
 namespace ProfileService.DataAccess.Repositories
 {
-    public class BonusesRepositiry : IRepository<Bonus>
+    public class BonusesRepository : IRepository<Bonus>
     {
         private readonly DbSet<Bonus> _entities;
-        private readonly ILogger<BonusesRepositiry> _logger;
+        private readonly ILogger<BonusesRepository> _logger;
 
-        public BonusesRepositiry(DbSet<Bonus> entities, ILogger<BonusesRepositiry> logger)
+        public BonusesRepository(DbSet<Bonus> entities, ILogger<BonusesRepository> logger)
         {
             _entities = entities;
             _logger = logger;
@@ -28,14 +28,6 @@ namespace ProfileService.DataAccess.Repositories
             var result = _entities.Add(item);
              _logger.LogTrace("Add Bonus item with BonusId:{bonusId} and PersonalId:{personalId} to database",item.BonusId, item.PersonalId );
              return Task.CompletedTask;
-        }
-
-        public async Task<Bonus> Get(Guid guid, CancellationToken cancellationToken)
-        {
-             //return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
-              var result=await _entities.FindAsync(guid);
-              _logger.LogTrace("Get Bonus item from database by Id:{guid}", guid);
-              return result;
         }
 
         public Task Update(Bonus item, CancellationToken cancellationToken)

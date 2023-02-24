@@ -43,8 +43,8 @@ namespace ProfileService.DataAccess
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services
-                .AddScoped<IRepository<PersonalData>, ProfilesRepositiry>()
-                .AddScoped<IRepository<Bonus>, BonusesRepositiry>();
+                .AddScoped<IRepository<PersonalData>, ProfilesRepository>()
+                .AddScoped<IRepository<Bonus>, BonusesRepository>();
             return services;
         }
 
@@ -55,7 +55,9 @@ namespace ProfileService.DataAccess
         /// </returns>
         public static IServiceCollection AddProviders(this IServiceCollection services)
         {
-            services.AddScoped<IProvider<Bonus>, BonusProvider>();
+            services.AddScoped<IFinder<Bonus>, BonusFinder>();
+            services.AddScoped<IProvider<Bonus>, BonusFinder>();
+            services.AddScoped<IProvider<PersonalData>, PersonalDataProvider>();
 
             return services;
         }
