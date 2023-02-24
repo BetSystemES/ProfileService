@@ -13,7 +13,10 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IRepository<PersonalData> _personalDataRepository;
         private readonly IRepository<Bonus> _bonusRepository;
+        private readonly IFinder<Bonus> _bonusFinder;
+
         private readonly IProvider<Bonus> _bonusProvider;
+        private readonly IProvider<PersonalData> _personalDataProvider;
 
         private readonly IDataContext _context;
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
@@ -22,7 +25,10 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IRepository<PersonalData>>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IRepository<Bonus>>();
+            _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
+
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
+            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<PersonalData>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -60,7 +66,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _bonusRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusRepository.Get(bonusId, _ctoken);
+            var actualResult = await _bonusProvider.Get(bonusId, _ctoken);
 
             // Assert
             actualResult.Should()
@@ -113,7 +119,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusRepository.Get(bonusId, _ctoken);
+            var actualResult = await _bonusProvider.Get(bonusId, _ctoken);
 
             actualResult.isAlreadyUsed = true;
             actualResult.Amount = 0;
@@ -121,7 +127,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _bonusRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            actualResult = await _bonusRepository.Get(bonusId, _ctoken);
+            actualResult = await _bonusProvider.Get(bonusId, _ctoken);
 
             // Assert
             actualResult.Should()
