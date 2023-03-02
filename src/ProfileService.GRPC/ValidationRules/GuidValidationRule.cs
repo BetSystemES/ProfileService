@@ -2,6 +2,7 @@
 
 namespace ProfileService.GRPC.ValidationRules
 {
+    // TODO: move functionality to ValidationRulesExtensions.cs file (description in DiscountTypeValidationRule.cs)
     /// <summary>
     /// Validation rule for guid
     /// </summary>

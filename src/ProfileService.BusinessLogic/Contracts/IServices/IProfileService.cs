@@ -1,10 +1,14 @@
-﻿using System;
+﻿// TODO: remove unused/sort usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProfileService.EntityModels.Models;
 
+// TODO: change folder name from IServices to Services
+// TODO: change namespace to ProfileService.BusinessLogic.Contracts.Services
+// TODO: remove all empty lines
 namespace ProfileService.BusinessLogic
 {
     public interface IProfileService

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// TODO: remove unused/sort usings
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ using ProfileService.GRPC;
 
 namespace ProfileService.GRPC.Configuration
 {
+    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Mappings
+    // TODO: Rename cs file from AutoMapperConfiguration.cs to DataAccessProfile.cs
+    // TODO: remove all empty lines
     public class DataAccessProfile : Profile
     {
         /// <summary>Initializes a new instance of the <see cref="DataAccessProfile" /> class.</summary>

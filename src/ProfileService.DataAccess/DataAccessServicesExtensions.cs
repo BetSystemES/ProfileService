@@ -1,4 +1,4 @@
-﻿
+﻿// TODO: remove unused/sort usings
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -9,8 +9,10 @@ using ProfileService.DataAccess.Repositories;
 using ProfileService.EntityModels.Models;
 
 
+// TODO: remove all empty lines
 namespace ProfileService.DataAccess
 {
+    // TODO: change file location to ProfileService.DataAccess.Extensions
     public static class DataAccessServicesExtensions
     {
         /// <summary>Register the PostgreSql context.</summary>

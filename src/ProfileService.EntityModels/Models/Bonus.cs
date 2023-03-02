@@ -2,6 +2,8 @@
 
 namespace ProfileService.EntityModels.Models
 {
+    // TODO: Change file location to ProfileService.BusinessLogic.Entities
+    // TODO: remove all empty lines
     public class Bonus
     {
         [Key] public Guid BonusId { get; set; }
@@ -15,6 +17,7 @@ namespace ProfileService.EntityModels.Models
         public decimal Discount { get; set; }
     }
 
+    // TODO: Change file location to ProfileService.BusinessLogic.Models.Enums
     public enum DiscountType
     {
         Unspecified = 0, 

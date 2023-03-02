@@ -2,6 +2,9 @@
 
 namespace ProfileService.GRPC.ValidationRules
 {
+    // TODO: remove all empty lines
+    // TODO: change file location to ProfileService.GRPC.Extensions
+    // TODO: rename file to ValidationRulesExtensions
     /// <summary>
     /// Validation rule for guid
     /// </summary>

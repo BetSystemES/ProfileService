@@ -1,10 +1,13 @@
-﻿using System;
+﻿// TODO: remove unused/sort usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProfileService.EntityModels.Models;
 
+// TODO: fix namespace to ProfileService.BusinessLogic.Services
+// TODO: remove all empty lines
 namespace ProfileService.BusinessLogic
 {
     public  class CustomProfileService : IProfileService
@@ -19,6 +22,7 @@ namespace ProfileService.BusinessLogic
 
         private readonly IDataContext _context;
 
+        // TODO: format CustomProfileService with word wrap for better reading
         public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<PersonalData> personalDataProvider, IDataContext context)
         {
             _personalDataRepository = personalDataRepository;

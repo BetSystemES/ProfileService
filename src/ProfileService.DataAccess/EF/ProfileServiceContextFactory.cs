@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace ProfileService.DataAccess.EF
 {
+    // TODO: change file location to ProfileService.DataAccess
     /// <summary>
     /// Auction service context factory
     /// </summary>

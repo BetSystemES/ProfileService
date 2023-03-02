@@ -2,6 +2,7 @@
 
 namespace ProfileService.EntityModels.Models
 {
+    // TODO: Change file location to ProfileService.BusinessLogic.Entities
     public class PersonalData
     {
         [Key] public Guid PersonalId { get; set; }

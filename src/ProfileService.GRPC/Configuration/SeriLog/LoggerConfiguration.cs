@@ -1,7 +1,11 @@
 ﻿using Serilog;
+// TODO: remove unused/sort usings
 using Serilog.Sinks.SystemConsole.Themes;
 
 
+// TODO: remove all empty lines
+// TODO: Change file location to ProfileService.GRPC.Infrastructure.Configurations.SeriLog
+// TODO: fix namespace to ProfileService.GRPC.Infrastructure.Configurations.SeriLog
 namespace ProfileService.GRPC.Configuration
 {
     public static class LoggerConfiguration

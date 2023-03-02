@@ -3,6 +3,7 @@ using ProfileService.GRPC.ValidationRules;
 
 namespace ProfileService.GRPC.Validators.Discount
 {
+    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Validators.Discount
     /// <summary>
     /// Validation rules for <seealso cref="AddDiscountRequest"/>
     /// </summary>

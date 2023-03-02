@@ -1,4 +1,5 @@
-﻿using System;
+﻿// TODO: remove unused/sort usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProfileService.EntityModels.Models;
 
+// TODO: remove all empty lines
 namespace ProfileService.DataAccess.Providers
 {
     internal class BonusFinder : IFinder<Bonus>, IProvider<Bonus>
