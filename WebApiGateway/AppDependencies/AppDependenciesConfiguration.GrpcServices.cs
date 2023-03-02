@@ -1,5 +1,5 @@
 ﻿using WebApiGateway.Settings;
-using static ProfileService.GRPC.Profiler;
+using static ProfileService.GRPC.ProfileService;
 
 namespace WebApiGateway.AppDependencies
 {
@@ -20,7 +20,7 @@ namespace WebApiGateway.AppDependencies
             var endpoint = serviceEndpointsSettings.ProfileService;
 
             return services
-                .AddGrcpServiceClient<ProfilerClient>("ProfileGrpcClient", endpoint);
+                .AddGrcpServiceClient<ProfileServiceClient>("ProfileGrpcClient", endpoint);
         }
 
         private static IServiceCollection AddGrcpServiceClient<TClient>(this IServiceCollection services, string clientName, string? endpoint) where TClient : class

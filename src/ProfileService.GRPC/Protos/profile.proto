@@ -4,8 +4,8 @@ option csharp_namespace = "ProfileService.GRPC";
 
 package profile;
 
-// The Profiler service definition.
-service Profiler {
+// The ProfileService definition.
+service ProfileService {
 
 	rpc AddPersonalData (AddPersonalDataRequest) 
 		returns (AddPersonalDataResponce);

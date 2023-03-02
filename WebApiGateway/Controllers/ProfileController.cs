@@ -3,7 +3,7 @@ using Grpc.Net.ClientFactory;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.GRPC;
 using WebApiGateway.Models;
-using static ProfileService.GRPC.Profiler;
+using static ProfileService.GRPC.ProfileService;
 
 namespace WebApiGateway.Controllers
 {
@@ -28,7 +28,7 @@ namespace WebApiGateway.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProfileModel>> Get([FromRoute]string id)
         {
-            var profileClient = _grpcClientFactory.CreateClient<ProfilerClient>("ProfileGrpcClient");
+            var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
             var request = new GetPersonalDataByIdRequest()
@@ -56,7 +56,7 @@ namespace WebApiGateway.Controllers
                 return BadRequest();
             }
 
-            var profileClient = _grpcClientFactory.CreateClient<ProfilerClient>("ProfileGrpcClient");
+            var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
             var requestModel = _mapper.Map<ProfileModel, PersonalProfile>(profileModel);
@@ -80,7 +80,7 @@ namespace WebApiGateway.Controllers
                 return BadRequest();
             }
 
-            var profileClient = _grpcClientFactory.CreateClient<ProfilerClient>("ProfileGrpcClient");
+            var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
             var requestModel = _mapper.Map<ProfileModel, PersonalProfile>(profileModel);

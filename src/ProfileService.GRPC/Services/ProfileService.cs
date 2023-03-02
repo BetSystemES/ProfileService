@@ -12,7 +12,7 @@ using ProfileService.EntityModels.Models;
 
 namespace ProfileService.GRPC.Services
 {
-    public class ProfileService : Profiler.ProfilerBase
+    public class ProfileService : GRPC.ProfileService.ProfileServiceBase
     {
         private readonly ILogger<ProfileService> _logger;
         private readonly IMapper _mapper;

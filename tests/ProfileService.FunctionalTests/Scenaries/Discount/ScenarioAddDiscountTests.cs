@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 using FluentAssertions;
 using NScenario;
 using ProfileService.BusinessLogic;
-using static ProfileService.GRPC.Profiler;
+using static ProfileService.GRPC.ProfileService;
 using DiscountType = ProfileService.GRPC.DiscountType;
 
 
@@ -14,13 +14,13 @@ namespace ProfileService.FunctionalTests.Scenaries
     public class ScenarioAddDiscountTests : IClassFixture<TestServerFixture>
     {
         private readonly ITestOutputHelper _outputHelper;
-        private readonly ProfilerClient _client;
+        private readonly ProfileServiceClient _client;
 
         public ScenarioAddDiscountTests(TestServerFixture factory,
             ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
-            _client = new ProfilerClient(factory.GrpcChannel);
+            _client = new ProfileServiceClient(factory.GrpcChannel);
         }
 
         [Fact()]

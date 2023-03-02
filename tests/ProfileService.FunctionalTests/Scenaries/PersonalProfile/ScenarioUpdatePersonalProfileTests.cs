@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 using FluentAssertions;
 using NScenario;
 using ProfileService.BusinessLogic;
-using static ProfileService.GRPC.Profiler;
+using static ProfileService.GRPC.ProfileService;
 
 
 namespace ProfileService.FunctionalTests.Scenaries
@@ -13,13 +13,13 @@ namespace ProfileService.FunctionalTests.Scenaries
     public class ScenarioUpdatePersonalProfileTests : IClassFixture<TestServerFixture>
     {
         private readonly ITestOutputHelper _outputHelper;
-        private readonly ProfilerClient _client;
+        private readonly ProfileServiceClient _client;
 
         public ScenarioUpdatePersonalProfileTests(TestServerFixture factory,
             ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
-            _client = new ProfilerClient(factory.GrpcChannel);
+            _client = new ProfileServiceClient(factory.GrpcChannel);
         }
 
         [Fact()]
