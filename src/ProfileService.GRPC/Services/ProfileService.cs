@@ -1,22 +1,12 @@
 using AutoMapper;
 using Grpc.Core;
-// TODO: remove unused/sort usings
-using Google.Protobuf.WellKnownTypes;
-using ProfileService.GRPC;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ProfileService.BusinessLogic;
-using System;
-using Google.Protobuf.Collections;
-using System.Collections.Generic;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Contracts.Services;
+using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.GRPC.Services
 {
-    // TODO: remove all empty lines
     public class ProfileService : GRPC.ProfileService.ProfileServiceBase
     {
-        // TODO: unused variable _logger. Please use it or remove
         private readonly ILogger<ProfileService> _logger;
         private readonly IMapper _mapper;
 
@@ -29,7 +19,7 @@ namespace ProfileService.GRPC.Services
             _profileService = profileService;
         }
 
-        public override async Task<AddPersonalDataResponce> AddPersonalData(AddPersonalDataRequest request, ServerCallContext context)
+        public override async Task<AddPersonalDataResponse> AddPersonalData(AddPersonalDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
@@ -39,10 +29,10 @@ namespace ProfileService.GRPC.Services
             //profile service
             await _profileService.AddPersonalData(personalData, token);
 
-            return new AddPersonalDataResponce();
+            return new AddPersonalDataResponse();
         }
         
-        public override async Task<GetPersonalDataByIdResponce> GetPersonalDataById(GetPersonalDataByIdRequest request, ServerCallContext context)
+        public override async Task<GetPersonalDataByIdResponse> GetPersonalDataById(GetPersonalDataByIdRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             
@@ -55,13 +45,13 @@ namespace ProfileService.GRPC.Services
             //map back
             PersonalProfile personalProfile = _mapper.Map<PersonalProfile>(item);
 
-            return new GetPersonalDataByIdResponce
+            return new GetPersonalDataByIdResponse
             {
                 Personalprofile = personalProfile
             };
         }
 
-        public override async Task<UpdatePersonalDataResponce> UpdatePersonalData(UpdatePersonalDataRequest request, ServerCallContext context)
+        public override async Task<UpdatePersonalDataResponse> UpdatePersonalData(UpdatePersonalDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
@@ -71,10 +61,10 @@ namespace ProfileService.GRPC.Services
             //profile service
             await _profileService.UpdatePersonalData(personalData, token);
 
-            return new UpdatePersonalDataResponce();
+            return new UpdatePersonalDataResponse();
         }
 
-        public override async Task<AddDiscountResponce> AddDiscount(AddDiscountRequest request, ServerCallContext context)
+        public override async Task<AddDiscountResponse> AddDiscount(AddDiscountRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             //map
@@ -83,10 +73,10 @@ namespace ProfileService.GRPC.Services
             //profile service
             await _profileService.AddDiscount(bonus, token);
 
-            return new AddDiscountResponce();
+            return new AddDiscountResponse();
         }
 
-        public override async Task<GetDiscountsResponce> GetDiscounts(GetDiscountsRequest request, ServerCallContext context)
+        public override async Task<GetDiscountsResponse> GetDiscounts(GetDiscountsRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
@@ -99,15 +89,14 @@ namespace ProfileService.GRPC.Services
             //map back
             IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>,IEnumerable<Discount>>(items);
 
-            // TODO: typo in responce. Should be response
-            GetDiscountsResponce responce = new GetDiscountsResponce();
+            GetDiscountsResponse response = new GetDiscountsResponse();
 
-            responce.Discounts.AddRange(discounts);
+            response.Discounts.AddRange(discounts);
 
-            return responce;
+            return response;
         }
 
-        public override async Task<UpdateDiscountResponce> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
+        public override async Task<UpdateDiscountResponse> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             //map
@@ -116,9 +105,7 @@ namespace ProfileService.GRPC.Services
             //profile service
             await _profileService.UpdateDiscount(bonus, token);
 
-            return new UpdateDiscountResponce();
+            return new UpdateDiscountResponse();
         }
-
-       
     }
 }

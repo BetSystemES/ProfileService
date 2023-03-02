@@ -1,12 +1,9 @@
-﻿// TODO: remove unused/sort usings
-using System;
-using System.CommandLine;
+﻿using System.CommandLine;
 using ProfileService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ProfileService.DatabaseMigrator.Extensions;
-using ProfileService.DataAccess.EF;
 
 var rootCommand = new RootCommand("Migrate database by connection string via EntityFramework");
 var connectionStringSourceOption = new Option<string>("--connection-string-source",

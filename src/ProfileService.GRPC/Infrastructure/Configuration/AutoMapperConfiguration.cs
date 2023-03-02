@@ -1,16 +1,9 @@
 ﻿// TODO: remove unused/sort usings
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using ProfileService.BusinessLogic;
-using ProfileService.EntityModels.Models;
-using ProfileService.GRPC;
 
-namespace ProfileService.GRPC.Configuration
+using AutoMapper;
+using ProfileService.BusinessLogic.Entities;
+
+namespace ProfileService.GRPC.Infrastructure.Configuration
 {
     // TODO: Change file location to ProfileService.Grpc.Infrastructure.Mappings
     // TODO: Rename cs file from AutoMapperConfiguration.cs to DataAccessProfile.cs
@@ -37,7 +30,7 @@ namespace ProfileService.GRPC.Configuration
                 .ForMember(dest => dest.Phone,
                     opt =>
                         opt.MapFrom(src => src.PhoneNumber));
-            
+
 
             CreateMap<IEnumerable<Discount>, IEnumerable<Bonus>>();
 
@@ -53,7 +46,7 @@ namespace ProfileService.GRPC.Configuration
                     opt =>
                         opt.MapFrom(src => src.Type))
                 .ForMember(x => x.PersonalData, opt => opt.Ignore());
-                
+
 
             CreateMap<Bonus, Discount>()
                 .ForMember(dest => dest.Id,
@@ -72,8 +65,7 @@ namespace ProfileService.GRPC.Configuration
                 .ConvertUsing(s => Guid.Parse(s));
 
 
-            CreateMap<DiscountType, EntityModels.Models.DiscountType>().ReverseMap();
-            CreateMap<EntityModels.Models.DiscountType, DiscountType>().ReverseMap();
+            CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
         }
 
     }

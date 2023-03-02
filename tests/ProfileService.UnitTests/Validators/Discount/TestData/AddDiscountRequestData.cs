@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.GRPC;
+﻿using ProfileService.GRPC;
+using ProfileService.UnitTests.Validators.Discount.TestHelpers;
 
-namespace ProfileService.UnitTests.Validators
+namespace ProfileService.UnitTests.Validators.Discount.TestData
 {
     public static class AddDiscountRequestData
     {
@@ -13,7 +9,7 @@ namespace ProfileService.UnitTests.Validators
         {
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",
@@ -26,7 +22,7 @@ namespace ProfileService.UnitTests.Validators
 
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",
@@ -43,7 +39,7 @@ namespace ProfileService.UnitTests.Validators
         {
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",
@@ -56,7 +52,7 @@ namespace ProfileService.UnitTests.Validators
 
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "4864-8b5d-3c36a3c6f496",
@@ -69,7 +65,7 @@ namespace ProfileService.UnitTests.Validators
 
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",
@@ -82,7 +78,7 @@ namespace ProfileService.UnitTests.Validators
 
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",
@@ -95,7 +91,7 @@ namespace ProfileService.UnitTests.Validators
 
             yield return new object[]
             {
-                new Discount().Init
+                new GRPC.Discount().Init
                 (
                     id: "34c92d2c-1f47-4a04-bffa-71101718b56d",
                     personalId: "8f902da9-e152-4864-8b5d-3c36a3c6f496",

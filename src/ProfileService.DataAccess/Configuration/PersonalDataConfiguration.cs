@@ -1,14 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-// TODO: remove unused/sort usings
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.BusinessLogic;
-using System.ComponentModel.DataAnnotations;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Configuration
 {

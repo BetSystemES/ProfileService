@@ -8,62 +8,62 @@ package profile;
 service ProfileService {
 
 	rpc AddPersonalData (AddPersonalDataRequest) 
-		returns (AddPersonalDataResponce);
+		returns (AddPersonalDataResponse);
 
   rpc GetPersonalDataById (GetPersonalDataByIdRequest) 
-		returns (GetPersonalDataByIdResponce);
+		returns (GetPersonalDataByIdResponse);
 
   rpc UpdatePersonalData (UpdatePersonalDataRequest) 
-	returns (UpdatePersonalDataResponce);
+	returns (UpdatePersonalDataResponse);
 
 	rpc AddDiscount (AddDiscountRequest) 
-	returns (AddDiscountResponce);
+	returns (AddDiscountResponse);
 
   rpc GetDiscounts (GetDiscountsRequest) 
-	returns (GetDiscountsResponce);
+	returns (GetDiscountsResponse);
 
   rpc UpdateDiscount (UpdateDiscountRequest) 
-	returns (UpdateDiscountResponce);
+	returns (UpdateDiscountResponse);
 }	
 
 
 message AddPersonalDataRequest{
 	PersonalProfile personalprofile = 1;
 }
-message AddPersonalDataResponce{
+message AddPersonalDataResponse{
 }
 
 message GetPersonalDataByIdRequest{
 	ProfileByIdRequest profilebyidrequest = 1;
 }
-message GetPersonalDataByIdResponce{
+message GetPersonalDataByIdResponse{
 	PersonalProfile personalprofile = 1;
 }
 
 message UpdatePersonalDataRequest{
 	PersonalProfile personalprofile = 1;
 }
-message UpdatePersonalDataResponce{
+message UpdatePersonalDataResponse{
 	ProfileByIdRequest profilebyidrequest = 1;
 }
 
 message AddDiscountRequest{
 	Discount discount = 1;
 }
-message AddDiscountResponce{
+message AddDiscountResponse{
 }
 
 message GetDiscountsRequest{
 	ProfileByIdRequest profilebyidrequest = 1;
 }
-message GetDiscountsResponce{
+message GetDiscountsResponse{
 	repeated Discount discounts = 1;
 }
 
 message UpdateDiscountRequest{
 	Discount discount = 1;
 }
-message UpdateDiscountResponce{
+message UpdateDiscountResponse{
 }
 
 // The request message containing the user's id.

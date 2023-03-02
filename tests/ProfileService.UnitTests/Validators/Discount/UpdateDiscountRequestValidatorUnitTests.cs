@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentAssertions;
 using FluentValidation;
-using FluentAssertions;
 using ProfileService.GRPC;
+using ProfileService.GRPC.Infrastructure.Validators.Discount;
+using ProfileService.UnitTests.Validators.Discount.TestData;
 
-using System.Xml.Linq;
-using ProfileService.GRPC.Validators.Discount;
-
-namespace ProfileService.UnitTests.Validators
+namespace ProfileService.UnitTests.Validators.Discount
 {
     public class UpdateDiscountRequestValidatorUnitTests
     {
@@ -25,7 +19,7 @@ namespace ProfileService.UnitTests.Validators
         [MemberData(
             nameof(UpdateDiscountRequestData.UpdateDiscountRequestDataValid),
             MemberType = typeof(UpdateDiscountRequestData))]
-        public async Task UpdatePersonalDataRequestValidator_Should_Be_Valid(Discount discount)
+        public async Task UpdatePersonalDataRequestValidator_Should_Be_Valid(GRPC.Discount discount)
         {
             // Arrange
             var model = new UpdateDiscountRequest()
@@ -45,7 +39,7 @@ namespace ProfileService.UnitTests.Validators
         [MemberData(
             nameof(UpdateDiscountRequestData.UpdateDiscountRequestDataInvalid),
             MemberType = typeof(UpdateDiscountRequestData))]
-        public async Task UpdatePersonalDataRequestValidator_Should_Be_Invalid(Discount discount)
+        public async Task UpdatePersonalDataRequestValidator_Should_Be_Invalid(GRPC.Discount discount)
         {
             // Arrange
             var model = new UpdateDiscountRequest()

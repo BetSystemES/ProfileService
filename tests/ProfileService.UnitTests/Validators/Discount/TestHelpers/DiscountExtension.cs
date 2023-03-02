@@ -1,16 +1,10 @@
-﻿using Google.Protobuf.Collections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.GRPC;
+﻿using ProfileService.GRPC;
 
-namespace ProfileService.UnitTests.Validators
+namespace ProfileService.UnitTests.Validators.Discount.TestHelpers
 {
     public static class DiscountExtension
     {
-        public static Discount Init(this Discount model,
+        public static GRPC.Discount Init(this GRPC.Discount model,
             string id,
             string personalId,
             bool isalreadyused,

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentAssertions;
 using FluentValidation;
-using FluentAssertions;
 using ProfileService.GRPC;
-using ProfileService.GRPC.Validators.PersonalData;
-using System.Xml.Linq;
-using ProfileService.GRPC.Validators.Discount;
+using ProfileService.GRPC.Infrastructure.Validators.Discount;
 
-namespace ProfileService.UnitTests.Validators
+namespace ProfileService.UnitTests.Validators.Discount
 {
     public class GetDiscountsRequestValidatorUnitTests
     {

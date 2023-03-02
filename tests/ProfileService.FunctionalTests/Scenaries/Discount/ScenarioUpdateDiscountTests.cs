@@ -4,7 +4,6 @@ using Xunit.Abstractions;
 
 using FluentAssertions;
 using NScenario;
-using ProfileService.BusinessLogic;
 using static ProfileService.GRPC.ProfileService;
 using DiscountType = ProfileService.GRPC.DiscountType;
 
@@ -100,7 +99,7 @@ namespace ProfileService.FunctionalTests.Scenaries
                     return await _client.UpdateDiscountAsync(request);
                 });
 
-            var getDiscountsResponce = await scenario
+            var getDiscountsResponse = await scenario
                 .Step($"Get Discounts",
                 async () =>
                 {
@@ -114,7 +113,7 @@ namespace ProfileService.FunctionalTests.Scenaries
                     return await _client.GetDiscountsAsync(request);
                 });
 
-            var result = getDiscountsResponce.Discounts.First();
+            var result = getDiscountsResponse.Discounts.First();
 
             result
                 .Should()

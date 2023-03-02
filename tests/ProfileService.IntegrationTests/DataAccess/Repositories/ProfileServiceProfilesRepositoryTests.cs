@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
-using ProfileService.BusinessLogic;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Contracts.DataAccess;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
+using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
 {

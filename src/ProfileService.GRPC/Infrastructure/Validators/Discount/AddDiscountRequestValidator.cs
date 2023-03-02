@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using ProfileService.GRPC.ValidationRules;
+using ProfileService.GRPC.Extensions;
 
-namespace ProfileService.GRPC.Validators.Discount
+namespace ProfileService.GRPC.Infrastructure.Validators.Discount
 {
-    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Validators.Discount
     /// <summary>
     /// Validation rules for <seealso cref="AddDiscountRequest"/>
     /// </summary>

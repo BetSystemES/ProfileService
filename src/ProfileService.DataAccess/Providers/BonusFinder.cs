@@ -1,15 +1,8 @@
-﻿// TODO: remove unused/sort usings
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.BusinessLogic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Entities;
 
-// TODO: remove all empty lines
 namespace ProfileService.DataAccess.Providers
 {
     internal class BonusFinder : IFinder<Bonus>, IProvider<Bonus>

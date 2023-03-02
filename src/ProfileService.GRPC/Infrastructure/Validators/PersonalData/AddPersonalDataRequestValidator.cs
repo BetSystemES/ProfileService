@@ -1,17 +1,18 @@
 ﻿using FluentValidation;
-using ProfileService.GRPC.ValidationRules;
+using ProfileService.GRPC.Extensions;
 
-namespace ProfileService.GRPC.Validators.PersonalData
+namespace ProfileService.GRPC.Infrastructure.Validators.PersonalData
 {
     // TODO: Change file location to ProfileService.Grpc.Infrastructure.Validators.PersonalData
     /// <summary>
-    /// Validation rules for <seealso cref="UpdatePersonalDataRequest"/>
+    /// Validation rules for <seealso cref="AddPersonalDataRequest"/>
     /// </summary>
-    public class UpdatePersonalDataRequestValidator : AbstractValidator<UpdatePersonalDataRequest>
+    public class AddPersonalDataRequestValidator : AbstractValidator<AddPersonalDataRequest>
     {
-        /// <summary>UpdatePersonalDataRequestValidator"/> class.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddPersonalDataRequestValidator"/> class.
         /// </summary>
-        public UpdatePersonalDataRequestValidator()
+        public AddPersonalDataRequestValidator()
         {
             RuleFor(e => e.Personalprofile.Id)
                 .MustBeValidGuid();

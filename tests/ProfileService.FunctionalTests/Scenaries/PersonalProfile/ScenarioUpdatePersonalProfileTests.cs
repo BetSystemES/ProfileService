@@ -4,7 +4,6 @@ using Xunit.Abstractions;
 
 using FluentAssertions;
 using NScenario;
-using ProfileService.BusinessLogic;
 using static ProfileService.GRPC.ProfileService;
 
 
@@ -74,7 +73,7 @@ namespace ProfileService.FunctionalTests.Scenaries
                     return await _client.UpdatePersonalDataAsync(request);
                 });
 
-            var getPersonalDataByIdResponce = await scenario
+            var getPersonalDataByIdResponse = await scenario
                 .Step($"Get PersonalProfileById",
                 async () =>
                 {
@@ -85,7 +84,7 @@ namespace ProfileService.FunctionalTests.Scenaries
                     return await _client.GetPersonalDataByIdAsync(request);
                 });
 
-            var result = getPersonalDataByIdResponce.Personalprofile;
+            var result = getPersonalDataByIdResponse.Personalprofile;
 
             result
                 .Should()

@@ -1,14 +1,11 @@
-﻿// TODO: remove unused/sort usings
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.EntityModels.Models;
+﻿using ProfileService.BusinessLogic.Contracts.DataAccess;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
+using ProfileService.BusinessLogic.Contracts.Services;
+using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
+using PersonalData = ProfileService.BusinessLogic.Entities.PersonalData;
 
-// TODO: fix namespace to ProfileService.BusinessLogic.Services
-// TODO: remove all empty lines
-namespace ProfileService.BusinessLogic
+namespace ProfileService.BusinessLogic.Services
 {
     public  class CustomProfileService : IProfileService
     {
@@ -22,7 +19,6 @@ namespace ProfileService.BusinessLogic
 
         private readonly IDataContext _context;
 
-        // TODO: format CustomProfileService with word wrap for better reading
         public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<PersonalData> personalDataProvider, IDataContext context)
         {
             _personalDataRepository = personalDataRepository;
@@ -68,6 +64,5 @@ namespace ProfileService.BusinessLogic
             await _bonusRepository.Update(bonus, token);
             await _context.SaveChanges(token);
         }
-        
     }
 }

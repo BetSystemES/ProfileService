@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ProfileService.BusinessLogic.Models.Enums;
 
-namespace ProfileService.EntityModels.Models
+namespace ProfileService.BusinessLogic.Entities
 {
-    // TODO: Change file location to ProfileService.BusinessLogic.Entities
-    // TODO: remove all empty lines
     public class Bonus
     {
         [Key] public Guid BonusId { get; set; }

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using ProfileService.GRPC.ValidationRules;
+using ProfileService.GRPC.Extensions;
 
-namespace ProfileService.GRPC.Validators.PersonalData
+namespace ProfileService.GRPC.Infrastructure.Validators.PersonalData
 {
     // TODO: Change file location to ProfileService.Grpc.Infrastructure.Validators.PersonalData
     /// <summary>

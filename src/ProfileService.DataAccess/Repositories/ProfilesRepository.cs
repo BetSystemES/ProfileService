@@ -1,15 +1,7 @@
-﻿using ProfileService.BusinessLogic;
-// TODO: remove unused/sort usings
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProfileService.DataAccess.EF;
-using Microsoft.EntityFrameworkCore;
-using System.Numerics;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
+using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Repositories
 {

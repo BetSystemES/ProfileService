@@ -1,13 +1,12 @@
 ﻿using Xunit;
-using ProfileService.BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Moq;
-using System.ComponentModel.DataAnnotations;
-using ProfileService.EntityModels.Models;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
+using ProfileService.BusinessLogic.Contracts.DataAccess;
+using ProfileService.BusinessLogic.Contracts.Services;
+using ProfileService.BusinessLogic.Models.Enums;
+using ProfileService.BusinessLogic.Services;
 
 namespace ProfileService.BusinessLogic.Tests
 {

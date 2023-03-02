@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
-using ProfileService.BusinessLogic;
+using ProfileService.BusinessLogic.Contracts.Services;
+using ProfileService.BusinessLogic.Services;
+using ProfileService.GRPC.Infrastructure.Configuration;
 
 namespace ProfileService.GRPC.Configuration
 {
