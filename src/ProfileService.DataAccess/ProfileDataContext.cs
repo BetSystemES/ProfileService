@@ -1,6 +1,6 @@
 ﻿using ProfileService.BusinessLogic.Contracts.DataAccess;
 
-namespace ProfileService.DataAccess.EF
+namespace ProfileService.DataAccess
 {
     public class ProfileDataContext : IDataContext
     {

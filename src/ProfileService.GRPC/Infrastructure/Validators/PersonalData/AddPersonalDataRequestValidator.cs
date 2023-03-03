@@ -3,7 +3,6 @@ using ProfileService.GRPC.Extensions;
 
 namespace ProfileService.GRPC.Infrastructure.Validators.PersonalData
 {
-    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Validators.PersonalData
     /// <summary>
     /// Validation rules for <seealso cref="AddPersonalDataRequest"/>
     /// </summary>

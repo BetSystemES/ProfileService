@@ -1,11 +1,9 @@
-﻿namespace ProfileService.GRPC.Configuration
+﻿namespace ProfileService.GRPC.Infrastructure.Configuration
 {
-    // TODO: Rename class from AppConfiguration to AppConfigurations
-    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Configurations
     /// <summary>
     ///   Add environment variables to <seealso cref="WebApplicationBuilder"/>
     /// </summary>
-    public static partial class AppConfiguration
+    public static partial class AppConfigurations
     {
         /// <summary>Adds the application settings.</summary>
         /// <param name="applicationBuilder">The application builder.</param>

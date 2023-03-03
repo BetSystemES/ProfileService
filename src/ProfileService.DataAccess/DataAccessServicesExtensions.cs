@@ -4,7 +4,6 @@ using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Entities;
-using ProfileService.DataAccess.EF;
 using ProfileService.DataAccess.Providers;
 using ProfileService.DataAccess.Repositories;
 

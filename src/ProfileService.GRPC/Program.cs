@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProfileService.DataAccess;
-using ProfileService.GRPC.Configuration;
+using ProfileService.GRPC.Infrastructure.Configuration;
 using ProfileService.GRPC.Infrastructure.Configuration.SeriLog;
 using ProfileService.GRPC.Interceptors;
 

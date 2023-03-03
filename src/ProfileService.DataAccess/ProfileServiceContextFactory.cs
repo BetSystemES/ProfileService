@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace ProfileService.DataAccess.EF
+namespace ProfileService.DataAccess
 {
     /// <summary>
     /// Auction service context factory

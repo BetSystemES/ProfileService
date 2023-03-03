@@ -1,13 +1,8 @@
-﻿// TODO: remove unused/sort usings
-
-using AutoMapper;
+﻿using AutoMapper;
 using ProfileService.BusinessLogic.Entities;
 
-namespace ProfileService.GRPC.Infrastructure.Configuration
+namespace ProfileService.GRPC.Infrastructure.Mappings
 {
-    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Mappings
-    // TODO: Rename cs file from AutoMapperConfiguration.cs to DataAccessProfile.cs
-    // TODO: remove all empty lines
     public class DataAccessProfile : Profile
     {
         /// <summary>Initializes a new instance of the <see cref="DataAccessProfile" /> class.</summary>
@@ -67,6 +62,5 @@ namespace ProfileService.GRPC.Infrastructure.Configuration
 
             CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
         }
-
     }
 }

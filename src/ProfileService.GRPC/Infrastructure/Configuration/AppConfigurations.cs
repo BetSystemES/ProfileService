@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Services;
-using ProfileService.GRPC.Infrastructure.Configuration;
+using ProfileService.GRPC.Infrastructure.Mappings;
 
-namespace ProfileService.GRPC.Configuration
+namespace ProfileService.GRPC.Infrastructure.Configuration
 {
-    // TODO: Rename class from AppConfiguration to AppConfigurations
-    // TODO: Change file location to ProfileService.Grpc.Infrastructure.Configurations
-    public static partial class AppConfiguration
+    public static partial class AppConfigurations
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
@@ -23,6 +21,5 @@ namespace ProfileService.GRPC.Configuration
 
             return services;
         }
-
     }
 }
