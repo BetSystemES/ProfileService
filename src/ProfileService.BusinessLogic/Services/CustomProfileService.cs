@@ -9,8 +9,8 @@ namespace ProfileService.BusinessLogic.Services
 {
     public  class CustomProfileService : IProfileService
     {
-        private readonly IRepository<PersonalData> _personalDataRepository;
-        private readonly IRepository<Bonus> _bonusRepository;
+        private readonly IProfileRepository _personalDataRepository;
+        private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
 
         private readonly IProvider<Bonus> _bonusProvider;
@@ -19,7 +19,7 @@ namespace ProfileService.BusinessLogic.Services
 
         private readonly IDataContext _context;
 
-        public CustomProfileService(IRepository<PersonalData> personalDataRepository, IRepository<Bonus> bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<PersonalData> personalDataProvider, IDataContext context)
+        public CustomProfileService(IProfileRepository personalDataRepository, IBonusRepository bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<PersonalData> personalDataProvider, IDataContext context)
         {
             _personalDataRepository = personalDataRepository;
             _bonusRepository = bonusRepository;

@@ -42,8 +42,8 @@ namespace ProfileService.DataAccess
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services
-                .AddScoped<IRepository<PersonalData>, ProfilesRepository>()
-                .AddScoped<IRepository<Bonus>, BonusesRepository>();
+                .AddScoped<IProfileRepository, ProfilesRepository>()
+                .AddScoped<IBonusRepository, BonusesRepository>();
             return services;
         }
 

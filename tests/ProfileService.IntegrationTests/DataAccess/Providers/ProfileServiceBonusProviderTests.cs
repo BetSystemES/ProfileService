@@ -14,8 +14,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
 
         private readonly IServiceScope _scope;
 
-        private readonly IRepository<PersonalData> _personalDataRepository;
-        private readonly IRepository<Bonus> _bonusRepository;
+        private readonly IProfileRepository _personalDataRepository;
+        private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
 
         private readonly IDataContext _context;
@@ -23,8 +23,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         {
             _scope = factory.Services.CreateScope();
 
-            _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IRepository<PersonalData>>();
-            _bonusRepository = _scope.ServiceProvider.GetRequiredService<IRepository<Bonus>>();
+            _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
