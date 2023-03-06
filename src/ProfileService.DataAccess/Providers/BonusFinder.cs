@@ -5,7 +5,7 @@ using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Providers
 {
-    internal class BonusFinder : IFinder<Bonus>, IProvider<Bonus>
+    public class BonusFinder : IFinder<Bonus>, IProvider<Bonus>
     {
         private readonly DbSet<Bonus> _entities;
 

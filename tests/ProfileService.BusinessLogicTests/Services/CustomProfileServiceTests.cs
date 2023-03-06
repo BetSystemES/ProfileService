@@ -17,8 +17,8 @@ namespace ProfileService.BusinessLogic.Tests
 
         private readonly IProfileService _profileService;
 
-        private readonly Mock<IRepository<PersonalData>> _mockPersonalDataRepository;
-        private readonly Mock<IRepository<Bonus>> _mockBonusRepository;
+        private readonly Mock<IProfileRepository> _mockPersonalDataRepository;
+        private readonly Mock<IBonusRepository> _mockBonusRepository;
         private readonly Mock<IFinder<Bonus>> _mockBonusFinder;
 
         private readonly Mock<IProvider<Bonus>> _mockBonusProvider;
