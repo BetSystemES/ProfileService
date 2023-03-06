@@ -11,19 +11,16 @@ namespace ProfileService.DataAccess.Repositories
             _entities = entities;
         }
 
-        public virtual Task Add(TEntity entity, CancellationToken token)
+        public virtual async Task Add(TEntity entity, CancellationToken token)
         {
             ArgumentNullException.ThrowIfNull(entity, "entity");
-            _entities.Add(entity);
-            return Task.CompletedTask;
+            await _entities.AddAsync(entity, token);
         }
 
-        public virtual Task AddRange(IEnumerable<TEntity> entities, CancellationToken token)
+        public virtual async Task AddRange(IEnumerable<TEntity> entities, CancellationToken token)
         {
             ArgumentNullException.ThrowIfNull(entities, "entities");
-            var entities2 = (entities as List<TEntity>) ?? entities.ToList();
-            _entities.AddRange(entities2);
-            return Task.CompletedTask;
+            await _entities.AddRangeAsync(entities, token);
         }
 
         public virtual Task Remove(TEntity entity, CancellationToken token)
