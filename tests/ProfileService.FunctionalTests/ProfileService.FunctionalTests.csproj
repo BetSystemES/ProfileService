@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="NBuilder" Version="6.1.0" />
     <PackageReference Include="NScenario" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -29,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ProfileService.TestDataGeneratorsAndExtensions\ProfileService.TestDataGeneratorsAndExtensions.csproj" />
     <ProjectReference Include="..\..\src\ProfileService.GRPC\ProfileService.GRPC.csproj" />
   </ItemGroup>
 

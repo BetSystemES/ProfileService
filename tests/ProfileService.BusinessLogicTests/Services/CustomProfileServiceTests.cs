@@ -1,19 +1,18 @@
-﻿using Xunit;
+﻿using FizzWare.NBuilder;
 using Moq;
-using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
-using ProfileService.BusinessLogic.Entities;
-using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.DataAccess;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
-using ProfileService.BusinessLogic.Models.Enums;
+using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Services;
+using Xunit;
 
-namespace ProfileService.BusinessLogic.Tests
+namespace ProfileService.BusinessLogicTests.Services
 {
     public class CustomProfileServiceTests
     {
         private static readonly CancellationToken _ctoken = CancellationToken.None;
-        private readonly Guid _guid;
 
         private readonly IProfileService _profileService;
 
@@ -51,14 +50,7 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task AddPersonalDataTest_Should_Call_Add_and_SaveChanges()
         {
             //Arrange
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            var personalData = Builder<PersonalData>.CreateNew().Build();
 
             //Init methods for mocks
             _mockPersonalDataRepository
@@ -85,21 +77,12 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task GetPersonalDataById_Should_Call_Get_and_Return_Result()
         {
             //Arrange
-            PersonalData expectedResult = new PersonalData()
-            {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            var expectedResult = Builder<PersonalData>.CreateNew().Build();
 
             //Init methods for mocks
-
             _mockPersonalDataProvider
                 .Setup(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
-
 
             //Act
             //Call Service method
@@ -117,17 +100,9 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task UpdatePersonalData_Should_Call_Update_and_SaveChanges()
         {
             //Arrange
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+           var personalData = Builder<PersonalData>.CreateNew().Build();
 
             //Init methods for mocks
-
             _mockPersonalDataRepository
                 .Setup(_ => _.Update(It.IsAny<PersonalData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
@@ -152,18 +127,9 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task AddDiscount_Should_Call_Update_and_SaveChanges()
         {
             //Arrange
-            Bonus bonus = new Bonus()
-            {
-                BonusId= Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                isAlreadyUsed =false,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
+            var bonus = Builder<Bonus>.CreateNew().Build();
 
             //Init methods for mocks
-
             _mockBonusRepository
                 .Setup(_ => _.Add(It.IsAny<Bonus>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
@@ -188,18 +154,8 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task GetDiscounts_Should_Call_FindByProfileId_and_Return_Result()
         {
             //Arrange
-            Bonus bonus = new Bonus()
-            {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                isAlreadyUsed = false,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
-
+            var bonus = Builder<Bonus>.CreateNew().Build();
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
-
 
             //Init methods for mocks
             _mockBonusFinder
@@ -222,18 +178,9 @@ namespace ProfileService.BusinessLogic.Tests
         public async Task UpdateDiscount_Should_Call_Update_and_SaveChanges()
         {
             //Arrange
-            Bonus bonus = new Bonus()
-            {
-                BonusId = Guid.Parse("34c92d2c-1f47-4a04-bffa-71101718b56d"),
-                PersonalId = Guid.Parse("8f902da9-e152-4864-8b5d-3c36a3c6f496"),
-                isAlreadyUsed = false,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
+            var bonus = Builder<Bonus>.CreateNew().Build();
 
             //Init methods for mocks
-
             _mockBonusRepository
                 .Setup(_ => _.Update(It.IsAny<Bonus>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);

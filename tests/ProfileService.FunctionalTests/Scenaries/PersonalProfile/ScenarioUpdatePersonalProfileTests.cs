@@ -1,13 +1,12 @@
-﻿using ProfileService.FunctionalTests.Adapters;
+﻿using FluentAssertions;
+using NScenario;
+using ProfileService.FunctionalTests.Adapters;
 using ProfileService.GRPC;
 using Xunit.Abstractions;
-
-using FluentAssertions;
-using NScenario;
 using static ProfileService.GRPC.ProfileService;
+using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
-
-namespace ProfileService.FunctionalTests.Scenaries
+namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
 {
     public class ScenarioUpdatePersonalProfileTests : IClassFixture<TestServerFixture>
     {
@@ -26,24 +25,9 @@ namespace ProfileService.FunctionalTests.Scenaries
         {
             string id = Guid.NewGuid().ToString();
 
-            PersonalProfile personalProfile = new()
-            {
-                Id = id,
-                Name = "Pavel",
-                Surname = "P",
-                Phone = "444333222",
-                Email = "PavelK@google.com"
-            };
-
-            PersonalProfile personalProfile2 = new()
-            {
-                Id = id,
-                Name = "Pavel",
-                Surname = "K",
-                Phone = "444333222",
-                Email = "PavelK@google.com"
-            };
-
+            var personalProfile = PersonalProfileGenerator(id);
+            var personalProfile2 = PersonalProfileGenerator(id);
+            personalProfile2.Phone = "5135135531";
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),

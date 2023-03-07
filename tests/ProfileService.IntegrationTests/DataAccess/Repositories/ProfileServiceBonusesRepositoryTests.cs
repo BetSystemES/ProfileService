@@ -4,7 +4,8 @@ using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Entities;
-using ProfileService.BusinessLogic.Models.Enums;
+using ProfileService.TestDataGeneratorsAndExtensions.Extensions;
+using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
 {
@@ -13,26 +14,20 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-
         private readonly IProfileRepository _personalDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
-
         private readonly IProvider<Bonus> _bonusProvider;
         private readonly IProvider<PersonalData> _personalDataProvider;
-
         private readonly IDataContext _context;
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-
             _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
-
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
             _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<PersonalData>>();
-
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
         
@@ -41,31 +36,13 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            PersonalData personalData = PersonalDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-
-            Bonus expectedResult = new Bonus()
-            {
-                BonusId = bonusId,
-                PersonalId = personalId,
-                isAlreadyUsed = true,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
+            Bonus expectedResult = BonusGenerator(bonusId, personalId);
 
             // Act
             await _personalDataRepository.Add(personalData, _ctoken);
-            await _context.SaveChanges(_ctoken);
-
             await _bonusRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
@@ -82,43 +59,14 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            PersonalData personalData = PersonalDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-
-            Bonus initialBonus = new Bonus()
-            {
-                BonusId = bonusId,
-                PersonalId = personalId,
-                PersonalData = personalData,
-                isAlreadyUsed = false,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
-
-            Bonus expectedResult = new Bonus()
-            {
-                BonusId = bonusId,
-                PersonalId = personalId,
-                PersonalData = personalData,
-                isAlreadyUsed = true,
-                DiscountType = DiscountType.Amount,
-                Amount = 0,
-                Discount = 30
-            };
+            Bonus initialBonus = BonusGenerator(bonusId, personalId ,personalData).ChangeisAlreadyUsed(false).ChangeAmount(50);
+            Bonus expectedResult = BonusGenerator(bonusId, personalId, personalData).ChangeisAlreadyUsed(true).ChangeAmount(0);
 
             // Act
             await _personalDataRepository.Add(personalData, _ctoken);
-            await _context.SaveChanges(_ctoken);
-
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 

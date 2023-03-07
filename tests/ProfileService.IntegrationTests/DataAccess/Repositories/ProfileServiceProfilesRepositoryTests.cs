@@ -4,6 +4,8 @@ using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.TestDataGeneratorsAndExtensions.Extensions;
+using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
 namespace ProfileService.IntegrationTests.DataAccess.Repositories
 {
@@ -40,14 +42,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData expectedResult = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            PersonalData expectedResult = PersonalDataGenerator(personalId);
 
             // Act
             await _personalDataRepository.Add(expectedResult, _ctoken);
@@ -66,24 +61,11 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
+            PersonalData initialPersonalData = PersonalDataGenerator(personalId);
 
-            PersonalData initialPersonalData = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
-
-            PersonalData expectedResult = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "P",
-                PhoneNumber = "111222333",
-                Email = "PavelK@google.com"
-            };
+            PersonalData expectedResult = PersonalDataGenerator(personalId)
+                                            .ChangeSurname("P")
+                                            .ChangePhoneNumber("111222333");
 
             // Act
             await _personalDataRepository.Add(initialPersonalData, _ctoken);
@@ -91,8 +73,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
 
-            actualResult.Surname= expectedResult.Surname;
-            actualResult.PhoneNumber= expectedResult.PhoneNumber;
+            actualResult.Surname = expectedResult.Surname;
+            actualResult.PhoneNumber = expectedResult.PhoneNumber;
 
             await _personalDataRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
@@ -104,7 +86,6 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
                 .NotBeNull().And
                 .BeEquivalentTo(expectedResult);
         }
-
 
         public void Dispose()
         {
