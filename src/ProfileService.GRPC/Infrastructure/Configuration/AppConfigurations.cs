@@ -13,11 +13,7 @@ namespace ProfileService.GRPC.Infrastructure.Configuration
             {
                 config.AddProfile<DataAccessProfile>();
             });
-
             services.AddScoped<IProfileService, CustomProfileService>();
-
-            services.AddValidatorsFromAssembly(typeof(Program).Assembly);
-
             return services;
         }
     }

@@ -19,6 +19,7 @@ builder.Services
     .AddRepositories()
     .AddProviders()
     .AddInfrastructureServices()
+    .AddFluentValidation()
     .AddGrpc(options =>
     {
         options.Interceptors.Add<ErrorHandlingInterceptor>();

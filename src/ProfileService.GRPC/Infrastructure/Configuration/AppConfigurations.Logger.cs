@@ -18,7 +18,6 @@ namespace ProfileService.GRPC.Infrastructure.Configuration
                     ? config.MinimumLevel.Debug()
                     : config.MinimumLevel.Warning();
             });
-
             return appBuilder;
         }
     }

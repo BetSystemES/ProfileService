@@ -18,7 +18,6 @@
                 config.AddEnvironmentVariables(prefix);
                 config.Build();
             });
-
             return applicationBuilder;
         }
     }
