@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace ProfileService.GRPC.Infrastructure.Configuration.SeriLog
+namespace ProfileService.GRPC.Infrastructure.Configuration
 {
     public static class LoggerConfiguration
     {

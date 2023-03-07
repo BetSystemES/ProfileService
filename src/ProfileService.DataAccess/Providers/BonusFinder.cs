@@ -19,7 +19,6 @@ namespace ProfileService.DataAccess.Providers
 
         public async Task<Bonus> Get(Guid guid, CancellationToken cancellationToken)
         {
-            //return Task.FromResult(_entities.FindAsync(guid.ToString()).Result);
             var result = await _entities.FindAsync(guid);
             _logger.LogTrace("Get Bonus item from database by Id:{guid}", guid);
             return result;
@@ -28,12 +27,8 @@ namespace ProfileService.DataAccess.Providers
 
         public async Task<List<Bonus>> FindByProfileId(Guid id, CancellationToken cancellationToken)
         {
-            //return _entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken);
-
             var result = await _entities.Where(x => x.PersonalId == id).ToListAsync(cancellationToken: cancellationToken);
-
             _logger.LogTrace("Find bonuses from database by profile Id:{id}. Count={Count}", id, result.Count);
-
             return result;
         }
     }

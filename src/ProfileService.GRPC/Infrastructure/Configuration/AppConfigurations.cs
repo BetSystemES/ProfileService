@@ -16,7 +16,6 @@ namespace ProfileService.GRPC.Infrastructure.Configuration
 
             services.AddScoped<IProfileService, CustomProfileService>();
 
-            // TODO: Add new AppConfigurations partial class for fluent validation
             services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
             return services;

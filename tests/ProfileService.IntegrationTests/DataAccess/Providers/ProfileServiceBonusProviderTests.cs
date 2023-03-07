@@ -4,7 +4,7 @@ using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Entities;
-using ProfileService.BusinessLogic.Models.Enums;
+using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
 namespace ProfileService.IntegrationTests.DataAccess.Providers
 {
@@ -13,20 +13,17 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-
         private readonly IProfileRepository _personalDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
-
         private readonly IDataContext _context;
+
         public ProfileServiceBonusProviderTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-
             _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
-
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
         
@@ -35,31 +32,14 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = new PersonalData()
-            {
-                PersonalId = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                PhoneNumber = "444333222",
-                Email = "PavelK@google.com"
-            };
+            PersonalData personalData = PersonalDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-
-            Bonus bonus = new Bonus()
-            {
-                BonusId = bonusId,
-                PersonalId = personalId,
-                isAlreadyUsed = true,
-                DiscountType = DiscountType.Amount,
-                Amount = 50,
-                Discount = 30
-            };
+            Bonus bonus = BonusGenerator(bonusId, personalId);
 
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
-
             await _personalDataRepository.Add(personalData, _ctoken);
             await _context.SaveChanges(_ctoken);
 

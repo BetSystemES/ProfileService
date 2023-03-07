@@ -1,14 +1,13 @@
-﻿using ProfileService.FunctionalTests.Adapters;
+﻿using FluentAssertions;
+using NScenario;
+using ProfileService.FunctionalTests.Adapters;
 using ProfileService.GRPC;
 using Xunit.Abstractions;
-
-using FluentAssertions;
-using NScenario;
 using static ProfileService.GRPC.ProfileService;
 using DiscountType = ProfileService.GRPC.DiscountType;
+using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
-
-namespace ProfileService.FunctionalTests.Scenaries
+namespace ProfileService.FunctionalTests.Scenaries.Discount
 {
     public class ScenarioUpdateDiscountTests : IClassFixture<TestServerFixture>
     {
@@ -29,35 +28,10 @@ namespace ProfileService.FunctionalTests.Scenaries
             string personalId = Guid.NewGuid().ToString();
             string discountId = Guid.NewGuid().ToString();
 
-            PersonalProfile personalProfile = new()
-            {
-                Id = personalId,
-                Name = "Pavel",
-                Surname = "K",
-                Phone = "444333222",
-                Email = "PavelK@google.com"
-            };
-
-            Discount discount = new Discount()
-            {
-                Id = discountId,
-                Personalid = personalId,
-                Isalreadyused = false,
-                Type =  DiscountType.Amount,
-                Amount = 50,
-                Discountvalue = 6,
-            };
-
-            Discount discount2 = new Discount()
-            {
-                Id = discountId,
-                Personalid = personalId,
-                Isalreadyused = true,
-                Type =  DiscountType.Amount,
-                Amount = 50,
-                Discountvalue = 6,
-            };
-
+            var personalProfile = PersonalProfileGenerator(personalId);
+            var discount = DiscountGenerator(discountId, personalId, DiscountType.Amount, 50);
+            var discount2 = DiscountGenerator(discountId, personalId, DiscountType.Amount, 50);
+            discount2.Isalreadyused = true;
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),
