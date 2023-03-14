@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
+using ProfileService.GRPC.Interceptors.Helpers;
 
 namespace ProfileService.GRPC.Interceptors
 {
@@ -8,6 +9,13 @@ namespace ProfileService.GRPC.Interceptors
     /// </summary>
     public class ErrorHandlingInterceptor : Interceptor
     {
+        private readonly ILogger<ErrorHandlingInterceptor> _logger;
+
+        public ErrorHandlingInterceptor(ILogger<ErrorHandlingInterceptor> logger)
+        {
+            _logger = logger;
+        }
+
         /// <summary>
         /// Server-side handler for intercepting and incoming unary call.
         /// </summary>
@@ -26,8 +34,8 @@ namespace ProfileService.GRPC.Interceptors
         /// can simply return the return value from the continuation intact,
         /// or an arbitrary response value as it sees fit.
         /// </returns>
-        /// <exception cref="Grpc.Core.RpcException"></exception>
-        /// <exception cref="Grpc.Core.Status"></exception>
+        /// <exception cref="RpcException"></exception>
+        /// <exception cref="Status"></exception>
         public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
             TRequest request,
             ServerCallContext context,
@@ -37,13 +45,9 @@ namespace ProfileService.GRPC.Interceptors
             {
                 return await continuation(request, context);
             }
-            catch (RpcException)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
-                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+                throw ex.Handle(context, _logger);
             }
         }
 
@@ -67,8 +71,8 @@ namespace ProfileService.GRPC.Interceptors
         /// the ability to wrap or substitute the request stream when calling
         /// the continuation.
         /// </returns>
-        /// <exception cref="Grpc.Core.RpcException"></exception>
-        /// <exception cref="Grpc.Core.Status"></exception>
+        /// <exception cref="RpcException"></exception>
+        /// <exception cref="Status"></exception>
         public override async Task<TResponse> ClientStreamingServerHandler<TRequest, TResponse>(
             IAsyncStreamReader<TRequest> requestStream,
             ServerCallContext context,
@@ -78,13 +82,9 @@ namespace ProfileService.GRPC.Interceptors
             {
                 return await continuation(requestStream, context);
             }
-            catch (RpcException)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
-                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+                throw ex.Handle(context, _logger);
             }
         }
 
@@ -103,8 +103,8 @@ namespace ProfileService.GRPC.Interceptors
         /// call it zero or more times at its discretion. The interceptor has
         /// the ability to wrap or substitute the request value and the response stream
         /// when calling the continuation.</param>
-        /// <exception cref="Grpc.Core.RpcException"></exception>
-        /// <exception cref="Grpc.Core.Status"></exception>
+        /// <exception cref="RpcException"></exception>
+        /// <exception cref="Status"></exception>
         public override async Task ServerStreamingServerHandler<TRequest, TResponse>(
             TRequest request,
             IServerStreamWriter<TResponse> responseStream,
@@ -115,13 +115,9 @@ namespace ProfileService.GRPC.Interceptors
             {
                 await continuation(request, responseStream, context);
             }
-            catch (RpcException)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
-                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+                throw ex.Handle(context, _logger);
             }
         }
 
@@ -140,8 +136,8 @@ namespace ProfileService.GRPC.Interceptors
         /// call it zero or more times at its discretion. The interceptor has
         /// the ability to wrap or substitute the request and response streams
         /// when calling the continuation.</param>
-        /// <exception cref="Grpc.Core.RpcException"></exception>
-        /// <exception cref="Grpc.Core.Status"></exception>
+        /// <exception cref="RpcException"></exception>
+        /// <exception cref="Status"></exception>
         public override async Task DuplexStreamingServerHandler<TRequest, TResponse>(
             IAsyncStreamReader<TRequest> requestStream,
             IServerStreamWriter<TResponse> responseStream,
@@ -152,13 +148,9 @@ namespace ProfileService.GRPC.Interceptors
             {
                 await continuation(requestStream, responseStream, context);
             }
-            catch (RpcException)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
-                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+                throw ex.Handle(context, _logger);
             }
         }
     }

@@ -1,3 +1,4 @@
+using Grpc.AspNetCore.Server;
 using Microsoft.EntityFrameworkCore;
 using ProfileService.DataAccess;
 using ProfileService.GRPC.Infrastructure.Configuration;
@@ -10,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args)
 var connectionString = builder.Configuration.GetConnectionString("ProfileDb");
 builder.Services.AddPostgreSqlContext(options =>
 {
-    options.UseNpgsql(connectionString);
+    options.UseNpgsql(connectionString, opt => opt.EnableRetryOnFailure(3));
 });
-builder.Services.AddDbContext<ProfileDbContext>(options => options.UseNpgsql(connectionString));
 
 // Add services to the container.
 builder.Services
