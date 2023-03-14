@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 
@@ -135,11 +136,10 @@ namespace ProfileService.GRPC.Interceptors
             {
                 var errors = validationResult
                     .Errors
-                    .Select(f => $"Property {f.PropertyName} failed validation. Error was {f.ErrorMessage}")
+                    .Select(f => new ValidationFailure(f.PropertyName, f.ErrorMessage))
                     .ToList();
 
-                var message = string.Join(Environment.NewLine, errors);
-                throw new RpcException(new Status(StatusCode.InvalidArgument, message));
+                throw new ValidationException(errors);
             }
         }
 
