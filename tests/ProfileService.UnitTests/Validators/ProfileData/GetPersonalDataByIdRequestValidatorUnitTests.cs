@@ -5,18 +5,18 @@ using ProfileService.GRPC.Infrastructure.Validators.ProfileData;
 
 namespace ProfileService.UnitTests.Validators.ProfileData
 {
-    public class GetPersonalDataByIdRequestValidatorUnitTests
+    public class GetProfileDataByIdRequestValidatorUnitTests
     {
         private readonly IValidator<GetProfileDataByIdRequest> _validator;
 
-        public GetPersonalDataByIdRequestValidatorUnitTests()
+        public GetProfileDataByIdRequestValidatorUnitTests()
         {
             _validator = new GetProfileDataByIdRequestValidator();
         }
 
         [Theory]
         [InlineData("c0631390-2ac4-4946-b172-501e173f47d6")]
-        public async Task GetPersonalDataByIdRequestValidator_Should_Be_Valid(string id)
+        public async Task GetProfileDataByIdRequestValidator_Should_Be_Valid(string id)
         {
             // Arrange
             var model = new GetProfileDataByIdRequest()

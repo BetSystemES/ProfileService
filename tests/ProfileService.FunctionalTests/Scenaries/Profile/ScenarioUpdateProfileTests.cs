@@ -21,7 +21,7 @@ namespace ProfileService.FunctionalTests.Scenaries.Profile
         }
 
         [Fact()]
-        public async Task ScenarioUpdatePersonalProfile()
+        public async Task ScenarioUpdateProfileData()
         {
             string id = Guid.NewGuid().ToString();
 

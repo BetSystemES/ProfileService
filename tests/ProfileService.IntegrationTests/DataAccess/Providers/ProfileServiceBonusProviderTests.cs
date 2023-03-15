@@ -13,7 +13,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-        private readonly IProfileRepository _personalDataRepository;
+        private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
         private readonly IDataContext _context;
@@ -21,7 +21,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         public ProfileServiceBonusProviderTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-            _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _profileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
@@ -31,22 +31,22 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         public async Task FindByProfileId_Should_Return_Result()
         {
             // Arrange
-            var personalId = Guid.NewGuid();
-            ProfileData profileData = ProfileDataGenerator(personalId);
+            var profileId = Guid.NewGuid();
+            ProfileData profileData = ProfileDataGenerator(profileId);
 
             var bonusId = Guid.NewGuid();
-            Bonus bonus = BonusGenerator(bonusId, personalId);
+            Bonus bonus = BonusGenerator(bonusId, profileId);
 
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
-            await _personalDataRepository.Add(profileData, _ctoken);
+            await _profileDataRepository.Add(profileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             await _bonusRepository.Add(bonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _bonusFinder.FindByProfileId(personalId, _ctoken);
+            var actualResult = await _bonusFinder.FindByProfileId(profileId, _ctoken);
 
             // Assert
             actualResult.Should()

@@ -15,11 +15,11 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IServiceScope _scope;
 
-        private readonly IProfileRepository _personalDataRepository;
+        private readonly IProfileRepository _pofileDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
         private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<ProfileData> _personalDataProvider;
+        private readonly IProvider<ProfileData> _profileDataProvider;
 
         private readonly IDataContext _context;
 
@@ -27,12 +27,12 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             _scope = factory.Services.CreateScope();
 
-            _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _pofileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
 
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
+            _profileDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -41,14 +41,14 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task AddProfile_Should_Return_Result()
         {
             // Arrange
-            var personalId = Guid.NewGuid();
-            ProfileData expectedResult = ProfileDataGenerator(personalId);
+            var profileId = Guid.NewGuid();
+            ProfileData expectedResult = ProfileDataGenerator(profileId);
 
             // Act
-            await _personalDataRepository.Add(expectedResult, _ctoken);
+            await _pofileDataRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
+            var actualResult = await _profileDataProvider.Get(profileId, _ctoken);
 
             // Assert
             actualResult.Should()
@@ -60,26 +60,26 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public async Task UpdateProfile_Should_Return_UpdatedResult()
         {
             // Arrange
-            var personalId = Guid.NewGuid();
-            ProfileData initialProfileData = ProfileDataGenerator(personalId);
+            var profileId = Guid.NewGuid();
+            ProfileData initialProfileData = ProfileDataGenerator(profileId);
 
-            ProfileData expectedResult = ProfileDataGenerator(personalId)
+            ProfileData expectedResult = ProfileDataGenerator(profileId)
                                             .ChangeSurname("P")
                                             .ChangePhoneNumber("111222333");
 
             // Act
-            await _personalDataRepository.Add(initialProfileData, _ctoken);
+            await _pofileDataRepository.Add(initialProfileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
+            var actualResult = await _profileDataProvider.Get(profileId, _ctoken);
 
             actualResult.LastName = expectedResult.LastName;
             actualResult.PhoneNumber = expectedResult.PhoneNumber;
 
-            await _personalDataRepository.Update(actualResult, _ctoken);
+            await _pofileDataRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            actualResult = await _personalDataProvider.Get(personalId, _ctoken);
+            actualResult = await _profileDataProvider.Get(profileId, _ctoken);
 
             // Assert
             actualResult.Should()

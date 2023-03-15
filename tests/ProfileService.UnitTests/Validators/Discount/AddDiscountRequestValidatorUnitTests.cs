@@ -19,7 +19,7 @@ namespace ProfileService.UnitTests.Validators.Discount
         [MemberData(
             nameof(AddDiscountRequestData.AddDiscountRequestDataValid),
             MemberType = typeof(AddDiscountRequestData))]
-        public async Task AddPersonalDataRequestValidator_Should_Be_Valid(GRPC.Discount discount)
+        public async Task AddProfileDataRequestValidator_Should_Be_Valid(GRPC.Discount discount)
         {
             // Arrange
             var model = new AddDiscountRequest()
@@ -39,7 +39,7 @@ namespace ProfileService.UnitTests.Validators.Discount
         [MemberData(
             nameof(AddDiscountRequestData.AddDiscountRequestDataInvalid),
             MemberType = typeof(AddDiscountRequestData))]
-        public async Task AddPersonalDataRequestValidator_Should_Be_Invalid(GRPC.Discount discount)
+        public async Task AddProfileDataRequestValidator_Should_Be_Invalid(GRPC.Discount discount)
         {
             // Arrange
             var model = new AddDiscountRequest()
