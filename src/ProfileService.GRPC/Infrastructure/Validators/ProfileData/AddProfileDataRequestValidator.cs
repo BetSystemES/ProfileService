@@ -16,10 +16,6 @@ namespace ProfileService.GRPC.Infrastructure.Validators.ProfileData
             RuleFor(e => e.UserProfile.Id)
                 .MustBeValidGuid();
 
-            RuleFor(e => e.UserProfile.FirstName)
-                .NotEmpty()
-                .NotNull();
-
             RuleFor(e => e.UserProfile.Email)
                 .EmailAddress();
         }
