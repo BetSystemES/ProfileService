@@ -12,7 +12,7 @@ namespace ProfileService.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .ApplyConfiguration(new PersonalDataConfiguration())
+                .ApplyConfiguration(new ProfileDataConfiguration())
                 .ApplyConfiguration(new BonusConfiguration());
 
             base.OnModelCreating(modelBuilder);

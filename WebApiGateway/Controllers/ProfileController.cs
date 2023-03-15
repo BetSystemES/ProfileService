@@ -31,17 +31,17 @@ namespace WebApiGateway.Controllers
             var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
-            var request = new GetPersonalDataByIdRequest()
+            var request = new GetProfileDataByIdRequest()
             {
-               Profilebyidrequest = new ProfileByIdRequest()
+               ProfileByIdRequest = new ProfileByIdRequest()
                {
                    Id = id
                },
             };
 
-            var result = await profileClient.GetPersonalDataByIdAsync(request , cancellationToken: token);
+            var result = await profileClient.GetProfileDataByIdAsync(request , cancellationToken: token);
 
-            var response = _mapper.Map<PersonalProfile, ProfileModel>(result.Personalprofile);
+            var response = _mapper.Map<UserProfile, ProfileModel>(result.UserProfile);
 
             return Ok(response);
         }
@@ -59,14 +59,14 @@ namespace WebApiGateway.Controllers
             var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
-            var requestModel = _mapper.Map<ProfileModel, PersonalProfile>(profileModel);
+            var requestModel = _mapper.Map<ProfileModel, UserProfile>(profileModel);
 
-            var request = new AddPersonalDataRequest()
+            var request = new AddProfileDataRequest()
             {
-                Personalprofile = requestModel
+                UserProfile = requestModel
             };
 
-            var result = await profileClient.AddPersonalDataAsync(request, cancellationToken: token);
+            var result = await profileClient.AddProfileDataAsync(request, cancellationToken: token);
 
             return Ok();
         }
@@ -83,19 +83,16 @@ namespace WebApiGateway.Controllers
             var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
-            var requestModel = _mapper.Map<ProfileModel, PersonalProfile>(profileModel);
+            var requestModel = _mapper.Map<ProfileModel, UserProfile>(profileModel);
 
-            var request = new UpdatePersonalDataRequest()
+            var request = new UpdateProfileDataRequest()
             {
-                Personalprofile = requestModel
+                UserProfile = requestModel
             };
 
-            var result = await profileClient.UpdatePersonalDataAsync(request, cancellationToken: token);
+            var result = await profileClient.UpdateProfileDataAsync(request, cancellationToken: token);
 
             return Ok();
         }
-
-
     }
-
 }

@@ -8,8 +8,8 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
         /// <summary>Initializes a new instance of the <see cref="DataAccessProfile" /> class.</summary>
         public DataAccessProfile()
         {
-            CreateMap<PersonalProfile, PersonalData>()
-                .ForMember(dest => dest.PersonalId,
+            CreateMap<UserProfile, ProfileData>()
+                .ForMember(dest => dest.ProfileId,
                     opt =>
                         opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.PhoneNumber,
@@ -18,10 +18,10 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ForMember(x => x.Bonuses, opt => opt.Ignore());
 
 
-            CreateMap<PersonalData, PersonalProfile>()
+            CreateMap<ProfileData, UserProfile>()
                 .ForMember(dest => dest.Id,
                     opt =>
-                        opt.MapFrom(src => src.PersonalId.ToString()))
+                        opt.MapFrom(src => src.ProfileId.ToString()))
                 .ForMember(dest => dest.Phone,
                     opt =>
                         opt.MapFrom(src => src.PhoneNumber));
@@ -36,18 +36,18 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                         opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.Discount,
                     opt =>
-                        opt.MapFrom(src => src.Discountvalue))
+                        opt.MapFrom(src => src.DiscountValue))
                 .ForMember(dest => dest.DiscountType,
                     opt =>
                         opt.MapFrom(src => src.Type))
-                .ForMember(x => x.PersonalData, opt => opt.Ignore());
+                .ForMember(x => x.ProfileData, opt => opt.Ignore());
 
 
             CreateMap<Bonus, Discount>()
                 .ForMember(dest => dest.Id,
                     opt =>
                         opt.MapFrom(src => src.BonusId.ToString()))
-                .ForMember(dest => dest.Discountvalue,
+                .ForMember(dest => dest.DiscountValue,
                     opt =>
                         opt.MapFrom(src => src.Discount))
                 .ForMember(dest => dest.Type,

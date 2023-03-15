@@ -7,16 +7,16 @@ package profile;
 // The ProfileService definition.
 service ProfileService {
 
-	rpc AddPersonalData (AddPersonalDataRequest) 
-		returns (AddPersonalDataResponse);
+  rpc AddProfileData (AddProfileDataRequest) 
+    returns (AddProfileDataResponse);
 
-  rpc GetPersonalDataById (GetPersonalDataByIdRequest) 
-		returns (GetPersonalDataByIdResponse);
+  rpc GetProfileDataById (GetProfileDataByIdRequest) 
+	returns (GetProfileDataByIdResponse);
 
-  rpc UpdatePersonalData (UpdatePersonalDataRequest) 
-	returns (UpdatePersonalDataResponse);
+  rpc UpdateProfileData (UpdateProfileDataRequest) 
+	returns (UpdateProfileDataResponse);
 
-	rpc AddDiscount (AddDiscountRequest) 
+  rpc AddDiscount (AddDiscountRequest) 
 	returns (AddDiscountResponse);
 
   rpc GetDiscounts (GetDiscountsRequest) 
@@ -27,24 +27,24 @@ service ProfileService {
 }	
 
 
-message AddPersonalDataRequest{
-	PersonalProfile personalprofile = 1;
+message AddProfileDataRequest{
+	UserProfile user_profile = 1;
 }
-message AddPersonalDataResponse{
-}
-
-message GetPersonalDataByIdRequest{
-	ProfileByIdRequest profilebyidrequest = 1;
-}
-message GetPersonalDataByIdResponse{
-	PersonalProfile personalprofile = 1;
+message AddProfileDataResponse{
 }
 
-message UpdatePersonalDataRequest{
-	PersonalProfile personalprofile = 1;
+message GetProfileDataByIdRequest{
+	ProfileByIdRequest profile_by_id_request = 1;
 }
-message UpdatePersonalDataResponse{
-	ProfileByIdRequest profilebyidrequest = 1;
+message GetProfileDataByIdResponse{
+	UserProfile user_profile = 1;
+}
+
+message UpdateProfileDataRequest{
+	UserProfile user_profile = 1;
+}
+message UpdateProfileDataResponse{
+	ProfileByIdRequest profile_by_id_request = 1;
 }
 
 message AddDiscountRequest{
@@ -54,7 +54,7 @@ message AddDiscountResponse{
 }
 
 message GetDiscountsRequest{
-	ProfileByIdRequest profilebyidrequest = 1;
+	ProfileByIdRequest profile_by_id_request = 1;
 }
 message GetDiscountsResponse{
 	repeated Discount discounts = 1;
@@ -71,11 +71,11 @@ message ProfileByIdRequest {
   string id = 1;
 }
 
-// The response message containing the PersonalProfile.
-message PersonalProfile {
+// The response message containing the UserProfile.
+message UserProfile {
   string id = 1;
-  string name = 2;
-  string surname = 3;
+  string first_name = 2;
+  string last_name = 3;
   string phone = 4;
   string email = 5;
 }
@@ -88,9 +88,9 @@ enum DiscountType {
 
 message Discount {
 	string id = 1;
-	string personalid = 2;
-	bool isalreadyused = 3;
+	string profile_id = 2;
+	bool is_already_used = 3;
 	DiscountType type = 4;
 	double amount = 5;
-	double discountvalue = 6;	
+	double discount_value = 6;	
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ProfileService.DataAccess;
 
 #nullable disable
 
@@ -21,7 +22,7 @@ namespace ProfileService.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProfileService.BusinessLogic.Bonus", b =>
+            modelBuilder.Entity("ProfileService.BusinessLogic.Entities.Bonus", b =>
                 {
                     b.Property<Guid>("BonusId")
                         .HasColumnType("uuid");
@@ -35,7 +36,7 @@ namespace ProfileService.DataAccess.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("PersonalId")
+                    b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("isAlreadyUsed")
@@ -43,21 +44,25 @@ namespace ProfileService.DataAccess.Migrations
 
                     b.HasKey("BonusId");
 
-                    b.HasIndex("PersonalId");
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Bonus", (string)null);
                 });
 
-            modelBuilder.Entity("ProfileService.BusinessLogic.PersonalData", b =>
+            modelBuilder.Entity("ProfileService.BusinessLogic.Entities.ProfileData", b =>
                 {
-                    b.Property<Guid>("PersonalId")
+                    b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -65,27 +70,23 @@ namespace ProfileService.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.HasKey("ProfileId");
 
-                    b.HasKey("PersonalId");
-
-                    b.ToTable("PersonalData", (string)null);
+                    b.ToTable("ProfileData", (string)null);
                 });
 
-            modelBuilder.Entity("ProfileService.BusinessLogic.Bonus", b =>
+            modelBuilder.Entity("ProfileService.BusinessLogic.Entities.Bonus", b =>
                 {
-                    b.HasOne("ProfileService.BusinessLogic.PersonalData", "PersonalData")
+                    b.HasOne("ProfileService.BusinessLogic.Entities.ProfileData", "ProfileData")
                         .WithMany("Bonuses")
-                        .HasForeignKey("PersonalId")
+                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PersonalData");
+                    b.Navigation("ProfileData");
                 });
 
-            modelBuilder.Entity("ProfileService.BusinessLogic.PersonalData", b =>
+            modelBuilder.Entity("ProfileService.BusinessLogic.Entities.ProfileData", b =>
                 {
                     b.Navigation("Bonuses");
                 });

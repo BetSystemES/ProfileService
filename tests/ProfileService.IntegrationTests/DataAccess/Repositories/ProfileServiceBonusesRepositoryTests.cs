@@ -18,7 +18,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
         private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<PersonalData> _personalDataProvider;
+        private readonly IProvider<ProfileData> _personalDataProvider;
         private readonly IDataContext _context;
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
         {
@@ -27,7 +27,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<PersonalData>>();
+            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
         
@@ -36,13 +36,13 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = PersonalDataGenerator(personalId);
+            ProfileData profileData = ProfileDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
             Bonus expectedResult = BonusGenerator(bonusId, personalId);
 
             // Act
-            await _personalDataRepository.Add(personalData, _ctoken);
+            await _personalDataRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
@@ -59,14 +59,14 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = PersonalDataGenerator(personalId);
+            ProfileData profileData = ProfileDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-            Bonus initialBonus = BonusGenerator(bonusId, personalId ,personalData).ChangeisAlreadyUsed(false).ChangeAmount(50);
-            Bonus expectedResult = BonusGenerator(bonusId, personalId, personalData).ChangeisAlreadyUsed(true).ChangeAmount(0);
+            Bonus initialBonus = BonusGenerator(bonusId, personalId ,profileData).ChangeisAlreadyUsed(false).ChangeAmount(50);
+            Bonus expectedResult = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(true).ChangeAmount(0);
 
             // Act
-            await _personalDataRepository.Add(personalData, _ctoken);
+            await _personalDataRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 

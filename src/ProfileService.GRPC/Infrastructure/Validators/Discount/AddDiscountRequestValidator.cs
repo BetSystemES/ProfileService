@@ -16,12 +16,12 @@ namespace ProfileService.GRPC.Infrastructure.Validators.Discount
             RuleFor(e => e.Discount.Id)
                 .MustBeValidGuid();
 
-            RuleFor(e => e.Discount.Personalid)
+            RuleFor(e => e.Discount.ProfileId)
                 .MustBeValidGuid();
 
             RuleFor(e => e.Discount.Amount).Must(e => e >= 0);
 
-            RuleFor(e => e.Discount.Discountvalue).Must(e => e >= 0);
+            RuleFor(e => e.Discount.DiscountValue).Must(e => e >= 0);
 
             RuleFor(e => e.Discount.Type)
                 .MustBeValidDiscountType();

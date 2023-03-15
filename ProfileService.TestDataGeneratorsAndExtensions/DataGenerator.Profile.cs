@@ -5,16 +5,16 @@ namespace ProfileService.TestDataGeneratorsAndExtensions
 {
     public static partial class DataGenerator
     {
-        public static PersonalProfile PersonalProfileGenerator(string personalId)
+        public static UserProfile UserProfileGenerator(string profileId)
         {
-            PersonalProfile personalProfile = Builder<PersonalProfile>
+            UserProfile userProfile = Builder<UserProfile>
                 .CreateNew()
-                .With(x => x.Id = personalId)
-                .With(x => x.Name = "Not Empty")
+                .With(x => x.Id = profileId)
+                .With(x => x.FirstName = "Not Empty")
                 .With(x => x.Email = "test@email.com")
                 .Build();
 
-            return personalProfile;
+            return userProfile;
         }
     }
 }

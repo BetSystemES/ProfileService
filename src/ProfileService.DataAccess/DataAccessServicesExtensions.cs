@@ -29,7 +29,7 @@ namespace ProfileService.DataAccess
                     .Set<Bonus>());
             services.AddScoped(serviceProvider =>
                 serviceProvider.GetRequiredService<ProfileDbContext>()
-                    .Set<PersonalData>());
+                    .Set<ProfileData>());
 
             return services;
         }
@@ -56,7 +56,7 @@ namespace ProfileService.DataAccess
         {
             services.AddScoped<IFinder<Bonus>, BonusFinder>();
             services.AddScoped<IProvider<Bonus>, BonusFinder>();
-            services.AddScoped<IProvider<PersonalData>, PersonalDataProvider>();
+            services.AddScoped<IProvider<ProfileData>, ProfileDataProvider>();
 
             return services;
         }

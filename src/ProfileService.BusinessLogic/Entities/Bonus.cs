@@ -7,8 +7,8 @@ namespace ProfileService.BusinessLogic.Entities
     {
         [Key] public Guid BonusId { get; set; }
 
-        [Required] public Guid PersonalId { get; set; }
-        public PersonalData PersonalData { get; set; }
+        [Required] public Guid ProfileId { get; set; }
+        public ProfileData ProfileData { get; set; }
 
         public bool isAlreadyUsed { get; set; } = false;
         public DiscountType DiscountType { get; set; }

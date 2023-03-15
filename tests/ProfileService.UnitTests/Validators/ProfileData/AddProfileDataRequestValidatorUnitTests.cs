@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using ProfileService.GRPC;
-using ProfileService.GRPC.Infrastructure.Validators.PersonalData;
+using ProfileService.GRPC.Infrastructure.Validators.ProfileData;
 
-namespace ProfileService.UnitTests.Validators.PersonalData
+namespace ProfileService.UnitTests.Validators.ProfileData
 {
-    public class AddPersonalDataRequestValidatorUnitTests
+    public class AddProfileDataRequestValidatorUnitTests
     {
-        private readonly IValidator<AddPersonalDataRequest> _validator;
+        private readonly IValidator<AddProfileDataRequest> _validator;
 
-        public AddPersonalDataRequestValidatorUnitTests()
+        public AddProfileDataRequestValidatorUnitTests()
         {
-            _validator = new AddPersonalDataRequestValidator();
+            _validator = new AddProfileDataRequestValidator();
         }
 
         [Theory]
@@ -19,16 +19,16 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         public async Task AddPersonalDataRequestValidator_Should_Be_Valid(string id, string name, string email)
         {
             // Arrange
-            var model = new AddPersonalDataRequest()
+            var model = new AddProfileDataRequest()
             {
-                Personalprofile = new PersonalProfile()
+                UserProfile = new UserProfile()
                 {
-                        Id = id,   
-                        Name = name,
-                        Email = email
+                    Id = id,
+                    FirstName = name,
+                    Email = email
                 }
             };
-            
+
             // Act
             var result = await _validator.ValidateAsync(model);
 
@@ -45,12 +45,12 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         public async Task AddPersonalDataRequestValidator_Should_Be_Invalid(string id, string name, string email)
         {
             // Arrange
-            var model = new AddPersonalDataRequest()
+            var model = new AddProfileDataRequest()
             {
-                Personalprofile = new PersonalProfile()
+                UserProfile = new UserProfile()
                 {
                     Id = id,
-                    Name = name,
+                    FirstName = name,
                     Email = email
                 }
             };

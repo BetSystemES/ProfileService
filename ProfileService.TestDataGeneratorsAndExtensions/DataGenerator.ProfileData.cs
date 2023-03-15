@@ -5,14 +5,14 @@ namespace ProfileService.TestDataGeneratorsAndExtensions
 {
     public static partial class DataGenerator
     {
-        public static PersonalData PersonalDataGenerator(Guid personalId)
+        public static ProfileData ProfileDataGenerator(Guid profileId)
         {
-            PersonalData personalData = Builder<PersonalData>
+            ProfileData profileData = Builder<ProfileData>
                 .CreateNew()
-                .With(x => x.PersonalId = personalId)
+                .With(x => x.ProfileId = profileId)
                 .Build();
 
-            return personalData;
+            return profileData;
         }
     }
 }

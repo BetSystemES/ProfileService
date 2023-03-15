@@ -21,7 +21,7 @@ namespace ProfileService.UnitTests.Validators.Discount
             // Arrange
             var model = new GetDiscountsRequest()
             {
-                Profilebyidrequest = new ProfileByIdRequest()
+                ProfileByIdRequest = new ProfileByIdRequest()
                 {
                     Id = id
                 }
@@ -44,7 +44,7 @@ namespace ProfileService.UnitTests.Validators.Discount
             // Arrange
             var model = new GetDiscountsRequest()
             {
-                Profilebyidrequest = new ProfileByIdRequest()
+                ProfileByIdRequest = new ProfileByIdRequest()
                 {
                     Id = id
                 }

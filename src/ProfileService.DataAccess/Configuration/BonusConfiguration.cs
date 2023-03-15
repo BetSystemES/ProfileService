@@ -14,11 +14,11 @@ namespace ProfileService.DataAccess.Configuration
             builder.Property(x => x.BonusId).ValueGeneratedNever();
 
 
-            builder.Property(x => x.PersonalId).IsRequired();
+            builder.Property(x => x.ProfileId).IsRequired();
 
-            builder.HasOne(x => x.PersonalData)
+            builder.HasOne(x => x.ProfileData)
                 .WithMany(y => y.Bonuses)
-                .HasForeignKey(z => z.PersonalId);
+                .HasForeignKey(z => z.ProfileId);
 
             builder.Property(x => x.isAlreadyUsed);
             builder.Property(x => x.DiscountType);

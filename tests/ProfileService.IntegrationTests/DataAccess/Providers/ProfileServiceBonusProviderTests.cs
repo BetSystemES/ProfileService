@@ -32,7 +32,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData personalData = PersonalDataGenerator(personalId);
+            ProfileData profileData = ProfileDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
             Bonus bonus = BonusGenerator(bonusId, personalId);
@@ -40,7 +40,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
-            await _personalDataRepository.Add(personalData, _ctoken);
+            await _personalDataRepository.Add(profileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             await _bonusRepository.Add(bonus, _ctoken);

@@ -11,7 +11,7 @@ namespace WebApiGateway.Mapper
         /// </summary>
         public ProfileModelMap()
         {
-            CreateMap<ProfileModel, PersonalProfile>()
+            CreateMap<ProfileModel, UserProfile>()
                 .ReverseMap();
         }
     }

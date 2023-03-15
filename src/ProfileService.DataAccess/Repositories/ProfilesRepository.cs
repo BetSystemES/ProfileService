@@ -5,9 +5,9 @@ using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Repositories
 {
-    public class ProfilesRepository : SqlRepository<PersonalData>, IProfileRepository
+    public class ProfilesRepository : SqlRepository<ProfileData>, IProfileRepository
     {
-        public ProfilesRepository(DbSet<PersonalData> entities) : base(entities)
+        public ProfilesRepository(DbSet<ProfileData> entities) : base(entities)
         {
         }
     }

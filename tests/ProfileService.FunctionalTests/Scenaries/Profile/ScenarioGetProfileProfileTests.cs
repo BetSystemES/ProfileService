@@ -6,14 +6,14 @@ using Xunit.Abstractions;
 using static ProfileService.GRPC.ProfileService;
 using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
-namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
+namespace ProfileService.FunctionalTests.Scenaries.Profile
 {
-    public class ScenarioGetPersonalProfileTests : IClassFixture<TestServerFixture>
+    public class ScenarioGetProfileProfileTests : IClassFixture<TestServerFixture>
     {
         private readonly ITestOutputHelper _outputHelper;
         private readonly ProfileServiceClient _client;
 
-        public ScenarioGetPersonalProfileTests(TestServerFixture factory,
+        public ScenarioGetProfileProfileTests(TestServerFixture factory,
             ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
@@ -24,7 +24,7 @@ namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
         public async Task ScenarioGetPersonaProfileById()
         {
             string id = Guid.NewGuid().ToString();
-            var personalProfile = PersonalProfileGenerator(id);
+            var personalProfile = UserProfileGenerator(id);
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),
@@ -34,26 +34,26 @@ namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
                 .Step($"Add PersonalData",
                 async () =>
                 {
-                    var request = new AddPersonalDataRequest()
+                    var request = new AddProfileDataRequest()
                     {
-                        Personalprofile = personalProfile
+                        UserProfile = personalProfile
                     };
 
-                    return await _client.AddPersonalDataAsync(request);
+                    return await _client.AddProfileDataAsync(request);
                 });
 
             var getPersonalDataByIdResponse = await scenario
                 .Step($"Get PersonalDataById",
                 async () =>
                 {
-                    var request = new GetPersonalDataByIdRequest()
+                    var request = new GetProfileDataByIdRequest()
                     {
-                        Profilebyidrequest = new ProfileByIdRequest() { Id = id }
+                        ProfileByIdRequest = new ProfileByIdRequest() { Id = id }
                     };
-                    return await _client.GetPersonalDataByIdAsync(request);
+                    return await _client.GetProfileDataByIdAsync(request);
                 });
 
-            var result = getPersonalDataByIdResponse.Personalprofile;
+            var result = getPersonalDataByIdResponse.UserProfile;
 
             result
                 .Should()

@@ -2,7 +2,7 @@
 
 namespace ProfileService.BusinessLogic.Contracts.DataAccess.Repositories
 {
-    public interface IProfileRepository : IDataRepository<PersonalData>
+    public interface IProfileRepository : IDataRepository<ProfileData>
     {
 
     }

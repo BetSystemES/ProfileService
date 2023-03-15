@@ -28,10 +28,10 @@ namespace ProfileService.FunctionalTests.Scenaries.Discount
             string personalId = Guid.NewGuid().ToString();
             string discountId = Guid.NewGuid().ToString();
 
-            var personalProfile = PersonalProfileGenerator(personalId);
+            var personalProfile = UserProfileGenerator(personalId);
             var discount = DiscountGenerator(discountId, personalId, DiscountType.Amount, 50);
             var discount2 = DiscountGenerator(discountId, personalId, DiscountType.Amount, 50);
-            discount2.Isalreadyused = true;
+            discount2.IsAlreadyUsed = true;
 
             var scenario = TestScenarioFactory.Default(
                 new XUnitOutputAdapter(_outputHelper),
@@ -41,12 +41,12 @@ namespace ProfileService.FunctionalTests.Scenaries.Discount
                 .Step($"Add PersonalData",
                     async () =>
                     {
-                        var request = new AddPersonalDataRequest()
+                        var request = new AddProfileDataRequest()
                         {
-                            Personalprofile = personalProfile
+                            UserProfile = personalProfile
                         };
 
-                        return await _client.AddPersonalDataAsync(request);
+                        return await _client.AddProfileDataAsync(request);
                     });
 
             var addDiscountResponse = await scenario
@@ -79,7 +79,7 @@ namespace ProfileService.FunctionalTests.Scenaries.Discount
                 {
                     var request = new GetDiscountsRequest()
                     {
-                        Profilebyidrequest = new ProfileByIdRequest()
+                        ProfileByIdRequest = new ProfileByIdRequest()
                         {
                             Id = personalId,
                         }

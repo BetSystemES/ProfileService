@@ -13,7 +13,7 @@ namespace ProfileService.GRPC.Infrastructure.Validators.Discount
         /// </summary>
         public GetDiscountsRequestValidator()
         {
-            RuleFor(e => e.Profilebyidrequest.Id)
+            RuleFor(e => e.ProfileByIdRequest.Id)
                 .MustBeValidGuid();
         }
     }
