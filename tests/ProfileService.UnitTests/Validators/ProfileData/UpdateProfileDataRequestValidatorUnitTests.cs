@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using ProfileService.GRPC;
-using ProfileService.GRPC.Infrastructure.Validators.PersonalData;
+using ProfileService.GRPC.Infrastructure.Validators.ProfileData;
 
-namespace ProfileService.UnitTests.Validators.PersonalData
+namespace ProfileService.UnitTests.Validators.ProfileData
 {
-    public class UpdatePersonalDataRequestValidatorUnitTests
+    public class UpdateProfileDataRequestValidatorUnitTests
     {
-        private readonly IValidator<UpdatePersonalDataRequest> _validator;
+        private readonly IValidator<UpdateProfileDataRequest> _validator;
 
-        public UpdatePersonalDataRequestValidatorUnitTests()
+        public UpdateProfileDataRequestValidatorUnitTests()
         {
-            _validator = new UpdatePersonalDataRequestValidator();
+            _validator = new UpdateProfileDataRequestValidator();
         }
 
         [Theory]
@@ -19,16 +19,16 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         public async Task AddPersonalDataRequestValidator_Should_Be_Valid(string id, string name, string email)
         {
             // Arrange
-            var model = new UpdatePersonalDataRequest()
+            var model = new UpdateProfileDataRequest()
             {
-                Personalprofile = new PersonalProfile()
+                UserProfile = new UserProfile()
                 {
-                        Id = id,   
-                        Name = name,
-                        Email = email
+                    Id = id,
+                    FirstName = name,
+                    Email = email
                 }
             };
-            
+
             // Act
             var result = await _validator.ValidateAsync(model);
 
@@ -45,12 +45,12 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         public async Task AddPersonalDataRequestValidator_Should_Be_Invalid(string id, string name, string email)
         {
             // Arrange
-            var model = new UpdatePersonalDataRequest()
+            var model = new UpdateProfileDataRequest()
             {
-                Personalprofile = new PersonalProfile()
+                UserProfile = new UserProfile()
                 {
                     Id = id,
-                    Name = name,
+                    FirstName = name,
                     Email = email
                 }
             };

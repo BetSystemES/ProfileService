@@ -19,7 +19,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
         private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<PersonalData> _personalDataProvider;
+        private readonly IProvider<ProfileData> _personalDataProvider;
 
         private readonly IDataContext _context;
 
@@ -32,7 +32,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
 
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<PersonalData>>();
+            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -42,7 +42,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData expectedResult = PersonalDataGenerator(personalId);
+            ProfileData expectedResult = ProfileDataGenerator(personalId);
 
             // Act
             await _personalDataRepository.Add(expectedResult, _ctoken);
@@ -61,19 +61,19 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             // Arrange
             var personalId = Guid.NewGuid();
-            PersonalData initialPersonalData = PersonalDataGenerator(personalId);
+            ProfileData initialProfileData = ProfileDataGenerator(personalId);
 
-            PersonalData expectedResult = PersonalDataGenerator(personalId)
+            ProfileData expectedResult = ProfileDataGenerator(personalId)
                                             .ChangeSurname("P")
                                             .ChangePhoneNumber("111222333");
 
             // Act
-            await _personalDataRepository.Add(initialPersonalData, _ctoken);
+            await _personalDataRepository.Add(initialProfileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             var actualResult = await _personalDataProvider.Get(personalId, _ctoken);
 
-            actualResult.Surname = expectedResult.Surname;
+            actualResult.LastName = expectedResult.LastName;
             actualResult.PhoneNumber = expectedResult.PhoneNumber;
 
             await _personalDataRepository.Update(actualResult, _ctoken);

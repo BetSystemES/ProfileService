@@ -10,11 +10,11 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
 {
     public  static class DiscountObjectBuilderExtentions
     {
-        public static ISingleObjectBuilder<Discount> DiscountBuilderId(this ISingleObjectBuilder<Discount> discount, string id, string personalId)
+        public static ISingleObjectBuilder<Discount> DiscountBuilderId(this ISingleObjectBuilder<Discount> discount, string id, string profileId)
         {
             discount
                 .With(x => x.Id = id)
-                .With(x => x.Personalid = personalId);
+                .With(x => x.ProfileId = profileId);
 
             return discount;
         }
@@ -28,14 +28,14 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
             {
                 DiscountType.Discount =>
                     discount
-                        .With(x => x.Discountvalue = value)
+                        .With(x => x.DiscountValue = value)
                         .With(x => x.Amount = 0),
                 DiscountType.Amount =>
                     discount
                         .With(x => x.Amount = value)
-                        .With(x => x.Discountvalue = 0),
+                        .With(x => x.DiscountValue = 0),
                 DiscountType.Unspecified => discount
-                    .With(x => x.Discountvalue = 0)
+                    .With(x => x.DiscountValue = 0)
                     .With(x => x.Amount = 0),
             };
         }
@@ -45,7 +45,7 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
             discount
                 .With(x => x.Type = discountType)
                 .With(x => x.Amount = amountValue)
-                .With(x => x.Discountvalue = discountValue);
+                .With(x => x.DiscountValue = discountValue);
 
             return discount;
         }

@@ -35,7 +35,7 @@ namespace WebApiGateway.Controllers
 
             var request = new GetDiscountsRequest()
             {
-               Profilebyidrequest = new ProfileByIdRequest()
+               ProfileByIdRequest = new ProfileByIdRequest()
                {
                    Id = id
                },

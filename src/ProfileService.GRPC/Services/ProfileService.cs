@@ -19,49 +19,49 @@ namespace ProfileService.GRPC.Services
             _profileService = profileService;
         }
 
-        public override async Task<AddPersonalDataResponse> AddPersonalData(AddPersonalDataRequest request, ServerCallContext context)
+        public override async Task<AddProfileDataResponse> AddProfileData(AddProfileDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
             //map
-            PersonalData personalData = _mapper.Map<PersonalData>(request.Personalprofile);
+            ProfileData profileData = _mapper.Map<ProfileData>(request.UserProfile);
 
             //profile service
-            await _profileService.AddPersonalData(personalData, token);
+            await _profileService.AddProfileData(profileData, token);
 
-            return new AddPersonalDataResponse();
+            return new AddProfileDataResponse();
         }
         
-        public override async Task<GetPersonalDataByIdResponse> GetPersonalDataById(GetPersonalDataByIdRequest request, ServerCallContext context)
+        public override async Task<GetProfileDataByIdResponse> GetProfileDataById(GetProfileDataByIdRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
             
             //map
-            Guid guid = _mapper.Map<Guid>(request.Profilebyidrequest.Id);
+            Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
 
             //profile service
-            var item = await _profileService.GetPersonalDataById(guid, token);
+            var item = await _profileService.GetProfileDataById(guid, token);
 
             //map back
-            PersonalProfile personalProfile = _mapper.Map<PersonalProfile>(item);
+            UserProfile userProfile = _mapper.Map<UserProfile>(item);
 
-            return new GetPersonalDataByIdResponse
+            return new GetProfileDataByIdResponse
             {
-                Personalprofile = personalProfile
+                UserProfile = userProfile
             };
         }
 
-        public override async Task<UpdatePersonalDataResponse> UpdatePersonalData(UpdatePersonalDataRequest request, ServerCallContext context)
+        public override async Task<UpdateProfileDataResponse> UpdateProfileData(UpdateProfileDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
             //map
-            PersonalData personalData = _mapper.Map<PersonalData>(request.Personalprofile);
+            ProfileData profileData = _mapper.Map<ProfileData>(request.UserProfile);
 
             //profile service
-            await _profileService.UpdatePersonalData(personalData, token);
+            await _profileService.UpdateProfileData(profileData, token);
 
-            return new UpdatePersonalDataResponse();
+            return new UpdateProfileDataResponse();
         }
 
         public override async Task<AddDiscountResponse> AddDiscount(AddDiscountRequest request, ServerCallContext context)
@@ -81,7 +81,7 @@ namespace ProfileService.GRPC.Services
             var token = context.CancellationToken;
 
             //map
-            Guid guid = _mapper.Map<Guid>(request.Profilebyidrequest.Id);
+            Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
 
             //profile service
             var items = await _profileService.GetDiscounts(guid, token);

@@ -2,11 +2,11 @@
 
 namespace ProfileService.BusinessLogic.Entities
 {
-    public class PersonalData
+    public class ProfileData
     {
-        [Key] public Guid PersonalId { get; set; }
-        [Required] public string Name { get; set; }
-        public string Surname { get; set; }
+        [Key] public Guid ProfileId { get; set; }
+        [Required] public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         [Required] public string Email { get; set; }
 

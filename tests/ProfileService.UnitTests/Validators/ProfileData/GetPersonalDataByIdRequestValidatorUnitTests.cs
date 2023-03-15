@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using ProfileService.GRPC;
-using ProfileService.GRPC.Infrastructure.Validators.PersonalData;
+using ProfileService.GRPC.Infrastructure.Validators.ProfileData;
 
-namespace ProfileService.UnitTests.Validators.PersonalData
+namespace ProfileService.UnitTests.Validators.ProfileData
 {
     public class GetPersonalDataByIdRequestValidatorUnitTests
     {
-        private readonly IValidator<GetPersonalDataByIdRequest> _validator;
+        private readonly IValidator<GetProfileDataByIdRequest> _validator;
 
         public GetPersonalDataByIdRequestValidatorUnitTests()
         {
-            _validator = new GetPersonalDataByIdRequestValidator();
+            _validator = new GetProfileDataByIdRequestValidator();
         }
 
         [Theory]
@@ -19,9 +19,9 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         public async Task GetPersonalDataByIdRequestValidator_Should_Be_Valid(string id)
         {
             // Arrange
-            var model = new GetPersonalDataByIdRequest()
+            var model = new GetProfileDataByIdRequest()
             {
-                Profilebyidrequest = new ProfileByIdRequest()
+                ProfileByIdRequest = new ProfileByIdRequest()
                 {
                     Id = id
                 }
@@ -39,12 +39,12 @@ namespace ProfileService.UnitTests.Validators.PersonalData
         [Theory]
         [InlineData("c0631390")]
         [InlineData("")]
-        public async Task GetPersonalDataByIdRequestValidator_Should_Be_Invalid(string id)
+        public async Task GetProfileDataByIdRequestValidator_Should_Be_Invalid(string id)
         {
             // Arrange
-            var model = new GetPersonalDataByIdRequest()
+            var model = new GetProfileDataByIdRequest()
             {
-                Profilebyidrequest = new ProfileByIdRequest()
+                ProfileByIdRequest = new ProfileByIdRequest()
                 {
                     Id = id
                 }

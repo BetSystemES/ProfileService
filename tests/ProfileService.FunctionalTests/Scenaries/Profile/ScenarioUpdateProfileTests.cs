@@ -6,14 +6,14 @@ using Xunit.Abstractions;
 using static ProfileService.GRPC.ProfileService;
 using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
-namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
+namespace ProfileService.FunctionalTests.Scenaries.Profile
 {
-    public class ScenarioUpdatePersonalProfileTests : IClassFixture<TestServerFixture>
+    public class ScenarioUpdateProfileTests : IClassFixture<TestServerFixture>
     {
         private readonly ITestOutputHelper _outputHelper;
         private readonly ProfileServiceClient _client;
 
-        public ScenarioUpdatePersonalProfileTests(TestServerFixture factory,
+        public ScenarioUpdateProfileTests(TestServerFixture factory,
             ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
@@ -25,8 +25,8 @@ namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
         {
             string id = Guid.NewGuid().ToString();
 
-            var personalProfile = PersonalProfileGenerator(id);
-            var personalProfile2 = PersonalProfileGenerator(id);
+            var personalProfile = UserProfileGenerator(id);
+            var personalProfile2 = UserProfileGenerator(id);
             personalProfile2.Phone = "5135135531";
 
             var scenario = TestScenarioFactory.Default(
@@ -37,38 +37,38 @@ namespace ProfileService.FunctionalTests.Scenaries.PersonalProfile
                 .Step($"Add PersonalData",
                     async () =>
                     {
-                        var request = new AddPersonalDataRequest()
+                        var request = new AddProfileDataRequest()
                         {
-                            Personalprofile = personalProfile
+                            UserProfile = personalProfile
                         };
 
-                        return await _client.AddPersonalDataAsync(request);
+                        return await _client.AddProfileDataAsync(request);
                     });
 
             var updatePersonalDataResponse = await scenario
                 .Step($"Update PersonalProfile",
                 async () =>
                 {
-                    var request = new UpdatePersonalDataRequest()
+                    var request = new UpdateProfileDataRequest()
                     {
-                        Personalprofile = personalProfile2
+                        UserProfile = personalProfile2
                     };
 
-                    return await _client.UpdatePersonalDataAsync(request);
+                    return await _client.UpdateProfileDataAsync(request);
                 });
 
             var getPersonalDataByIdResponse = await scenario
                 .Step($"Get PersonalProfileById",
                 async () =>
                 {
-                    var request = new GetPersonalDataByIdRequest()
+                    var request = new GetProfileDataByIdRequest()
                     {
-                        Profilebyidrequest = new ProfileByIdRequest() { Id = id }
+                        ProfileByIdRequest = new ProfileByIdRequest() { Id = id }
                     };
-                    return await _client.GetPersonalDataByIdAsync(request);
+                    return await _client.GetProfileDataByIdAsync(request);
                 });
 
-            var result = getPersonalDataByIdResponse.Personalprofile;
+            var result = getPersonalDataByIdResponse.UserProfile;
 
             result
                 .Should()

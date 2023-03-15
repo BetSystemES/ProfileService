@@ -21,7 +21,7 @@ namespace ProfileService.BusinessLogicTests.Services
         private readonly Mock<IFinder<Bonus>> _mockBonusFinder;
 
         private readonly Mock<IProvider<Bonus>> _mockBonusProvider;
-        private readonly Mock<IProvider<PersonalData>> _mockPersonalDataProvider;
+        private readonly Mock<IProvider<ProfileData>> _mockPersonalDataProvider;
 
         private readonly Mock<IDataContext> _mockContext;
 
@@ -50,11 +50,11 @@ namespace ProfileService.BusinessLogicTests.Services
         public async Task AddPersonalDataTest_Should_Call_Add_and_SaveChanges()
         {
             //Arrange
-            var personalData = Builder<PersonalData>.CreateNew().Build();
+            var personalData = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
             _mockPersonalDataRepository
-                .Setup(_ => _.Add(It.IsAny<PersonalData>(), It.IsAny<CancellationToken>()))
+                .Setup(_ => _.Add(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             _mockContext
@@ -63,12 +63,12 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Act
             //Call Service method
-             await _profileService.AddPersonalData(personalData, _ctoken);
+             await _profileService.AddProfileData(personalData, _ctoken);
 
             //Assert
             //Verify method use
             _mockPersonalDataRepository
-                .Verify(_ => _.Add(It.IsAny<PersonalData>(), It.IsAny<CancellationToken>()), Times.Once());
+                .Verify(_ => _.Add(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()), Times.Once());
             _mockContext
                 .Verify(_ => _.SaveChanges(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -77,7 +77,7 @@ namespace ProfileService.BusinessLogicTests.Services
         public async Task GetPersonalDataById_Should_Call_Get_and_Return_Result()
         {
             //Arrange
-            var expectedResult = Builder<PersonalData>.CreateNew().Build();
+            var expectedResult = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
             _mockPersonalDataProvider
@@ -86,7 +86,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Act
             //Call Service method
-            var actualResult = await _profileService.GetPersonalDataById(new Guid(), _ctoken);
+            var actualResult = await _profileService.GetProfileDataById(new Guid(), _ctoken);
 
             //Assert
             //Verify method use
@@ -100,11 +100,11 @@ namespace ProfileService.BusinessLogicTests.Services
         public async Task UpdatePersonalData_Should_Call_Update_and_SaveChanges()
         {
             //Arrange
-           var personalData = Builder<PersonalData>.CreateNew().Build();
+           var personalData = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
             _mockPersonalDataRepository
-                .Setup(_ => _.Update(It.IsAny<PersonalData>(), It.IsAny<CancellationToken>()))
+                .Setup(_ => _.Update(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             _mockContext
@@ -113,12 +113,12 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Act
             //Call Service method
-            await _profileService.UpdatePersonalData(personalData, _ctoken);
+            await _profileService.UpdateProfileData(personalData, _ctoken);
 
             //Assert
             //Verify method use
             _mockPersonalDataRepository
-                .Verify(_ => _.Update(It.IsAny<PersonalData>(), It.IsAny<CancellationToken>()), Times.Once());
+                .Verify(_ => _.Update(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()), Times.Once());
             _mockContext
                 .Verify(_ => _.SaveChanges(It.IsAny<CancellationToken>()), Times.Once());
         }

@@ -30,11 +30,11 @@ namespace ProfileService.TestDataGeneratorsAndExtensions
             return discount;
         }
 
-        public static Discount DiscountGenerator(string id, string personalId, DiscountType discountType, double value)
+        public static Discount DiscountGenerator(string id, string profileId, DiscountType discountType, double value)
         {
             var discount = Builder<Discount>
                 .CreateNew()
-                .DiscountBuilderId(id, personalId)
+                .DiscountBuilderId(id, profileId)
                 .DiscountBuilderValue(discountType, value)
                 .Build();
             

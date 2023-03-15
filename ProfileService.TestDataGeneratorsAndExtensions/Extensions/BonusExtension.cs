@@ -16,9 +16,9 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
             return bonus;
         }
 
-        public static Bonus SetPersonalData(this Bonus bonus, PersonalData personalData)
+        public static Bonus SetProfileData(this Bonus bonus, ProfileData profileData)
         {
-            bonus.PersonalData = personalData;
+            bonus.ProfileData = profileData;
             return bonus;
         }
     }
