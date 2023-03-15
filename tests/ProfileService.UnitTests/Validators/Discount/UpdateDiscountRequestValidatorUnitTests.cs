@@ -26,7 +26,7 @@ namespace ProfileService.UnitTests.Validators.Discount
             {
                 Discount = discount
             };
-            
+
             // Act
             var result = await _validator.ValidateAsync(model);
 
@@ -35,6 +35,7 @@ namespace ProfileService.UnitTests.Validators.Discount
                 .Should()
                 .Be(true);
         }
+
         [Theory]
         [MemberData(
             nameof(UpdateDiscountRequestData.UpdateDiscountRequestDataInvalid),

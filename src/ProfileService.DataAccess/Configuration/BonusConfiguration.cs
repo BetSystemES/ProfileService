@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Configuration
@@ -12,7 +12,6 @@ namespace ProfileService.DataAccess.Configuration
         {
             builder.HasKey(x => x.BonusId);
             builder.Property(x => x.BonusId).ValueGeneratedNever();
-
 
             builder.Property(x => x.ProfileId).IsRequired();
 

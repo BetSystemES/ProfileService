@@ -20,6 +20,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private readonly IProvider<Bonus> _bonusProvider;
         private readonly IProvider<ProfileData> _profieDataProvider;
         private readonly IDataContext _context;
+
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
@@ -30,7 +31,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             _profieDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
-        
+
         [Fact]
         public async Task AddBonus_Should_Return_Result()
         {
@@ -62,7 +63,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             ProfileData profileData = ProfileDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-            Bonus initialBonus = BonusGenerator(bonusId, personalId ,profileData).ChangeisAlreadyUsed(false).ChangeAmount(50);
+            Bonus initialBonus = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(false).ChangeAmount(50);
             Bonus expectedResult = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(true).ChangeAmount(0);
 
             // Act

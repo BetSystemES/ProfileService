@@ -28,7 +28,6 @@ namespace ProfileService.UnitTests.Validators.Discount.TestData
                 30
                 )
             };
-
         }
 
         public static IEnumerable<object[]> UpdateDiscountRequestDataInvalid()
@@ -83,7 +82,6 @@ namespace ProfileService.UnitTests.Validators.Discount.TestData
                     -30
                 )
             };
-
         }
     }
 }

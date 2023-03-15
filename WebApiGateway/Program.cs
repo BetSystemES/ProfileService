@@ -34,7 +34,6 @@ namespace WebApiGateway
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();

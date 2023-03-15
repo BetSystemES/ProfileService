@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace ProfileService.GRPC.Interceptors.Helpers
+﻿namespace ProfileService.GRPC.Interceptors.Helpers
 {
     public class StatusMessage
     {

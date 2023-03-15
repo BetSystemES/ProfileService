@@ -14,7 +14,6 @@ namespace ProfileService.UnitTests.Validators.Discount.TestData
 
             yield return new object[]
             {
-                
                 DiscountGenerator(DiscountType.Discount, 30)
             };
         }
@@ -71,7 +70,6 @@ namespace ProfileService.UnitTests.Validators.Discount.TestData
                 -30
                 )
             };
-
         }
     }
 }

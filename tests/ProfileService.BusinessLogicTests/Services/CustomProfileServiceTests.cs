@@ -31,10 +31,10 @@ namespace ProfileService.BusinessLogicTests.Services
             _mockIProfileRepository = new();
             _mockBonusRepository = new();
             _mockBonusFinder = new();
-            _mockBonusProvider = new ();
-            _mockProfileDataProvider = new ();
+            _mockBonusProvider = new();
+            _mockProfileDataProvider = new();
 
-            _mockContext = new ();
+            _mockContext = new();
 
             //Create Service
             _profileService = new CustomProfileService(
@@ -58,12 +58,12 @@ namespace ProfileService.BusinessLogicTests.Services
                 .Returns(Task.CompletedTask);
 
             _mockContext
-                .Setup(_=>_.SaveChanges(It.IsAny<CancellationToken>()))
+                .Setup(_ => _.SaveChanges(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             //Act
             //Call Service method
-             await _profileService.AddProfileData(personalData, _ctoken);
+            await _profileService.AddProfileData(personalData, _ctoken);
 
             //Assert
             //Verify method use
@@ -100,7 +100,7 @@ namespace ProfileService.BusinessLogicTests.Services
         public async Task UpdateProfileData_Should_Call_Update_and_SaveChanges()
         {
             //Arrange
-           var personalData = Builder<ProfileData>.CreateNew().Build();
+            var personalData = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
             _mockIProfileRepository
@@ -170,7 +170,7 @@ namespace ProfileService.BusinessLogicTests.Services
             //Verify method use
             _mockBonusFinder
                 .Verify(_ => _.FindByProfileId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
-            
+
             Assert.Equal(expectedResult, actualResult);
         }
 

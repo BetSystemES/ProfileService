@@ -1,4 +1,3 @@
-using Grpc.AspNetCore.Server;
 using Microsoft.EntityFrameworkCore;
 using ProfileService.DataAccess;
 using ProfileService.GRPC.Infrastructure.Configuration;
@@ -34,8 +33,8 @@ app.MapGet("/", () => "Communication with gRPC endpoints must be made through a 
 
 app.Run();
 
-
 namespace ProfileService.Grpc
 {
-    public partial class Program { }
+    public partial class Program
+    { }
 }

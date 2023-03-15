@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using FizzWare.NBuilder;
-using ProfileService.BusinessLogic.Entities;
+﻿using FizzWare.NBuilder;
 using ProfileService.GRPC;
 using ProfileService.TestDataGeneratorsAndExtensions.Extensions;
 
@@ -37,7 +35,7 @@ namespace ProfileService.TestDataGeneratorsAndExtensions
                 .DiscountBuilderId(id, profileId)
                 .DiscountBuilderValue(discountType, value)
                 .Build();
-            
+
             return discount;
         }
     }

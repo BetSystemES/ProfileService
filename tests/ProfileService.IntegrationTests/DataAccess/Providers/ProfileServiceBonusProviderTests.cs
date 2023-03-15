@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using FluentAssertions;
-using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
+﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
+using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Entities;
 using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
 
@@ -26,7 +26,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
-        
+
         [Fact]
         public async Task FindByProfileId_Should_Return_Result()
         {

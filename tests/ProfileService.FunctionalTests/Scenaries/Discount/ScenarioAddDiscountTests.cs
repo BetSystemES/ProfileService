@@ -4,8 +4,8 @@ using ProfileService.FunctionalTests.Adapters;
 using ProfileService.GRPC;
 using Xunit.Abstractions;
 using static ProfileService.GRPC.ProfileService;
-using DiscountType = ProfileService.GRPC.DiscountType;
 using static ProfileService.TestDataGeneratorsAndExtensions.DataGenerator;
+using DiscountType = ProfileService.GRPC.DiscountType;
 
 namespace ProfileService.FunctionalTests.Scenaries.Discount
 {
@@ -24,7 +24,7 @@ namespace ProfileService.FunctionalTests.Scenaries.Discount
         [Fact()]
         public async Task ScenarioAddDiscount()
         {
-            string personalId= Guid.NewGuid().ToString();
+            string personalId = Guid.NewGuid().ToString();
             string discountId = Guid.NewGuid().ToString();
 
             var personalProfile = UserProfileGenerator(personalId);

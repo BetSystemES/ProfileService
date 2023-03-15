@@ -1,8 +1,6 @@
-﻿
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProfileService.Grpc;
-
 
 namespace ProfileService.FunctionalTests
 {

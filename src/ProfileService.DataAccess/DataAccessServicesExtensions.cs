@@ -7,7 +7,6 @@ using ProfileService.BusinessLogic.Entities;
 using ProfileService.DataAccess.Providers;
 using ProfileService.DataAccess.Repositories;
 
-
 namespace ProfileService.DataAccess
 {
     public static class DataAccessServicesExtensions
@@ -60,7 +59,5 @@ namespace ProfileService.DataAccess
 
             return services;
         }
-
-
     }
 }

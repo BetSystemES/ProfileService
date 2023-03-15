@@ -17,7 +17,6 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                     opt.MapFrom(src => src.Phone))
                 .ForMember(x => x.Bonuses, opt => opt.Ignore());
 
-
             CreateMap<ProfileData, UserProfile>()
                 .ForMember(dest => dest.Id,
                     opt =>
@@ -26,9 +25,7 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                     opt =>
                         opt.MapFrom(src => src.PhoneNumber));
 
-
             CreateMap<IEnumerable<Discount>, IEnumerable<Bonus>>();
-
 
             CreateMap<Discount, Bonus>()
                 .ForMember(dest => dest.BonusId,
@@ -41,7 +38,6 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                     opt =>
                         opt.MapFrom(src => src.Type))
                 .ForMember(x => x.ProfileData, opt => opt.Ignore());
-
 
             CreateMap<Bonus, Discount>()
                 .ForMember(dest => dest.Id,
@@ -58,7 +54,6 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ConvertUsing(s => s.ToString());
             CreateMap<string, Guid>()
                 .ConvertUsing(s => Guid.Parse(s));
-
 
             CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
         }

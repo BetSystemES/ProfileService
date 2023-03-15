@@ -24,34 +24,32 @@ namespace WebApiGateway.Controllers
             _mapper = mapper;
         }
 
-
         // GET api/bonus/"guid"
         [HttpGet("{id}")]
         [SwaggerResponse(200, "Successfully get bonus(es)", typeof(List<DiscountModel>))]
-        public async Task<ActionResult<List<DiscountModel>>> Get([FromRoute]string id)
+        public async Task<ActionResult<List<DiscountModel>>> Get([FromRoute] string id)
         {
             var profileClient = _grpcClientFactory.CreateClient<ProfileServiceClient>("ProfileGrpcClient");
             var token = HttpContext.RequestAborted;
 
             var request = new GetDiscountsRequest()
             {
-               ProfileByIdRequest = new ProfileByIdRequest()
-               {
-                   Id = id
-               },
+                ProfileByIdRequest = new ProfileByIdRequest()
+                {
+                    Id = id
+                },
             };
 
-            var result = await profileClient.GetDiscountsAsync(request , cancellationToken: token);
+            var result = await profileClient.GetDiscountsAsync(request, cancellationToken: token);
 
             List<DiscountModel> response = _mapper.Map<IEnumerable<Discount>, List<DiscountModel>>(result.Discounts);
 
             return Ok(response);
         }
 
-
         // POST api/bonus
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]DiscountModel discountModel)
+        public async Task<ActionResult> Post([FromBody] DiscountModel discountModel)
         {
             if (discountModel == null)
             {
@@ -96,8 +94,5 @@ namespace WebApiGateway.Controllers
 
             return Ok();
         }
-
-
     }
-
 }

@@ -36,7 +36,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
-        
+
         [Fact]
         public async Task AddProfile_Should_Return_Result()
         {

@@ -183,4 +183,3 @@ namespace ProfileService.GRPC.Interceptors
         }
     }
 }
-

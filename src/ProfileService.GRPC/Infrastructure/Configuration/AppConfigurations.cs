@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using ProfileService.BusinessLogic.Contracts.Services;
+﻿using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Services;
 using ProfileService.GRPC.Infrastructure.Mappings;
 

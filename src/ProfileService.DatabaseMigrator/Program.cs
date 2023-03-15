@@ -1,8 +1,8 @@
 ﻿using System.CommandLine;
-using ProfileService.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProfileService.DataAccess;
 using ProfileService.DatabaseMigrator.Extensions;
 
 var rootCommand = new RootCommand("Migrate database by connection string via EntityFramework");
