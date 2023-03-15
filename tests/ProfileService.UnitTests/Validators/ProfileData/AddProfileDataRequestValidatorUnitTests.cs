@@ -16,7 +16,7 @@ namespace ProfileService.UnitTests.Validators.ProfileData
 
         [Theory]
         [InlineData("c0631390-2ac4-4946-b172-501e173f47d6", "Oleg", "Test@mail.ru")]
-        public async Task AddPersonalDataRequestValidator_Should_Be_Valid(string id, string name, string email)
+        public async Task AddProfileDataRequestValidator_Should_Be_Valid(string id, string name, string email)
         {
             // Arrange
             var model = new AddProfileDataRequest()
@@ -42,7 +42,7 @@ namespace ProfileService.UnitTests.Validators.ProfileData
         [InlineData("c0631390", "Oleg", "Test@mail.ru")]
         [InlineData("c0631390-2ac4-4946-b172-501e173f47d6", "", "Test@mail.ru")]
         [InlineData("c0631390-2ac4-4946-b172-501e173f47d6", "Oleg", "")]
-        public async Task AddPersonalDataRequestValidator_Should_Be_Invalid(string id, string name, string email)
+        public async Task AddProfileDataRequestValidator_Should_Be_Invalid(string id, string name, string email)
         {
             // Arrange
             var model = new AddProfileDataRequest()

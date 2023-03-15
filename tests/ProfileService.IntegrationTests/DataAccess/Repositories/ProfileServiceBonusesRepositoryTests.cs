@@ -14,23 +14,24 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-        private readonly IProfileRepository _personalDataRepository;
+        private readonly IProfileRepository _profilelDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IFinder<Bonus> _bonusFinder;
         private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<ProfileData> _personalDataProvider;
+        private readonly IProvider<ProfileData> _profieDataProvider;
         private readonly IDataContext _context;
+
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-            _personalDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _profilelDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _personalDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
+            _profieDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
-        
+
         [Fact]
         public async Task AddBonus_Should_Return_Result()
         {
@@ -42,7 +43,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             Bonus expectedResult = BonusGenerator(bonusId, personalId);
 
             // Act
-            await _personalDataRepository.Add(profileData, _ctoken);
+            await _profilelDataRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
@@ -62,11 +63,11 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             ProfileData profileData = ProfileDataGenerator(personalId);
 
             var bonusId = Guid.NewGuid();
-            Bonus initialBonus = BonusGenerator(bonusId, personalId ,profileData).ChangeisAlreadyUsed(false).ChangeAmount(50);
+            Bonus initialBonus = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(false).ChangeAmount(50);
             Bonus expectedResult = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(true).ChangeAmount(0);
 
             // Act
-            await _personalDataRepository.Add(profileData, _ctoken);
+            await _profilelDataRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 

@@ -1,14 +1,9 @@
 ﻿using FizzWare.NBuilder;
 using ProfileService.GRPC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
 {
-    public  static class DiscountObjectBuilderExtentions
+    public static class DiscountObjectBuilderExtentions
     {
         public static ISingleObjectBuilder<Discount> DiscountBuilderId(this ISingleObjectBuilder<Discount> discount, string id, string profileId)
         {

@@ -31,11 +31,11 @@ namespace ProfileService.GRPC.Services
 
             return new AddProfileDataResponse();
         }
-        
+
         public override async Task<GetProfileDataByIdResponse> GetProfileDataById(GetProfileDataByIdRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
-            
+
             //map
             Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
 
@@ -87,7 +87,7 @@ namespace ProfileService.GRPC.Services
             var items = await _profileService.GetDiscounts(guid, token);
 
             //map back
-            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>,IEnumerable<Discount>>(items);
+            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
 
             GetDiscountsResponse response = new GetDiscountsResponse();
 

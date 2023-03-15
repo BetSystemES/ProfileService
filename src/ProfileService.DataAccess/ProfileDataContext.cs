@@ -21,5 +21,4 @@ namespace ProfileService.DataAccess
             return _profileDbContext.SaveChangesAsync(token);
         }
     }
-
 }

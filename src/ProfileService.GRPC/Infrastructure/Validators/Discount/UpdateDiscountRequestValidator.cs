@@ -23,7 +23,6 @@ namespace ProfileService.GRPC.Infrastructure.Validators.Discount
 
             RuleFor(e => e.Discount.DiscountValue).Must(e => e >= 0);
 
-
             RuleFor(e => e.Discount.Type)
                 .MustBeValidDiscountType();
         }

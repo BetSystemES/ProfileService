@@ -7,7 +7,7 @@ using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Services
 {
-    public  class CustomProfileService : IProfileService
+    public class CustomProfileService : IProfileService
     {
         private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
@@ -16,10 +16,9 @@ namespace ProfileService.BusinessLogic.Services
         private readonly IProvider<Bonus> _bonusProvider;
         private readonly IProvider<ProfileData> _profileDataProvider;
 
-
         private readonly IDataContext _context;
 
-        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository, IFinder<Bonus> bonusFinder,  IProvider<Bonus> bonusProvider, IProvider<ProfileData> profileDataProvider, IDataContext context)
+        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository, IFinder<Bonus> bonusFinder, IProvider<Bonus> bonusProvider, IProvider<ProfileData> profileDataProvider, IDataContext context)
         {
             _profileDataRepository = profileDataRepository;
             _bonusRepository = bonusRepository;

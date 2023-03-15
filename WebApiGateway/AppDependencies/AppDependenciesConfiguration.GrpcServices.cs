@@ -32,6 +32,5 @@ namespace WebApiGateway.AppDependencies
                 })
                 .Services;
         }
-
     }
 }

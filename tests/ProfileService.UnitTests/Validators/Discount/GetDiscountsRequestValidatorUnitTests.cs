@@ -16,7 +16,7 @@ namespace ProfileService.UnitTests.Validators.Discount
 
         [Theory]
         [InlineData("c0631390-2ac4-4946-b172-501e173f47d6")]
-        public async Task GetPersonalDataByIdRequestValidator_Should_Be_Valid(string id)
+        public async Task GetProfileDataByIdRequestValidator_Should_Be_Valid(string id)
         {
             // Arrange
             var model = new GetDiscountsRequest()
@@ -39,7 +39,7 @@ namespace ProfileService.UnitTests.Validators.Discount
         [Theory]
         [InlineData("c0631390")]
         [InlineData("")]
-        public async Task GetPersonalDataByIdRequestValidator_Should_Be_Invalid(string id)
+        public async Task GetProfileDataByIdRequestValidator_Should_Be_Invalid(string id)
         {
             // Arrange
             var model = new GetDiscountsRequest()

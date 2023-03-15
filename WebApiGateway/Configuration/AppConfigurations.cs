@@ -14,6 +14,5 @@ namespace WebApiGateway.Configuration
 
             return services;
         }
-
     }
 }

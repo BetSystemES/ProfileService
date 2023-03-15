@@ -24,7 +24,6 @@ namespace ProfileService.DataAccess.Providers
             return result;
         }
 
-
         public async Task<List<Bonus>> FindByProfileId(Guid id, CancellationToken cancellationToken)
         {
             var result = await _entities.Where(x => x.ProfileId == id).ToListAsync(cancellationToken: cancellationToken);
