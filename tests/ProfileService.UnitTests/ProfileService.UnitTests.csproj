@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ProfileService.TestDataGeneratorsAndExtensions\ProfileService.TestDataGeneratorsAndExtensions.csproj" />
     <ProjectReference Include="..\..\src\ProfileService.GRPC\ProfileService.GRPC.csproj" />
+    <ProjectReference Include="..\..\src\ProfileService.TestDataGeneratorsAndExtensions\ProfileService.TestDataGeneratorsAndExtensions.csproj" />
   </ItemGroup>
 
 </Project>
