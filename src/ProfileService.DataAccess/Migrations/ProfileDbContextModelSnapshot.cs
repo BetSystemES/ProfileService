@@ -36,11 +36,14 @@ namespace ProfileService.DataAccess.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsAlreadyUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("isAlreadyUsed")
-                        .HasColumnType("boolean");
 
                     b.HasKey("BonusId");
 
@@ -59,15 +62,12 @@ namespace ProfileService.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ProfileId");

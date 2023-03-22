@@ -3,6 +3,9 @@ using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models;
+using System;
+using System.Runtime.CompilerServices;
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Services
@@ -11,19 +14,21 @@ namespace ProfileService.BusinessLogic.Services
     {
         private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFinder<Bonus> _bonusFinder;
-
+        private readonly IFilter<Bonus> _bonusFilter;
         private readonly IProvider<Bonus> _bonusProvider;
         private readonly IProvider<ProfileData> _profileDataProvider;
 
         private readonly IDataContext _context;
 
-        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository, IFinder<Bonus> bonusFinder, IProvider<Bonus> bonusProvider, IProvider<ProfileData> profileDataProvider, IDataContext context)
+        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository, 
+            IProvider<Bonus> bonusProvider, IFilter<Bonus> bonusFilter,
+            IProvider<ProfileData> profileDataProvider, 
+            IDataContext context)
         {
             _profileDataRepository = profileDataRepository;
             _bonusRepository = bonusRepository;
-            _bonusFinder = bonusFinder;
             _bonusProvider = bonusProvider;
+            _bonusFilter = bonusFilter;
             _profileDataProvider = profileDataProvider;
             _context = context;
         }
@@ -54,8 +59,24 @@ namespace ProfileService.BusinessLogic.Services
 
         public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
         {
-            var result = await _bonusFinder.FindByProfileId(guid, token);
-            return result.ToList();
+            var result = await _bonusFilter.FindBy(x=>x.ProfileId==guid, token);
+            return result;
+        }
+
+        public async Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool IsReadyToUse, CancellationToken token)
+        {
+            var result = await _bonusFilter.FindBy(
+                x => x.ProfileId==guid 
+                     && x.IsEnabled == IsReadyToUse,
+                token);
+            return result;
+        }
+
+        public async Task<IEnumerable<Bonus>> GetDiscountsWithFilter(Guid guid, PageFilter pageFilter, CancellationToken token)
+        {
+            var result = await _bonusFilter
+                .FindByPageFilter(x => x.ProfileId == guid, pageFilter, token);
+            return result;
         }
 
         public async Task UpdateDiscount(Bonus bonus, CancellationToken token)

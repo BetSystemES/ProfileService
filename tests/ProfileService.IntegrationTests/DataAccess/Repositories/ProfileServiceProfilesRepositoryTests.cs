@@ -17,7 +17,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IProfileRepository _pofileDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFinder<Bonus> _bonusFinder;
+        private readonly IFilter<Bonus> _bonusFilter;
         private readonly IProvider<Bonus> _bonusProvider;
         private readonly IProvider<ProfileData> _profileDataProvider;
 
@@ -29,7 +29,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             _pofileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
-            _bonusFinder = _scope.ServiceProvider.GetRequiredService<IFinder<Bonus>>();
+            _bonusFilter = _scope.ServiceProvider.GetRequiredService<IFilter<Bonus>>();
 
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
             _profileDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();

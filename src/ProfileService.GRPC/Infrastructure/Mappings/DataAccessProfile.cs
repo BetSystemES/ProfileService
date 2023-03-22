@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models;
 
 namespace ProfileService.GRPC.Infrastructure.Mappings
 {
@@ -56,6 +57,8 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ConvertUsing(s => Guid.Parse(s));
 
             CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
+
+            CreateMap<PageFilter, DiscountFilter>().ReverseMap();
         }
     }
 }

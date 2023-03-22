@@ -22,6 +22,12 @@ service ProfileService {
   rpc GetDiscounts (GetDiscountsRequest) 
 	returns (GetDiscountsResponse);
 
+  rpc GetDiscountsDepOnRole (GetDiscountsRequest) 
+  returns (GetDiscountsResponse);
+
+  rpc GetDiscountsDepOnFilter (GetDiscountsWithFilterRequest) 
+  returns (GetDiscountsResponse);
+
   rpc UpdateDiscount (UpdateDiscountRequest) 
 	returns (UpdateDiscountResponse);
 }	
@@ -56,6 +62,12 @@ message AddDiscountResponse{
 message GetDiscountsRequest{
 	ProfileByIdRequest profile_by_id_request = 1;
 }
+
+message GetDiscountsWithFilterRequest{
+	ProfileByIdRequest profile_by_id_request = 1;
+	DiscountFilter discount_filter = 2;
+}
+
 message GetDiscountsResponse{
 	repeated Discount discounts = 1;
 }
@@ -86,11 +98,17 @@ enum DiscountType {
 	DISCOUNT_TYPE_DISCOUNT = 2;
 }
 
+message DiscountFilter {
+	int32 page_number = 1;
+	int32 page_size = 2;
+}
+
 message Discount {
 	string id = 1;
 	string profile_id = 2;
 	bool is_already_used = 3;
-	DiscountType type = 4;
-	double amount = 5;
-	double discount_value = 6;	
+	bool is_enabled = 4;
+	DiscountType type = 5;
+	double amount = 6;
+	double discount_value = 7;	
 }

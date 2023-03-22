@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -13,9 +14,9 @@ namespace ProfileService.DataAccess.Migrations
                 columns: table => new
                 {
                     ProfileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +30,8 @@ namespace ProfileService.DataAccess.Migrations
                 {
                     BonusId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProfileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    isAlreadyUsed = table.Column<bool>(type: "boolean", nullable: false),
+                    IsAlreadyUsed = table.Column<bool>(type: "boolean", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "boolean", nullable: false),
                     DiscountType = table.Column<int>(type: "integer", nullable: false),
                     Amount = table.Column<decimal>(type: "numeric", nullable: false),
                     Discount = table.Column<decimal>(type: "numeric", nullable: false)

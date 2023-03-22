@@ -12,7 +12,7 @@ using ProfileService.DataAccess;
 namespace ProfileService.DataAccess.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20230315145448_Init")]
+    [Migration("20230322135647_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,11 +38,14 @@ namespace ProfileService.DataAccess.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsAlreadyUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("isAlreadyUsed")
-                        .HasColumnType("boolean");
 
                     b.HasKey("BonusId");
 
@@ -61,15 +64,12 @@ namespace ProfileService.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ProfileId");
