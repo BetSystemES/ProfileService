@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProfileService.BusinessLogic\ProfileService.BusinessLogic.csproj" />
-    <ProjectReference Include="..\ProfileService.GRPC\ProfileService.GRPC.csproj" />
+    <ProjectReference Include="..\..\src\ProfileService.BusinessLogic\ProfileService.BusinessLogic.csproj" />
+    <ProjectReference Include="..\..\src\ProfileService.GRPC\ProfileService.GRPC.csproj" />
   </ItemGroup>
 
 </Project>
