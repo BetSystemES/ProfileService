@@ -6,7 +6,7 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
     {
         public static Bonus ChangeisAlreadyUsed(this Bonus bonus, bool isAlreadyUsed)
         {
-            bonus.isAlreadyUsed = isAlreadyUsed;
+            bonus.IsAlreadyUsed = isAlreadyUsed;
             return bonus;
         }
 

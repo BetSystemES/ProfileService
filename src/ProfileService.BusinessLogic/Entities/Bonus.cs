@@ -10,7 +10,7 @@ namespace ProfileService.BusinessLogic.Entities
         [Required] public Guid ProfileId { get; set; }
         public ProfileData ProfileData { get; set; }
 
-        public bool isAlreadyUsed { get; set; } = false;
+        public bool IsAlreadyUsed { get; set; } = false;
         public DiscountType DiscountType { get; set; }
         public decimal Amount { get; set; }
         public decimal Discount { get; set; }

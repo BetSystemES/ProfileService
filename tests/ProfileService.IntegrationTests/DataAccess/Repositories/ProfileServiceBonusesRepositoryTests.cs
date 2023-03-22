@@ -73,7 +73,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             var actualResult = await _bonusProvider.Get(bonusId, _ctoken);
 
-            actualResult.isAlreadyUsed = true;
+            actualResult.IsAlreadyUsed = true;
             actualResult.Amount = 0;
 
             await _bonusRepository.Update(actualResult, _ctoken);
