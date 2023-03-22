@@ -4,8 +4,6 @@ using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Models;
-using System;
-using System.Runtime.CompilerServices;
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Services
@@ -65,10 +63,20 @@ namespace ProfileService.BusinessLogic.Services
 
         public async Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool IsReadyToUse, CancellationToken token)
         {
-            var result = await _bonusFilter.FindBy(
-                x => x.ProfileId==guid 
-                     && x.IsEnabled == IsReadyToUse,
-                token);
+            var result = new List<Bonus>();
+
+            if (IsReadyToUse)
+            {
+                result = await _bonusFilter.FindBy(
+                    x => x.ProfileId==guid
+                         && x.IsEnabled == IsReadyToUse,
+                    token);
+            }
+            else
+            {
+                result = await _bonusFilter.FindBy(x => x.ProfileId==guid, token);
+            }
+
             return result;
         }
 

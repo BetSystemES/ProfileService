@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using AutoMapper;
 using Grpc.Core;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Models;
+using ProfileService.BusinessLogic.Models.Enums;
+using ProfileService.BusinessLogic.Models.Enums.Extensions;
 
 namespace ProfileService.GRPC.Services
 {
@@ -104,13 +107,11 @@ namespace ProfileService.GRPC.Services
             //map
             Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
 
-            //TODO: Get Role From Header
-
-            //TODO: Check Role By Service
-            bool isReadyToUseMock = false;
+            //Get Role From Header and Check Role
+            bool isReadyToUse = IsReadyToUse(context.GetHttpContext().User);
 
             //profile service
-            var items = await _profileService.GetDiscountsDepOnRole(guid, isReadyToUseMock, token);
+            var items = await _profileService.GetDiscountsDepOnRole(guid, isReadyToUse, token);
 
             //map back
             IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
@@ -120,6 +121,15 @@ namespace ProfileService.GRPC.Services
             response.Discounts.AddRange(discounts);
 
             return response;
+        }
+
+        private bool IsReadyToUse(ClaimsPrincipal user)
+        {
+            var authRoles = user
+                .FindFirst(ClaimTypes.Role)?.Value.Split(',')
+                .Select(x => x.GetEnumItem<AuthRole>());
+
+            return !authRoles.Contains(AuthRole.Admin);
         }
 
         public override async Task<GetDiscountsResponse> GetDiscountsDepOnFilter(GetDiscountsWithFilterRequest request, ServerCallContext context)
