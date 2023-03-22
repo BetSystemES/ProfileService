@@ -11,6 +11,8 @@ namespace ProfileService.BusinessLogic.Entities
         public ProfileData ProfileData { get; set; }
 
         public bool IsAlreadyUsed { get; set; } = false;
+        public bool IsEnabled { get; set; } = false;
+
         public DiscountType DiscountType { get; set; }
         public decimal Amount { get; set; }
         public decimal Discount { get; set; }

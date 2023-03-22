@@ -20,6 +20,7 @@ namespace ProfileService.DataAccess.Configuration
                 .HasForeignKey(z => z.ProfileId);
 
             builder.Property(x => x.IsAlreadyUsed);
+            builder.Property(x => x.IsEnabled);
             builder.Property(x => x.DiscountType);
             builder.Property(x => x.Amount);
             builder.Property(x => x.Discount);
