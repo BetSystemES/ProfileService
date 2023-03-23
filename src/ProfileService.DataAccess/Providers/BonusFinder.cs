@@ -34,11 +34,19 @@ namespace ProfileService.DataAccess.Providers
             return result;
         }
 
-        public async Task<List<Bonus>> FindByPageFilter(Expression<Func<Bonus, bool>> predicate, PageFilter pageFilter,
+        public async Task<List<Bonus>> FindByPageFilter(Expression<Func<Bonus, bool>> predicate, PaginationCriteria paginationCriteria,
             CancellationToken cancellationToken)
         {
-            int page = pageFilter.PageNumber;
-            int pageSize = pageFilter.PageSize;
+            if (paginationCriteria == null)
+            {
+                var resultWoFilter = await _entities.Where(predicate)
+                    .ToListAsync(cancellationToken: cancellationToken);
+                _logger.LogTrace("Find bonuses from database only by predicate because pageFilter==null. Count={Count}", resultWoFilter.Count);
+                return resultWoFilter;
+            }
+            
+            int page = paginationCriteria.PageNumber;
+            int pageSize = paginationCriteria.PageSize;
 
             var result = await _entities.Where(predicate)
                 .Skip((page - 1) * pageSize)

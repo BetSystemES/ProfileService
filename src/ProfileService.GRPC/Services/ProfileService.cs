@@ -129,6 +129,8 @@ namespace ProfileService.GRPC.Services
                 .FindFirst(ClaimTypes.Role)?.Value.Split(',')
                 .Select(x => x.GetEnumItem<AuthRole>());
 
+            if (authRoles == null) return true;
+
             return !authRoles.Contains(AuthRole.Admin);
         }
 
@@ -138,10 +140,10 @@ namespace ProfileService.GRPC.Services
 
             //map
             Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
-            PageFilter pageFilter = _mapper.Map<PageFilter>(request.DiscountFilter);
+            PaginationCriteria paginationCriteria = _mapper.Map<PaginationCriteria>(request.DiscountFilter);
 
             //profile service
-            var items = await _profileService.GetDiscountsWithFilter(guid, pageFilter, token);
+            var items = await _profileService.GetDiscountsWithFilter(guid, paginationCriteria, token);
 
             //map back
             IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);

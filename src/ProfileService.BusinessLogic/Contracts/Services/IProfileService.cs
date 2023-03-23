@@ -16,9 +16,9 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token);
 
-        Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool isReadyToUseMock, CancellationToken token);
+        Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool isReadyToUse, CancellationToken token);
 
-        Task<IEnumerable<Bonus>> GetDiscountsWithFilter(Guid guid, PageFilter pageFilter, CancellationToken token);
+        Task<IEnumerable<Bonus>> GetDiscountsWithFilter(Guid guid, PaginationCriteria paginationCriteria, CancellationToken token);
 
         Task UpdateDiscount(Bonus bonus, CancellationToken token);
     }

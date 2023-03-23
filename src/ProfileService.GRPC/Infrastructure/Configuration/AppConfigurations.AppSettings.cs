@@ -18,6 +18,9 @@
                 config.AddEnvironmentVariables(prefix);
                 config.Build();
             });
+
+            applicationBuilder.Services.ConfigureAppSettings<JwtConfig>(applicationBuilder.Configuration);
+
             return applicationBuilder;
         }
     }
