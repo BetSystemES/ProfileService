@@ -2,6 +2,8 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
+using ProfileService.BusinessLogic.Models.Enums;
+
 namespace ProfileService.BusinessLogic.Helpers
 {
     public static class OrderHelper

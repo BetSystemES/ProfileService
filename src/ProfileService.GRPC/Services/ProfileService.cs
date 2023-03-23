@@ -3,7 +3,7 @@ using AutoMapper;
 using Grpc.Core;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
-using ProfileService.BusinessLogic.Models;
+using ProfileService.BusinessLogic.Models.Criterias;
 using ProfileService.BusinessLogic.Models.Enums;
 using ProfileService.BusinessLogic.Models.Enums.Extensions;
 
@@ -154,6 +154,27 @@ namespace ProfileService.GRPC.Services
 
         //    return response;
         //}
+
+        public override async Task<GetDiscountsResponse> GetPagedDiscounts(GetDiscountsWithFilterRequest request, ServerCallContext context)
+        {
+            var token = context.CancellationToken;
+
+            //map
+            Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
+            FilterCriteria filterCriteria = _mapper.Map<FilterCriteria>(request.DiscountFilter);
+
+            //profile service
+            var items = await _profileService.GetPagedDiscounts(filterCriteria, token);
+
+            //map back
+            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
+
+            GetDiscountsResponse response = new GetDiscountsResponse();
+
+            response.Discounts.AddRange(discounts);
+
+            return response;
+        }
 
         public override async Task<UpdateDiscountResponse> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
         {

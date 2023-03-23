@@ -1,12 +1,12 @@
-﻿using ProfileService.BusinessLogic.Contracts.DataAccess;
+﻿using System.Linq.Expressions;
+using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Helpers;
-using ProfileService.BusinessLogic.Models;
-using System.Linq.Expressions;
 using ProfileService.BusinessLogic.Extensions;
+using ProfileService.BusinessLogic.Models.Criterias;
 
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
@@ -122,14 +122,14 @@ namespace ProfileService.BusinessLogic.Services
             return orderByExpression;
         }
 
-        public async Task GetDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
+        public Task<List<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
         {
             var expression = GetFilterExpression(filterCriteria);
             var order = GetOrderByFunc(filterCriteria);
 
             var (skip, take) = ((PaginationCriteria)filterCriteria).GetPaginationCriteria();
 
-            await _bonusFinder.GetPaged(expression, order, skip, take, cancellationToken);
+            return _bonusFinder.GetPaged(expression, order, skip, take, cancellationToken);
         }
     }
 }
