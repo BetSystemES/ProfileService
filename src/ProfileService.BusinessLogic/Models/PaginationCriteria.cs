@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProfileService.BusinessLogic.Models
+﻿namespace ProfileService.BusinessLogic.Models
 {
     public class PaginationCriteria
     {
@@ -14,23 +12,23 @@ namespace ProfileService.BusinessLogic.Models
         public List<T> Data { get; set; }
     }
 
-    public class SortCriteria : PaginationCriteria
+    public class OrderCriteria : PaginationCriteria
     {
         public string? ColumnName { get; set; }
-        public SortDirection? SortDirection { get; set; }
+        public OrderDirection? SortDirection { get; set; }
     }
 
-    public enum SortDirection
+    public enum OrderDirection
     {
-        Asc,
-        Desc
+        Unspecified = 0,
+        Ascending = 1,
+        Descending = 2
     }
 
-    public class FilterCriteria : SortCriteria
+    public class FilterCriteria : OrderCriteria
     {
         public List<Guid>? UserIds { get; set; }
         public bool? IsEnabled { get; set; }
         public string? SearchCriteria { get; set; }
     }
-
 }

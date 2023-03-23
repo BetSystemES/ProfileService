@@ -5,9 +5,9 @@ using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Helpers;
 using ProfileService.BusinessLogic.Models;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using ProfileService.BusinessLogic.Extensions;
+
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Services
@@ -16,22 +16,21 @@ namespace ProfileService.BusinessLogic.Services
     {
         private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFilter<Bonus> _bonusFilter;
-        private readonly IProvider<Bonus> _bonusProvider;
+        private readonly IBonusFinder _bonusFinder;
         private readonly IProvider<ProfileData> _profileDataProvider;
 
         private readonly IDataContext _context;
 
-        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository,
-            IProvider<Bonus> bonusProvider, IFilter<Bonus> bonusFilter,
+        public CustomProfileService(IProfileRepository profileDataRepository,
+            IBonusRepository bonusRepository,
             IProvider<ProfileData> profileDataProvider,
+            IBonusFinder bonusFinder,
             IDataContext context)
         {
             _profileDataRepository = profileDataRepository;
             _bonusRepository = bonusRepository;
-            _bonusProvider = bonusProvider;
-            _bonusFilter = bonusFilter;
             _profileDataProvider = profileDataProvider;
+            _bonusFinder = bonusFinder;
             _context = context;
         }
 
@@ -61,7 +60,7 @@ namespace ProfileService.BusinessLogic.Services
 
         public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
         {
-            var result = await _bonusFilter.FindBy(x => x.ProfileId == guid, token);
+            var result = await _bonusFinder.FindBy(x => x.ProfileId == guid, token);
             return result;
         }
 
@@ -72,24 +71,16 @@ namespace ProfileService.BusinessLogic.Services
 
             if (isReadyToUse)
             {
-                result = await _bonusFilter.FindBy(
+                result = await _bonusFinder.FindBy(
                     x => x.ProfileId == guid
                          && x.IsEnabled == isReadyToUse,
                     token);
             }
             else
             {
-                result = await _bonusFilter.FindBy(x => x.ProfileId == guid, token);
+                result = await _bonusFinder.FindBy(x => x.ProfileId == guid, token);
             }
 
-            return result;
-        }
-
-        public async Task<IEnumerable<Bonus>> GetDiscountsWithFilter(Guid guid, PaginationCriteria paginationCriteria,
-            CancellationToken token)
-        {
-            var result = await _bonusFilter
-                .FindByPageFilter(x => x.ProfileId == guid, paginationCriteria, token);
             return result;
         }
 
@@ -102,15 +93,20 @@ namespace ProfileService.BusinessLogic.Services
 
         private Expression<Func<Bonus, bool>> GetFilterExpression(FilterCriteria filter)
         {
-            var predicate = PredicateBuilderHelper.True<Entities.Bonus>();
-            predicate = predicate.And(x => x.IsEnabled == filter.IsEnabled).Or(x=>x.IsAlreadyUsed);
+            var predicate = PredicateBuilderHelper.True<Bonus>();
 
-            if (HasValue)
+            if (filter.IsEnabled.HasValue)
             {
                 predicate = predicate.And(x => x.IsEnabled == filter.IsEnabled);
             }
-            
-            predicate = predicate.And(x => x.IsEnabled == filter.IsEnabled);
+
+            if (filter.UserIds != null && filter.UserIds.Any())
+            {
+                foreach (var userId in filter.UserIds)
+                {
+                    predicate = predicate.And(x => x.ProfileId == userId);
+                }
+            }
 
             return predicate;
         }
@@ -121,23 +117,19 @@ namespace ProfileService.BusinessLogic.Services
 
             if (!string.IsNullOrEmpty(filter.ColumnName) && filter.SortDirection.HasValue)
             {
-                orderByExpression = SortHelper.GetOrderBy<Bonus>(filter.ColumnName, filter.SortDirection.Value);
+                orderByExpression = OrderHelper.GetOrderBy<Bonus>(filter.ColumnName, filter.SortDirection.Value);
             }
             return orderByExpression;
         }
 
-
-        public async Task GetBonuses(FilterCriteria filterCriteria, CancellationToken cancellationToken)
+        public async Task GetDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
         {
             var expression = GetFilterExpression(filterCriteria);
             var order = GetOrderByFunc(filterCriteria);
 
-            (var skip, var take) = ((PaginationCriteria)filterCriteria).GetPaginationCriteria();
+            var (skip, take) = ((PaginationCriteria)filterCriteria).GetPaginationCriteria();
 
-            IQueryable<Bonus> kInts;
-            var res = kInts.Where(expression).OrderBy(order).Take(take).Skip(skip).ToListAsync();
-
+            await _bonusFinder.GetPaged(expression, order, skip, take, cancellationToken);
         }
-
     }
 }

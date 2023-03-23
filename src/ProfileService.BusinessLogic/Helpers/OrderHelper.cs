@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace ProfileService.BusinessLogic.Helpers
 {
-    public static class SortHelper
+    public static class OrderHelper
     {
-        public static Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderBy<T>(string orderColumn, SortDirection orderType)
+        public static Func<IQueryable<T>, IOrderedQueryable<T>> GetOrderBy<T>(string orderColumn, OrderDirection orderType)
         {
             Type typeQueryable = typeof(IQueryable<T>);
             ParameterExpression argQueryable = Expression.Parameter(typeQueryable, "p");
@@ -28,7 +28,7 @@ namespace ProfileService.BusinessLogic.Helpers
             }
 
             LambdaExpression lambda = Expression.Lambda(expr, arg);
-            string methodName = orderType == SortDirection.Asc ? "OrderBy" : "OrderByDescending";
+            string methodName = orderType == OrderDirection.Ascending ? "OrderBy" : "OrderByDescending";
 
             MethodCallExpression resultExp =
                 Expression.Call(typeof(Queryable), methodName, new Type[] { typeof(T), type }, outerExpression.Body,

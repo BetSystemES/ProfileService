@@ -18,8 +18,8 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool isReadyToUse, CancellationToken token);
 
-        Task<IEnumerable<Bonus>> GetDiscountsWithFilter(Guid guid, PaginationCriteria paginationCriteria, CancellationToken token);
-
         Task UpdateDiscount(Bonus bonus, CancellationToken token);
+
+        public Task GetDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
     }
 }

@@ -3,11 +3,12 @@ using Microsoft.Extensions.Logging;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Entities;
 using System.Linq.Expressions;
-using ProfileService.BusinessLogic.Models;
+
+using ProfileService.BusinessLogic.Extensions;
 
 namespace ProfileService.DataAccess.Providers
 {
-    public class BonusFinder : IProvider<Bonus>, IFilter<Bonus>
+    public class BonusFinder : IBonusFinder
     {
         private readonly DbSet<Bonus> _entities;
 
@@ -34,28 +35,18 @@ namespace ProfileService.DataAccess.Providers
             return result;
         }
 
-        public async Task<List<Bonus>> FindByPageFilter(Expression<Func<Bonus, bool>> predicate, PaginationCriteria paginationCriteria,
-            CancellationToken cancellationToken)
+        public async Task<List<Bonus>> GetPaged(Expression<Func<Bonus, bool>> predicate, Func<IQueryable<Bonus>, IOrderedQueryable<Bonus>> order, int? skip, int? take, CancellationToken cancellationToken)
         {
-            if (paginationCriteria == null)
-            {
-                var resultWoFilter = await _entities.Where(predicate)
-                    .ToListAsync(cancellationToken: cancellationToken);
-                _logger.LogTrace("Find bonuses from database only by predicate because pageFilter==null. Count={Count}", resultWoFilter.Count);
-                return resultWoFilter;
-            }
-            
-            int page = paginationCriteria.PageNumber;
-            int pageSize = paginationCriteria.PageSize;
-
             var result = await _entities.Where(predicate)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .OrderByFunc(order)
+                .SkipTake(skip, take)
                 .ToListAsync(cancellationToken: cancellationToken);
             _logger.LogTrace(
-                "Find bonuses from database by predicate and by page with params: page={page} and pageSize={pageSize}. Count={Count}",
-                page, pageSize, result.Count);
+                "Find bonuses from database by predicate and by page with params: skip={skip} and take={take}. Count={Count}",
+                skip, take, result.Count);
             return result;
         }
+
+        
     }
 }

@@ -134,26 +134,26 @@ namespace ProfileService.GRPC.Services
             return !authRoles.Contains(AuthRole.Admin);
         }
 
-        public override async Task<GetDiscountsResponse> GetDiscountsDepOnFilter(GetDiscountsWithFilterRequest request, ServerCallContext context)
-        {
-            var token = context.CancellationToken;
+        //public override async Task<GetDiscountsResponse> GetDiscountsDepOnFilter(GetDiscountsWithFilterRequest request, ServerCallContext context)
+        //{
+        //    var token = context.CancellationToken;
 
-            //map
-            Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
-            PaginationCriteria paginationCriteria = _mapper.Map<PaginationCriteria>(request.DiscountFilter);
+        //    //map
+        //    Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
+        //    PaginationCriteria paginationCriteria = _mapper.Map<PaginationCriteria>(request.DiscountFilter);
 
-            //profile service
-            var items = await _profileService.GetDiscountsWithFilter(guid, paginationCriteria, token);
+        //    //profile service
+        //    var items = await _profileService.GetDiscountsWithFilter(guid, paginationCriteria, token);
 
-            //map back
-            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
+        //    //map back
+        //    IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
 
-            GetDiscountsResponse response = new GetDiscountsResponse();
+        //    GetDiscountsResponse response = new GetDiscountsResponse();
 
-            response.Discounts.AddRange(discounts);
+        //    response.Discounts.AddRange(discounts);
 
-            return response;
-        }
+        //    return response;
+        //}
 
         public override async Task<UpdateDiscountResponse> UpdateDiscount(UpdateDiscountRequest request, ServerCallContext context)
         {

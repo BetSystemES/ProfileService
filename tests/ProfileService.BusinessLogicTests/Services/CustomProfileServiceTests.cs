@@ -19,9 +19,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
         private readonly Mock<IProfileRepository> _mockIProfileRepository;
         private readonly Mock<IBonusRepository> _mockBonusRepository;
-        private readonly Mock<IFilter<Bonus>> _mockBonusFilter;
-
-        private readonly Mock<IProvider<Bonus>> _mockBonusProvider;
+        private readonly Mock<IBonusFinder> _mockBonusFinder;
         private readonly Mock<IProvider<ProfileData>> _mockProfileDataProvider;
 
         private readonly Mock<IDataContext> _mockContext;
@@ -31,8 +29,7 @@ namespace ProfileService.BusinessLogicTests.Services
             //Init moqs for IRepository IRepository IProvider IDataContext
             _mockIProfileRepository = new();
             _mockBonusRepository = new();
-            _mockBonusProvider = new();
-            _mockBonusFilter = new();
+            _mockBonusFinder = new();
             _mockProfileDataProvider = new();
 
             _mockContext = new();
@@ -41,9 +38,8 @@ namespace ProfileService.BusinessLogicTests.Services
             _profileService = new CustomProfileService(
                 _mockIProfileRepository.Object,
                 _mockBonusRepository.Object,
-                _mockBonusProvider.Object,
-                _mockBonusFilter.Object,
                 _mockProfileDataProvider.Object,
+                _mockBonusFinder.Object,
                 _mockContext.Object);
         }
 
@@ -160,7 +156,7 @@ namespace ProfileService.BusinessLogicTests.Services
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             //Init methods for mocks
-            _mockBonusFilter
+            _mockBonusFinder
                 .Setup(_ => _.FindBy(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
@@ -170,7 +166,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Assert
             //Verify method use
-            _mockBonusFilter
+            _mockBonusFinder
                 .Verify(_ => _.FindBy(x=>x.ProfileId==guid, It.IsAny<CancellationToken>()), Times.Once());
 
             Assert.Equal(expectedResult, actualResult);
