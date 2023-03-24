@@ -1,6 +1,4 @@
-﻿using ProfileService.BusinessLogic.Entities;
-
-namespace ProfileService.BusinessLogic.Extensions
+﻿namespace ProfileService.BusinessLogic.Extensions
 {
     public static class QueryableExtension
     {

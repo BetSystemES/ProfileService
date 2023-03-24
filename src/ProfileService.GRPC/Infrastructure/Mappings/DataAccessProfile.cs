@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ProfileService.BusinessLogic.Entities;
-using ProfileService.BusinessLogic.Models;
 using ProfileService.BusinessLogic.Models.Criterias;
 
 namespace ProfileService.GRPC.Infrastructure.Mappings

@@ -162,7 +162,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Act
             //Call Service method
-            var actualResult = await _profileService.GetDiscounts(guid, _ctoken);
+            var actualResult = await _profileService.GetDiscounts(guid, false, _ctoken);
 
             //Assert
             //Verify method use

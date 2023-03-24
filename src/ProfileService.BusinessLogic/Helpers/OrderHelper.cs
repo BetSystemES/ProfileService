@@ -1,5 +1,4 @@
-﻿using ProfileService.BusinessLogic.Models;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 
 using ProfileService.BusinessLogic.Models.Enums;

@@ -59,29 +59,10 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
-        public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
+        public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, bool isReadyToUse, CancellationToken token)
         {
-            var result = await _bonusProvider.FindBy(x => x.ProfileId == guid, token);
-            return result;
-        }
-
-        public async Task<IEnumerable<Bonus>> GetDiscountsDepOnRole(Guid guid, bool isReadyToUse,
-            CancellationToken token)
-        {
-            var result = new List<Bonus>();
-
-            if (isReadyToUse)
-            {
-                result = await _bonusProvider.FindBy(
-                    x => x.ProfileId == guid
-                         && x.IsEnabled == isReadyToUse,
-                    token);
-            }
-            else
-            {
-                result = await _bonusProvider.FindBy(x => x.ProfileId == guid, token);
-            }
-
+            var predicate = GetDepOnRoleExpression(guid, isReadyToUse);
+            var result = await _bonusProvider.FindBy(predicate, token);
             return result;
         }
 
@@ -107,6 +88,18 @@ namespace ProfileService.BusinessLogic.Services
             };
 
             return pagedResponse;
+        }
+
+        private Expression<Func<Bonus, bool>> GetDepOnRoleExpression(Guid guid, bool isReadyToUse)
+        {
+            var predicate = PredicateBuilderHelper.Create<Bonus>(x => x.ProfileId == guid);
+
+            if (isReadyToUse)
+            {
+                predicate = predicate.And(x => x.IsEnabled == isReadyToUse);
+            }
+
+            return predicate;
         }
 
         private Expression<Func<Bonus, bool>> GetFilterExpression(FilterCriteria filter)

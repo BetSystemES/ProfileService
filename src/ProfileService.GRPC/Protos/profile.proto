@@ -22,12 +22,6 @@ service ProfileService {
   rpc GetDiscounts (GetDiscountsRequest) 
 	returns (GetDiscountsResponse);
 
-  rpc GetDiscountsDepOnRole (GetDiscountsRequest) 
-  returns (GetDiscountsResponse);
-
-  rpc GetDiscountsDepOnFilter (GetDiscountsWithFilterRequest) 
-  returns (GetDiscountsResponse);
-
   rpc GetPagedDiscounts (GetDiscountsWithFilterRequest) 
    returns (GetPagedDiscountsResponse);
 

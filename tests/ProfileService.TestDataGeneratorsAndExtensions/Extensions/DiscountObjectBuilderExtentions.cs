@@ -9,7 +9,8 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
         {
             discount
                 .With(x => x.Id = id)
-                .With(x => x.ProfileId = profileId);
+                .With(x => x.ProfileId = profileId)
+                .With(x => x.IsEnabled = true); //true for user access
 
             return discount;
         }
