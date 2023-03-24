@@ -67,7 +67,13 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
             CreateMap<DiscountFilter, FilterCriteria>()
                 .ForMember(dest => dest.UserIds,
                     opt =>
-                        opt.MapFrom(src => src.UserIds.Select(Guid.Parse).ToList()));
+                        opt.MapFrom(src => src.UserIds.Select(Guid.Parse).ToList()))
+                .ForMember(dest => dest.PageSize,
+                    opt =>
+                        opt.MapFrom(src => src.PageSize == -1 ? (int?)null : src.PageSize))
+                .ForMember(dest => dest.PageNumber,
+                    opt =>
+                        opt.MapFrom(src => src.PageNumber == -1 ? (int?)null : src.PageNumber));
         }
     }
 }
