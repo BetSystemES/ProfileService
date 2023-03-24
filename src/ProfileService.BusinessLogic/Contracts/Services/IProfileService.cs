@@ -1,4 +1,5 @@
 ﻿using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models;
 using ProfileService.BusinessLogic.Models.Criterias;
 
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
@@ -21,6 +22,6 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task UpdateDiscount(Bonus bonus, CancellationToken token);
 
-        public Task<List<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
+        public Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
     }
 }

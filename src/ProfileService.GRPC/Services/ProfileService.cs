@@ -123,17 +123,6 @@ namespace ProfileService.GRPC.Services
             return response;
         }
 
-        private bool IsReadyToUse(ClaimsPrincipal user)
-        {
-            var authRoles = user
-                .FindFirst(ClaimTypes.Role)?.Value.Split(',')
-                .Select(x => x.GetEnumItem<AuthRole>());
-
-            if (authRoles == null) return true;
-
-            return !authRoles.Contains(AuthRole.Admin);
-        }
-
         //public override async Task<GetDiscountsResponse> GetDiscountsDepOnFilter(GetDiscountsWithFilterRequest request, ServerCallContext context)
         //{
         //    var token = context.CancellationToken;
@@ -155,7 +144,7 @@ namespace ProfileService.GRPC.Services
         //    return response;
         //}
 
-        public override async Task<GetDiscountsResponse> GetPagedDiscounts(GetDiscountsWithFilterRequest request, ServerCallContext context)
+        public override async Task<GetPagedDiscountsResponse> GetPagedDiscounts(GetDiscountsWithFilterRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
 
@@ -167,9 +156,12 @@ namespace ProfileService.GRPC.Services
             var items = await _profileService.GetPagedDiscounts(filterCriteria, token);
 
             //map back
-            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
+            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items.Data);
 
-            GetDiscountsResponse response = new GetDiscountsResponse();
+            GetPagedDiscountsResponse response = new GetPagedDiscountsResponse()
+            {
+                TotalCount = items.TotalCount
+            };
 
             response.Discounts.AddRange(discounts);
 
@@ -186,6 +178,17 @@ namespace ProfileService.GRPC.Services
             await _profileService.UpdateDiscount(bonus, token);
 
             return new UpdateDiscountResponse();
+        }
+
+        private bool IsReadyToUse(ClaimsPrincipal user)
+        {
+            var authRoles = user
+                .FindFirst(ClaimTypes.Role)?.Value.Split(',')
+                .Select(x => x.GetEnumItem<AuthRole>());
+
+            if (authRoles == null) return true;
+
+            return !authRoles.Contains(AuthRole.Admin);
         }
     }
 }

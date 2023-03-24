@@ -29,7 +29,7 @@ service ProfileService {
   returns (GetDiscountsResponse);
 
   rpc GetPagedDiscounts (GetDiscountsWithFilterRequest) 
-   returns (GetDiscountsResponse);
+   returns (GetPagedDiscountsResponse);
 
   rpc UpdateDiscount (UpdateDiscountRequest) 
 	returns (UpdateDiscountResponse);
@@ -75,6 +75,11 @@ message GetDiscountsResponse{
 	repeated Discount discounts = 1;
 }
 
+message GetPagedDiscountsResponse{
+	int32 total_count = 1;
+	repeated Discount discounts = 2;
+}
+
 message UpdateDiscountRequest{
 	Discount discount = 1;
 }
@@ -107,16 +112,12 @@ enum OrderDirection {
 	ORDER_DIRECTION_DESCENDING = 2;
 }
 
-message UserIds {
-	string id = 1;
-}
-
 message DiscountFilter {
 	int32 page_number = 1;
 	int32 page_size = 2;
 	string column_name = 3;
 	OrderDirection order_direction = 4;
-	repeated UserIds user_ids = 5;
+	repeated string user_ids = 5;
 	bool is_enabled = 6;
 	string search_criteria = 7;
 }

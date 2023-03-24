@@ -59,7 +59,15 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
 
             CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
 
-            CreateMap<FilterCriteria, DiscountFilter>().ReverseMap();
+            CreateMap<FilterCriteria, DiscountFilter>()
+                .ForMember(dest => dest.UserIds,
+                opt =>
+                    opt.MapFrom(src => src.UserIds.Select(x => x.ToString())));
+
+            CreateMap<DiscountFilter, FilterCriteria>()
+                .ForMember(dest => dest.UserIds,
+                    opt =>
+                        opt.MapFrom(src => src.UserIds.Select(Guid.Parse).ToList()));
         }
     }
 }

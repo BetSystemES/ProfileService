@@ -17,9 +17,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IProfileRepository _pofileDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFilter<Bonus> _bonusFilter;
-        private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<ProfileData> _profileDataProvider;
+        private readonly IBonusProvider _bonusProvider;
+        private readonly IProfileProvider _profileProvider;
 
         private readonly IDataContext _context;
 
@@ -29,10 +28,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
             _pofileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
-            _bonusFilter = _scope.ServiceProvider.GetRequiredService<IFilter<Bonus>>();
-
-            _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _profileDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
+            _bonusProvider = _scope.ServiceProvider.GetRequiredService<IBonusProvider>();
+            _profileProvider = _scope.ServiceProvider.GetRequiredService<IProfileProvider>();
 
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
@@ -48,7 +45,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _pofileDataRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _profileDataProvider.Get(profileId, _ctoken);
+            var actualResult = await _profileProvider.Get(profileId, _ctoken);
 
             // Assert
             actualResult.Should()
@@ -71,7 +68,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _pofileDataRepository.Add(initialProfileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            var actualResult = await _profileDataProvider.Get(profileId, _ctoken);
+            var actualResult = await _profileProvider.Get(profileId, _ctoken);
 
             actualResult.LastName = expectedResult.LastName;
             actualResult.PhoneNumber = expectedResult.PhoneNumber;
@@ -79,7 +76,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             await _pofileDataRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
-            actualResult = await _profileDataProvider.Get(profileId, _ctoken);
+            actualResult = await _profileProvider.Get(profileId, _ctoken);
 
             // Assert
             actualResult.Should()

@@ -19,18 +19,18 @@ namespace ProfileService.BusinessLogicTests.Services
 
         private readonly Mock<IProfileRepository> _mockIProfileRepository;
         private readonly Mock<IBonusRepository> _mockBonusRepository;
-        private readonly Mock<IBonusFinder> _mockBonusFinder;
-        private readonly Mock<IProvider<ProfileData>> _mockProfileDataProvider;
+        private readonly Mock<IBonusProvider> _mockBonusFinder;
+        private readonly Mock<IProfileProvider> _mockProfileProvider;
 
         private readonly Mock<IDataContext> _mockContext;
 
         public CustomProfileServiceTests()
         {
-            //Init moqs for IRepository IRepository IProvider IDataContext
+            //Init moqs for IRepository IRepository IProfileProvider IDataContext
             _mockIProfileRepository = new();
             _mockBonusRepository = new();
             _mockBonusFinder = new();
-            _mockProfileDataProvider = new();
+            _mockProfileProvider = new();
 
             _mockContext = new();
 
@@ -38,7 +38,7 @@ namespace ProfileService.BusinessLogicTests.Services
             _profileService = new CustomProfileService(
                 _mockIProfileRepository.Object,
                 _mockBonusRepository.Object,
-                _mockProfileDataProvider.Object,
+                _mockProfileProvider.Object,
                 _mockBonusFinder.Object,
                 _mockContext.Object);
         }
@@ -77,7 +77,7 @@ namespace ProfileService.BusinessLogicTests.Services
             var expectedResult = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
-            _mockProfileDataProvider
+            _mockProfileProvider
                 .Setup(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
@@ -87,7 +87,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Assert
             //Verify method use
-            _mockProfileDataProvider
+            _mockProfileProvider
                 .Verify(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
 
             Assert.Equal(expectedResult, actualResult);

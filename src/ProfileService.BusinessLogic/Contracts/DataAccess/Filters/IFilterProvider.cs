@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 
-namespace ProfileService.BusinessLogic.Contracts.DataAccess.Providers
+namespace ProfileService.BusinessLogic.Contracts.DataAccess.Filters
 {
-    public interface IFilter<T> where T : class
+    public interface IFilterProvider<T> where T : class
     {
         Task<List<T>> FindBy(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
     }

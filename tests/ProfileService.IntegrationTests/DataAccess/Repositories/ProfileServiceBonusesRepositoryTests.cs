@@ -16,9 +16,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private readonly IServiceScope _scope;
         private readonly IProfileRepository _profilelDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFilter<Bonus> _bonusFilter;
-        private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<ProfileData> _profieDataProvider;
+        private readonly IBonusProvider _bonusProvider;
+        private readonly IProfileProvider _profileProvider;
         private readonly IDataContext _context;
 
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
@@ -26,9 +25,8 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             _scope = factory.Services.CreateScope();
             _profilelDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
-            _bonusFilter = _scope.ServiceProvider.GetRequiredService<IFilter<Bonus>>();
-            _bonusProvider = _scope.ServiceProvider.GetRequiredService<IProvider<Bonus>>();
-            _profieDataProvider = _scope.ServiceProvider.GetRequiredService<IProvider<ProfileData>>();
+            _bonusProvider = _scope.ServiceProvider.GetRequiredService<IBonusProvider>();
+            _profileProvider = _scope.ServiceProvider.GetRequiredService<IProfileProvider>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
         }
 

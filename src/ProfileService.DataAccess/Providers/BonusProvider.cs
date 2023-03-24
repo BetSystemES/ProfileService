@@ -8,13 +8,13 @@ using ProfileService.BusinessLogic.Extensions;
 
 namespace ProfileService.DataAccess.Providers
 {
-    public class BonusFinder : IBonusFinder
+    public class BonusProvider : IBonusProvider
     {
         private readonly DbSet<Bonus> _entities;
 
-        private readonly ILogger<BonusFinder> _logger;
+        private readonly ILogger<BonusProvider> _logger;
 
-        public BonusFinder(DbSet<Bonus> entities, ILogger<BonusFinder> logger)
+        public BonusProvider(DbSet<Bonus> entities, ILogger<BonusProvider> logger)
         {
             _entities = entities;
             _logger = logger;
@@ -47,6 +47,10 @@ namespace ProfileService.DataAccess.Providers
             return result;
         }
 
-        
+        public async Task<int> GetCount(Expression<Func<Bonus, bool>> predicate)
+        {
+            var result = await _entities.Where(predicate).CountAsync();
+            return result;
+        }
     }
 }
