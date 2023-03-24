@@ -118,7 +118,7 @@ message DiscountFilter {
 	string column_name = 3;
 	OrderDirection order_direction = 4;
 	repeated string user_ids = 5;
-	bool is_enabled = 6;
+	string is_enabled = 6;
 	string search_criteria = 7;
 }
 
