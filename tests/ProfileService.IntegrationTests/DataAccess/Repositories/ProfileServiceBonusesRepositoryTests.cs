@@ -14,7 +14,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-        private readonly IProfileRepository _profilelDataRepository;
+        private readonly IProfileRepository _profilelRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IBonusProvider _bonusProvider;
         private readonly IProfileProvider _profileProvider;
@@ -23,7 +23,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         public ProfileServiceBonusesRepositoryTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-            _profilelDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _profilelRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IBonusProvider>();
             _profileProvider = _scope.ServiceProvider.GetRequiredService<IProfileProvider>();
@@ -41,7 +41,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             Bonus expectedResult = BonusGenerator(bonusId, personalId);
 
             // Act
-            await _profilelDataRepository.Add(profileData, _ctoken);
+            await _profilelRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
@@ -65,7 +65,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             Bonus expectedResult = BonusGenerator(bonusId, personalId, profileData).ChangeisAlreadyUsed(true).ChangeAmount(0);
 
             // Act
-            await _profilelDataRepository.Add(profileData, _ctoken);
+            await _profilelRepository.Add(profileData, _ctoken);
             await _bonusRepository.Add(initialBonus, _ctoken);
             await _context.SaveChanges(_ctoken);
 

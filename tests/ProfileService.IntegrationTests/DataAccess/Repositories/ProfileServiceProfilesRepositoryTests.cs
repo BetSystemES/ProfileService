@@ -15,7 +15,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
 
         private readonly IServiceScope _scope;
 
-        private readonly IProfileRepository _pofileDataRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IBonusProvider _bonusProvider;
         private readonly IProfileProvider _profileProvider;
@@ -26,7 +26,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
         {
             _scope = factory.Services.CreateScope();
 
-            _pofileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _profileRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IBonusProvider>();
             _profileProvider = _scope.ServiceProvider.GetRequiredService<IProfileProvider>();
@@ -42,7 +42,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             ProfileData expectedResult = ProfileDataGenerator(profileId);
 
             // Act
-            await _pofileDataRepository.Add(expectedResult, _ctoken);
+            await _profileRepository.Add(expectedResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             var actualResult = await _profileProvider.Get(profileId, _ctoken);
@@ -65,7 +65,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
                                             .ChangePhoneNumber("111222333");
 
             // Act
-            await _pofileDataRepository.Add(initialProfileData, _ctoken);
+            await _profileRepository.Add(initialProfileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             var actualResult = await _profileProvider.Get(profileId, _ctoken);
@@ -73,7 +73,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Repositories
             actualResult.LastName = expectedResult.LastName;
             actualResult.PhoneNumber = expectedResult.PhoneNumber;
 
-            await _pofileDataRepository.Update(actualResult, _ctoken);
+            await _profileRepository.Update(actualResult, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             actualResult = await _profileProvider.Get(profileId, _ctoken);

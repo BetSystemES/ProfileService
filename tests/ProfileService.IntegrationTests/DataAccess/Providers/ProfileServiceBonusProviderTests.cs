@@ -14,7 +14,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         private static readonly CancellationToken _ctoken = CancellationToken.None;
 
         private readonly IServiceScope _scope;
-        private readonly IProfileRepository _profileDataRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IDataContext _context;
 
@@ -23,7 +23,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
         public ProfileServiceBonusProviderTests(GrpcAppFactory factory)
         {
             _scope = factory.Services.CreateScope();
-            _profileDataRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
+            _profileRepository = _scope.ServiceProvider.GetRequiredService<IProfileRepository>();
             _bonusRepository = _scope.ServiceProvider.GetRequiredService<IBonusRepository>();
             _context = _scope.ServiceProvider.GetRequiredService<IDataContext>();
             _bonusProvider = _scope.ServiceProvider.GetRequiredService<IBonusProvider>();
@@ -42,7 +42,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
-            await _profileDataRepository.Add(profileData, _ctoken);
+            await _profileRepository.Add(profileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             await _bonusRepository.Add(bonus, _ctoken);
@@ -69,7 +69,7 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             // Act
-            await _profileDataRepository.Add(profileData, _ctoken);
+            await _profileRepository.Add(profileData, _ctoken);
             await _context.SaveChanges(_ctoken);
 
             await _bonusRepository.Add(bonus, _ctoken);
