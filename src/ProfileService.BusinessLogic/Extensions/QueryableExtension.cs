@@ -4,7 +4,7 @@ namespace ProfileService.BusinessLogic.Extensions
 {
     public static class QueryableExtension
     {
-        public static IQueryable<Bonus> SkipTake(this IQueryable<Bonus> query, int? skip, int? take)
+        public static IQueryable<T> SkipTake<T>(this IQueryable<T> query, int? skip, int? take)
         {
             if (skip.HasValue && take.HasValue)
             {
@@ -16,7 +16,7 @@ namespace ProfileService.BusinessLogic.Extensions
             return query;
         }
 
-        public static IQueryable<Bonus> OrderByFunc(this IQueryable<Bonus> query, Func<IQueryable<Bonus>, IOrderedQueryable<Bonus>> order)
+        public static IQueryable<T> OrderByFunc<T>(this IQueryable<T> query, Func<IQueryable<T>, IOrderedQueryable<T>> order)
         {
             if (order is not null)
             {

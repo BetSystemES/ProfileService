@@ -5,13 +5,13 @@ using ProfileService.BusinessLogic.Entities;
 
 namespace ProfileService.DataAccess.Providers
 {
-    public class ProfileDataProvider : IProvider<ProfileData>
+    public class ProfileProvider : IProfileProvider
     {
         private readonly DbSet<ProfileData> _entities;
 
         private readonly ILogger<ProfileData> _logger;
 
-        public ProfileDataProvider(DbSet<ProfileData> entities, ILogger<ProfileData> logger)
+        public ProfileProvider(DbSet<ProfileData> entities, ILogger<ProfileData> logger)
         {
             _entities = entities;
             _logger = logger;

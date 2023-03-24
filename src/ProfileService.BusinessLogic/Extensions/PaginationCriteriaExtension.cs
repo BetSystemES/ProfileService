@@ -1,4 +1,4 @@
-﻿using ProfileService.BusinessLogic.Models;
+﻿using ProfileService.BusinessLogic.Models.Criterias;
 
 namespace ProfileService.BusinessLogic.Extensions
 {

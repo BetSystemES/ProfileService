@@ -53,8 +53,8 @@ namespace ProfileService.DataAccess
         /// </returns>
         public static IServiceCollection AddProviders(this IServiceCollection services)
         {
-            services.AddScoped<IBonusFinder, BonusFinder>();
-            services.AddScoped<IProvider<ProfileData>, ProfileDataProvider>();
+            services.AddScoped<IBonusProvider, BonusProvider>();
+            services.AddScoped<IProfileProvider, ProfileProvider>();
 
             return services;
         }
