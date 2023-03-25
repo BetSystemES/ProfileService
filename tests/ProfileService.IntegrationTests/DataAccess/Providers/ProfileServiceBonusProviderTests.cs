@@ -76,12 +76,14 @@ namespace ProfileService.IntegrationTests.DataAccess.Providers
             await _context.SaveChanges(_ctoken);
 
             var expression = PredicateBuilderHelper.True<Bonus>();
+            expression = expression.And(x => x.ProfileId == profileId);
 
-            var actualResult = await _bonusProvider.GetPaged(expression, null, 2, 5, CancellationToken.None);
+            var actualResult = await _bonusProvider.GetPaged(expression, null, 0, 5, CancellationToken.None);
 
             // Assert
             actualResult.Should()
-                .NotBeNull();
+                .NotBeNull().And
+                .BeEquivalentTo(expectedResult);
         }
 
         public void Dispose()

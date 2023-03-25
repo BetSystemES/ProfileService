@@ -8,6 +8,7 @@ using ProfileService.BusinessLogic.Helpers;
 using ProfileService.BusinessLogic.Extensions;
 using ProfileService.BusinessLogic.Models;
 using ProfileService.BusinessLogic.Models.Criterias;
+using ProfileService.BusinessLogic.Models.Enums;
 
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
@@ -18,19 +19,19 @@ namespace ProfileService.BusinessLogic.Services
         private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
         private readonly IBonusProvider _bonusProvider;
-        private readonly IProfileProvider _profileDataProfileProvider;
+        private readonly IProfileProvider _profileProvider;
 
         private readonly IDataContext _context;
 
         public CustomProfileService(IProfileRepository profileDataRepository,
             IBonusRepository bonusRepository,
-            IProfileProvider profileDataProfileProvider,
+            IProfileProvider profileProvider,
             IBonusProvider bonusProvider,
             IDataContext context)
         {
             _profileDataRepository = profileDataRepository;
             _bonusRepository = bonusRepository;
-            _profileDataProfileProvider = profileDataProfileProvider;
+            _profileProvider = profileProvider;
             _bonusProvider = bonusProvider;
             _context = context;
         }
@@ -43,7 +44,7 @@ namespace ProfileService.BusinessLogic.Services
 
         public async Task<ProfileData> GetProfileDataById(Guid guid, CancellationToken token)
         {
-            var result = await _profileDataProfileProvider.Get(guid, token);
+            var result = await _profileProvider.Get(guid, token);
             return result;
         }
 
@@ -123,7 +124,7 @@ namespace ProfileService.BusinessLogic.Services
         {
             Func<IQueryable<Bonus>, IOrderedQueryable<Bonus>> orderByExpression = null;
 
-            if (!string.IsNullOrEmpty(filter.ColumnName) && filter.OrderDirection.HasValue)
+            if (!string.IsNullOrEmpty(filter.ColumnName) && filter.OrderDirection.HasValue && filter.OrderDirection != OrderDirection.Unspecified)
             {
                 orderByExpression = OrderHelper.GetOrderBy<Bonus>(filter.ColumnName, filter.OrderDirection.Value);
             }
