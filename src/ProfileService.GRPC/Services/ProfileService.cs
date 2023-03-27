@@ -146,6 +146,26 @@ namespace ProfileService.GRPC.Services
             return new UpdateDiscountResponse();
         }
 
+        // TODO: Add delete request for admin
+
+        public override async Task<DeleteProfileDataResponse> DeleteProfileData(DeleteProfileDataRequest request, ServerCallContext context)
+        {
+            var token = context.CancellationToken;
+
+            //map
+            ProfileData profileData = _mapper.Map<ProfileData>(request.UserProfile);
+
+            foreach (var bonus in profileData.Bonuses)
+            {
+                await _profileService.DeleteDiscount(bonus, token);
+            }
+
+            //profile service
+            await _profileService.DeleteProfileData(profileData, token);
+
+            return new DeleteProfileDataResponse();
+        }
+
         private bool IsReadyToUse(ClaimsPrincipal user)
         {
             var authRoles = user

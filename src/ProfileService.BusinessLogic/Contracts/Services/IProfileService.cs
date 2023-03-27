@@ -14,11 +14,15 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task UpdateProfileData(ProfileData profileData, CancellationToken token);
 
+        Task DeleteProfileData(ProfileData profileData, CancellationToken token);
+
         Task AddDiscount(Bonus bonus, CancellationToken token);
 
         Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, bool isReadyToUse, CancellationToken token);
 
         Task UpdateDiscount(Bonus bonus, CancellationToken token);
+
+        Task DeleteDiscount(Bonus bonus, CancellationToken token);
 
         public Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
     }

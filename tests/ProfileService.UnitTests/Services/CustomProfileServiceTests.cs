@@ -14,7 +14,7 @@ namespace ProfileService.UnitTests.Services
         {
             // Arrange
             var verifier = new CustomProfileServiceVerifierBuilder()
-                .SetupProfileServiceBonusRepositoryAdd()
+                .SetupProfileServiceProfileDataRepositoryAdd()
                 .SetupProfileServiceDataContextSaveChanges()
                 .Build();
 
@@ -50,7 +50,7 @@ namespace ProfileService.UnitTests.Services
         {
             // Arrange
             var verifier = new CustomProfileServiceVerifierBuilder()
-                .SetupProfileServiceBonusRepositoryUpdate()
+                .SetupProfileServiceProfileDataRepositoryUpdate()
                 .SetupProfileServiceDataContextSaveChanges()
                 .Build();
 
@@ -60,6 +60,24 @@ namespace ProfileService.UnitTests.Services
             // Assert
             verifier
                 .VerifyProfileDataRepositoryUpdate()
+                .VerifyDataContextSaveChanges();
+        }
+
+        [Fact]
+        public async Task DeleteProfileDataTest()
+        {
+            // Arrange
+            var verifier = new CustomProfileServiceVerifierBuilder()
+                .SetupProfileServiceProfileDataRepositoryRemove()
+                .SetupProfileServiceDataContextSaveChanges()
+                .Build();
+
+            // Act
+            await verifier.CustomProfileService.DeleteProfileData(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>());
+
+            // Assert
+            verifier
+                .VerifyProfileDataRepositoryRemove()
                 .VerifyDataContextSaveChanges();
         }
 
@@ -114,6 +132,24 @@ namespace ProfileService.UnitTests.Services
             // Assert
             verifier
                 .VerifyBonusRepositoryUpdate()
+                .VerifyDataContextSaveChanges();
+        }
+
+        [Fact]
+        public async Task DeleteDiscountTest()
+        {
+            // Arrange
+            var verifier = new CustomProfileServiceVerifierBuilder()
+                .SetupProfileServiceBonusRepositoryRemove()
+                .SetupProfileServiceDataContextSaveChanges()
+                .Build();
+
+            // Act
+            await verifier.CustomProfileService.DeleteDiscount(It.IsAny<Bonus>(), It.IsAny<CancellationToken>());
+
+            // Assert
+            verifier
+                .VerifyBonusRepositoryRemove()
                 .VerifyDataContextSaveChanges();
         }
 

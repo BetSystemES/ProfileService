@@ -16,6 +16,9 @@ service ProfileService {
   rpc UpdateProfileData (UpdateProfileDataRequest) 
 	returns (UpdateProfileDataResponse);
 
+  rpc DeleteProfileData (DeleteProfileDataRequest) 
+	returns (DeleteProfileDataResponse);
+
   rpc AddDiscount (AddDiscountRequest) 
 	returns (AddDiscountResponse);
 
@@ -48,6 +51,12 @@ message UpdateProfileDataRequest{
 }
 message UpdateProfileDataResponse{
 	ProfileByIdRequest profile_by_id_request = 1;
+}
+
+message DeleteProfileDataRequest{
+	UserProfile user_profile = 1;
+}
+message DeleteProfileDataResponse{
 }
 
 message AddDiscountRequest{

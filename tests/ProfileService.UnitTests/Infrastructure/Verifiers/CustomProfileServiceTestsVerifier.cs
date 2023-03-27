@@ -63,6 +63,13 @@ namespace ProfileService.UnitTests.Infrastructure.Verifiers
             return this;
         }
 
+        public CustomProfileServiceTestsVerifier VerifyProfileDataRepositoryRemove()
+        {
+            _profileDataRepository.Verify(x => x.Remove(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            return this;
+        }
+
         public CustomProfileServiceTestsVerifier VerifyDataContextSaveChanges()
         {
             _context.Verify(x => x.SaveChanges(It.IsAny<CancellationToken>()), Times.Once());
@@ -91,6 +98,13 @@ namespace ProfileService.UnitTests.Infrastructure.Verifiers
             return this;
         }
 
+        public CustomProfileServiceTestsVerifier VerifyBonusRepositoryRemove()
+        {
+            _bonusRepository.Verify(x => x.Remove(It.IsAny<Bonus>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            return this;
+        }
+
         public CustomProfileServiceTestsVerifier VerifyBonusProviderFindBy()
         {
             _bonusProvider.Verify(x => x.FindBy(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -107,7 +121,7 @@ namespace ProfileService.UnitTests.Infrastructure.Verifiers
 
         public CustomProfileServiceTestsVerifier VerifyBonusProviderGetCount()
         {
-            _bonusProvider.Verify(x => x.GetCount(It.IsAny<Expression<Func<Bonus, bool>>>()), Times.Once);
+            _bonusProvider.Verify(x => x.GetCount(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()), Times.Once);
 
             return this;
         }

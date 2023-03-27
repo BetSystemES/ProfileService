@@ -54,6 +54,13 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
+        public async Task DeleteProfileData(ProfileData profileData, CancellationToken token)
+        {
+            await _profileDataRepository.Remove(profileData, token);
+            await _context.SaveChanges(token);
+        }
+
+
         public async Task AddDiscount(Bonus bonus, CancellationToken token)
         {
             await _bonusRepository.Add(bonus, token);
@@ -73,6 +80,12 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
+        public async Task DeleteDiscount(Bonus bonus, CancellationToken token)
+        {
+            await _bonusRepository.Remove(bonus, token);
+            await _context.SaveChanges(token);
+        }
+
         public async Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
         {
             var expression = GetFilterExpression(filterCriteria);
@@ -81,7 +94,7 @@ namespace ProfileService.BusinessLogic.Services
             var (skip, take) = ((PaginationCriteria)filterCriteria).GetPaginationCriteria();
 
             var pagedBonuses = await _bonusProvider.GetPaged(expression, order, skip, take, cancellationToken);
-            var totalCount = await _bonusProvider.GetCount(expression);
+            var totalCount = await _bonusProvider.GetCount(expression, cancellationToken);
             var pagedResponse = new PagedResponse<Bonus>()
             {
                 TotalCount = totalCount,
@@ -115,6 +128,15 @@ namespace ProfileService.BusinessLogic.Services
             if (filter.UserIds != null && filter.UserIds.Any())
             {
                 predicate = predicate.And(x => filter.UserIds.Contains(x.ProfileId));
+            }
+
+            if (!string.IsNullOrEmpty(filter.SearchCriteria))
+            {
+                predicate = predicate.And(x => x.ProfileData.FirstName.ToLower().Contains(filter.SearchCriteria.ToLower()))
+                    .Or(x => x.ProfileData.LastName.ToLower().Contains(filter.SearchCriteria.ToLower()))
+                    .Or(x => x.ProfileId.ToString().ToLower().Contains(filter.SearchCriteria.ToLower()))
+                    .Or(x => x.BonusId.ToString().ToLower().Contains(filter.SearchCriteria.ToLower()))
+                    .Or(x => x.ProfileData.Email.ToLower().Contains(filter.SearchCriteria.ToLower()));
             }
 
             return predicate;

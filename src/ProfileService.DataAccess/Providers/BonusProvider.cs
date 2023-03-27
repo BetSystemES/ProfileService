@@ -47,9 +47,9 @@ namespace ProfileService.DataAccess.Providers
             return result;
         }
 
-        public async Task<int> GetCount(Expression<Func<Bonus, bool>> predicate)
+        public async Task<int> GetCount(Expression<Func<Bonus, bool>> predicate, CancellationToken cancellationToken)
         {
-            var result = await _entities.Where(predicate).CountAsync();
+            var result = await _entities.Where(predicate).CountAsync(cancellationToken);
             return result;
         }
     }

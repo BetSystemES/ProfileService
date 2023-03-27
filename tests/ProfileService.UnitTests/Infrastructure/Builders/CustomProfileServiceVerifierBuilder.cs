@@ -112,6 +112,14 @@ namespace ProfileService.UnitTests.Infrastructure.Builders
             return this;
         }
 
+        public CustomProfileServiceVerifierBuilder SetupProfileServiceProfileDataRepositoryRemove()
+        {
+            _profileDataRepository.Setup(x => x.Remove(It.IsAny<ProfileData>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            return this;
+        }
+
         public CustomProfileServiceVerifierBuilder SetupProfileServiceDataContextSaveChanges()
         {
             _context.Setup(x => x.SaveChanges(It.IsAny<CancellationToken>()))
@@ -145,6 +153,14 @@ namespace ProfileService.UnitTests.Infrastructure.Builders
             return this;
         }
 
+        public CustomProfileServiceVerifierBuilder SetupProfileServiceBonusRepositoryRemove()
+        {
+            _bonusRepository.Setup(x => x.Remove(It.IsAny<Bonus>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            return this;
+        }
+
         public CustomProfileServiceVerifierBuilder SetupProfileServiceBonusProviderFindBy()
         {
             _bonusProvider.Setup(x => x.FindBy(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()))!
@@ -165,7 +181,7 @@ namespace ProfileService.UnitTests.Infrastructure.Builders
 
         public CustomProfileServiceVerifierBuilder SetupProfileServiceBonusProviderGetCount()
         {
-            _bonusProvider.Setup(x => x.GetCount(It.IsAny<Expression<Func<Bonus, bool>>>()))
+            _bonusProvider.Setup(x => x.GetCount(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(_expectedResponse!.TotalCount)
                 .Verifiable();
 
