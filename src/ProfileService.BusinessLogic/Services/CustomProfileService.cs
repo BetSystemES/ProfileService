@@ -1,8 +1,15 @@
-﻿using ProfileService.BusinessLogic.Contracts.DataAccess;
+﻿using System.Linq.Expressions;
+using ProfileService.BusinessLogic.Contracts.DataAccess;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Providers;
 using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Helpers;
+using ProfileService.BusinessLogic.Extensions;
+using ProfileService.BusinessLogic.Models;
+using ProfileService.BusinessLogic.Models.Criterias;
+using ProfileService.BusinessLogic.Models.Enums;
+
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Services
@@ -11,20 +18,21 @@ namespace ProfileService.BusinessLogic.Services
     {
         private readonly IProfileRepository _profileDataRepository;
         private readonly IBonusRepository _bonusRepository;
-        private readonly IFinder<Bonus> _bonusFinder;
-
-        private readonly IProvider<Bonus> _bonusProvider;
-        private readonly IProvider<ProfileData> _profileDataProvider;
+        private readonly IBonusProvider _bonusProvider;
+        private readonly IProfileProvider _profileProvider;
 
         private readonly IDataContext _context;
 
-        public CustomProfileService(IProfileRepository profileDataRepository, IBonusRepository bonusRepository, IFinder<Bonus> bonusFinder, IProvider<Bonus> bonusProvider, IProvider<ProfileData> profileDataProvider, IDataContext context)
+        public CustomProfileService(IProfileRepository profileDataRepository,
+            IBonusRepository bonusRepository,
+            IProfileProvider profileProvider,
+            IBonusProvider bonusProvider,
+            IDataContext context)
         {
             _profileDataRepository = profileDataRepository;
             _bonusRepository = bonusRepository;
-            _bonusFinder = bonusFinder;
+            _profileProvider = profileProvider;
             _bonusProvider = bonusProvider;
-            _profileDataProvider = profileDataProvider;
             _context = context;
         }
 
@@ -36,7 +44,7 @@ namespace ProfileService.BusinessLogic.Services
 
         public async Task<ProfileData> GetProfileDataById(Guid guid, CancellationToken token)
         {
-            var result = await _profileDataProvider.Get(guid, token);
+            var result = await _profileProvider.Get(guid, token);
             return result;
         }
 
@@ -52,16 +60,76 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
-        public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token)
+        public async Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, bool isReadyToUse, CancellationToken token)
         {
-            var result = await _bonusFinder.FindByProfileId(guid, token);
-            return result.ToList();
+            var predicate = GetDepOnRoleExpression(guid, isReadyToUse);
+            var result = await _bonusProvider.FindBy(predicate, token);
+            return result;
         }
 
         public async Task UpdateDiscount(Bonus bonus, CancellationToken token)
         {
             await _bonusRepository.Update(bonus, token);
             await _context.SaveChanges(token);
+        }
+
+        public async Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
+        {
+            var expression = GetFilterExpression(filterCriteria);
+            var order = GetOrderByFunc(filterCriteria);
+
+            var (skip, take) = ((PaginationCriteria)filterCriteria).GetPaginationCriteria();
+
+            var pagedBonuses = await _bonusProvider.GetPaged(expression, order, skip, take, cancellationToken);
+            var totalCount = await _bonusProvider.GetCount(expression);
+            var pagedResponse = new PagedResponse<Bonus>()
+            {
+                TotalCount = totalCount,
+                Data = pagedBonuses
+            };
+
+            return pagedResponse;
+        }
+
+        private Expression<Func<Bonus, bool>> GetDepOnRoleExpression(Guid guid, bool isReadyToUse)
+        {
+            var predicate = PredicateBuilderHelper.Create<Bonus>(x => x.ProfileId == guid);
+
+            if (isReadyToUse)
+            {
+                predicate = predicate.And(x => x.IsEnabled == isReadyToUse);
+            }
+
+            return predicate;
+        }
+
+        private Expression<Func<Bonus, bool>> GetFilterExpression(FilterCriteria filter)
+        {
+            var predicate = PredicateBuilderHelper.True<Bonus>();
+
+            if (filter.IsEnabled.HasValue)
+            {
+                predicate = predicate.And(x => x.IsEnabled == filter.IsEnabled);
+            }
+
+            if (filter.UserIds != null && filter.UserIds.Any())
+            {
+                predicate = predicate.And(x => filter.UserIds.Contains(x.ProfileId));
+            }
+
+            return predicate;
+        }
+
+        private Func<IQueryable<Bonus>, IOrderedQueryable<Bonus>> GetOrderByFunc(FilterCriteria filter)
+        {
+            Func<IQueryable<Bonus>, IOrderedQueryable<Bonus>> orderByExpression = null;
+
+            if (!string.IsNullOrEmpty(filter.ColumnName) && filter.OrderDirection.HasValue && filter.OrderDirection != OrderDirection.Unspecified)
+            {
+                orderByExpression = OrderHelper.GetOrderBy<Bonus>(filter.ColumnName, filter.OrderDirection.Value);
+            }
+
+            return orderByExpression;
         }
     }
 }

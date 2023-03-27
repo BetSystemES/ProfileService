@@ -1,11 +1,14 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProfileService.DataAccess;
 using ProfileService.GRPC.Infrastructure.Configuration;
+using ProfileService.GRPC.Infrastructure.Configuration.Jwt;
 using ProfileService.GRPC.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args)
     .AddAppSettings()
     .AddSerialLogger();
+
+var jwtConfig = builder.GetAppSettings<JwtConfig>();
 
 var connectionString = builder.Configuration.GetConnectionString("ProfileDb");
 builder.Services.AddPostgreSqlContext(options =>
@@ -15,6 +18,8 @@ builder.Services.AddPostgreSqlContext(options =>
 
 // Add services to the container.
 builder.Services
+    .AddJwtAuthentication(jwtConfig)
+    .AddAuthorization()
     .AddRepositories()
     .AddProviders()
     .AddInfrastructureServices()
@@ -26,6 +31,9 @@ builder.Services
     });
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<ProfileService.GRPC.Services.ProfileService>();

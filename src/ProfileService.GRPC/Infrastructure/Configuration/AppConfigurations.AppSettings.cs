@@ -1,4 +1,6 @@
-﻿namespace ProfileService.GRPC.Infrastructure.Configuration
+﻿using ProfileService.GRPC.Infrastructure.Configuration.Jwt;
+
+namespace ProfileService.GRPC.Infrastructure.Configuration
 {
     /// <summary>
     ///   Add environment variables to <seealso cref="WebApplicationBuilder"/>
@@ -18,6 +20,9 @@
                 config.AddEnvironmentVariables(prefix);
                 config.Build();
             });
+
+            applicationBuilder.Services.ConfigureAppSettings<JwtConfig>(applicationBuilder.Configuration);
+
             return applicationBuilder;
         }
     }

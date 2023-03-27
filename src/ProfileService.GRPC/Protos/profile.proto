@@ -22,6 +22,9 @@ service ProfileService {
   rpc GetDiscounts (GetDiscountsRequest) 
 	returns (GetDiscountsResponse);
 
+  rpc GetPagedDiscounts (GetDiscountsWithFilterRequest) 
+   returns (GetPagedDiscountsResponse);
+
   rpc UpdateDiscount (UpdateDiscountRequest) 
 	returns (UpdateDiscountResponse);
 }	
@@ -56,8 +59,19 @@ message AddDiscountResponse{
 message GetDiscountsRequest{
 	ProfileByIdRequest profile_by_id_request = 1;
 }
+
+message GetDiscountsWithFilterRequest{
+	ProfileByIdRequest profile_by_id_request = 1;
+	DiscountFilter discount_filter = 2;
+}
+
 message GetDiscountsResponse{
 	repeated Discount discounts = 1;
+}
+
+message GetPagedDiscountsResponse{
+	int32 total_count = 1;
+	repeated Discount discounts = 2;
 }
 
 message UpdateDiscountRequest{
@@ -86,11 +100,28 @@ enum DiscountType {
 	DISCOUNT_TYPE_DISCOUNT = 2;
 }
 
+enum OrderDirection {
+	ORDER_DIRECTION_UNSPECIFIED = 0;
+	ORDER_DIRECTION_ASCENDING = 1;
+	ORDER_DIRECTION_DESCENDING = 2;
+}
+
+message DiscountFilter {
+	int32 page_number = 1;
+	int32 page_size = 2;
+	string column_name = 3;
+	OrderDirection order_direction = 4;
+	repeated string user_ids = 5;
+	string is_enabled = 6;
+	string search_criteria = 7;
+}
+
 message Discount {
 	string id = 1;
 	string profile_id = 2;
 	bool is_already_used = 3;
-	DiscountType type = 4;
-	double amount = 5;
-	double discount_value = 6;	
+	bool is_enabled = 4;
+	DiscountType type = 5;
+	double amount = 6;
+	double discount_value = 7;	
 }

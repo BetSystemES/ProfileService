@@ -1,4 +1,7 @@
 ﻿using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models;
+using ProfileService.BusinessLogic.Models.Criterias;
+
 using Bonus = ProfileService.BusinessLogic.Entities.Bonus;
 
 namespace ProfileService.BusinessLogic.Contracts.Services
@@ -13,8 +16,10 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task AddDiscount(Bonus bonus, CancellationToken token);
 
-        Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, CancellationToken token);
+        Task<IEnumerable<Bonus>> GetDiscounts(Guid guid, bool isReadyToUse, CancellationToken token);
 
         Task UpdateDiscount(Bonus bonus, CancellationToken token);
+
+        public Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
     }
 }

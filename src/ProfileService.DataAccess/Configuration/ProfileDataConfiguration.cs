@@ -13,7 +13,7 @@ namespace ProfileService.DataAccess.Configuration
             builder.HasKey(x => x.ProfileId);
             builder.Property(x => x.ProfileId).ValueGeneratedNever();
 
-            builder.Property(x => x.FirstName).IsRequired();
+            builder.Property(x => x.FirstName);
             builder.Property(x => x.LastName);
             builder.Property(x => x.PhoneNumber);
             builder.Property(x => x.Email).IsRequired();

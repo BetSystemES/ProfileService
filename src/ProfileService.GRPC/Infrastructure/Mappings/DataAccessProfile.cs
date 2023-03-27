@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models.Criterias;
 
 namespace ProfileService.GRPC.Infrastructure.Mappings
 {
@@ -56,6 +57,22 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ConvertUsing(s => Guid.Parse(s));
 
             CreateMap<DiscountType, BusinessLogic.Models.Enums.DiscountType>().ReverseMap();
+
+            CreateMap<FilterCriteria, DiscountFilter>()
+                .ForMember(dest => dest.UserIds,
+                opt =>
+                    opt.MapFrom(src => src.UserIds.Select(x => x.ToString())));
+
+            CreateMap<DiscountFilter, FilterCriteria>()
+                .ForMember(dest => dest.UserIds,
+                    opt =>
+                        opt.MapFrom(src => src.UserIds.Select(Guid.Parse).ToList()))
+                .ForMember(dest => dest.PageSize,
+                    opt =>
+                        opt.MapFrom(src => src.PageSize == -1 ? (int?)null : src.PageSize))
+                .ForMember(dest => dest.PageNumber,
+                    opt =>
+                        opt.MapFrom(src => src.PageNumber == -1 ? (int?)null : src.PageNumber));
         }
     }
 }

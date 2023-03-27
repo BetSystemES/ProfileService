@@ -1,7 +1,12 @@
+using System.Security.Claims;
 using AutoMapper;
 using Grpc.Core;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
+using ProfileService.BusinessLogic.Models.Criterias;
+using ProfileService.BusinessLogic.Models.Criterias.Extensions;
+using ProfileService.BusinessLogic.Models.Enums;
+using ProfileService.BusinessLogic.Models.Enums.Extensions;
 
 namespace ProfileService.GRPC.Services
 {
@@ -83,13 +88,46 @@ namespace ProfileService.GRPC.Services
             //map
             Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
 
+            //Get Role From Header and Check Role
+            bool isReadyToUse = IsReadyToUse(context.GetHttpContext().User);
+
             //profile service
-            var items = await _profileService.GetDiscounts(guid, token);
+            var items = await _profileService.GetDiscounts(guid, isReadyToUse, token);
 
             //map back
             IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items);
 
             GetDiscountsResponse response = new GetDiscountsResponse();
+
+            response.Discounts.AddRange(discounts);
+
+            return response;
+        }
+
+        public override async Task<GetPagedDiscountsResponse> GetPagedDiscounts(GetDiscountsWithFilterRequest request, ServerCallContext context)
+        {
+            var token = context.CancellationToken;
+
+            //map
+            Guid guid = _mapper.Map<Guid>(request.ProfileByIdRequest.Id);
+            FilterCriteria filterCriteria = _mapper.Map<FilterCriteria>(request.DiscountFilter);
+
+            //Get Role From Header and Check Role
+            bool isReadyToUse = IsReadyToUse(context.GetHttpContext().User);
+
+            //Work with FilterCriteria
+            filterCriteria.Apply(isReadyToUse);
+
+            //profile service
+            var items = await _profileService.GetPagedDiscounts(filterCriteria, token);
+
+            //map back
+            IEnumerable<Discount> discounts = _mapper.Map<IEnumerable<Bonus>, IEnumerable<Discount>>(items.Data);
+
+            GetPagedDiscountsResponse response = new GetPagedDiscountsResponse()
+            {
+                TotalCount = items.TotalCount
+            };
 
             response.Discounts.AddRange(discounts);
 
@@ -106,6 +144,17 @@ namespace ProfileService.GRPC.Services
             await _profileService.UpdateDiscount(bonus, token);
 
             return new UpdateDiscountResponse();
+        }
+
+        private bool IsReadyToUse(ClaimsPrincipal user)
+        {
+            var authRoles = user
+                .FindFirst(ClaimTypes.Role)?.Value.Split(',')
+                .Select(x => x.GetEnumItem<AuthRole>());
+
+            if (authRoles == null) return true;
+
+            return !authRoles.Contains(AuthRole.Admin);
         }
     }
 }

@@ -6,6 +6,7 @@ using ProfileService.BusinessLogic.Contracts.DataAccess.Repositories;
 using ProfileService.BusinessLogic.Contracts.Services;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Services;
+using System.Linq.Expressions;
 using Xunit;
 
 namespace ProfileService.BusinessLogicTests.Services
@@ -18,21 +19,18 @@ namespace ProfileService.BusinessLogicTests.Services
 
         private readonly Mock<IProfileRepository> _mockIProfileRepository;
         private readonly Mock<IBonusRepository> _mockBonusRepository;
-        private readonly Mock<IFinder<Bonus>> _mockBonusFinder;
-
-        private readonly Mock<IProvider<Bonus>> _mockBonusProvider;
-        private readonly Mock<IProvider<ProfileData>> _mockProfileDataProvider;
+        private readonly Mock<IBonusProvider> _mockBonusFinder;
+        private readonly Mock<IProfileProvider> _mockProfileProvider;
 
         private readonly Mock<IDataContext> _mockContext;
 
         public CustomProfileServiceTests()
         {
-            //Init moqs for IRepository IRepository IProvider IDataContext
+            //Init moqs for IRepository IRepository IProfileProvider IDataContext
             _mockIProfileRepository = new();
             _mockBonusRepository = new();
             _mockBonusFinder = new();
-            _mockBonusProvider = new();
-            _mockProfileDataProvider = new();
+            _mockProfileProvider = new();
 
             _mockContext = new();
 
@@ -40,9 +38,8 @@ namespace ProfileService.BusinessLogicTests.Services
             _profileService = new CustomProfileService(
                 _mockIProfileRepository.Object,
                 _mockBonusRepository.Object,
+                _mockProfileProvider.Object,
                 _mockBonusFinder.Object,
-                _mockBonusProvider.Object,
-                _mockProfileDataProvider.Object,
                 _mockContext.Object);
         }
 
@@ -80,7 +77,7 @@ namespace ProfileService.BusinessLogicTests.Services
             var expectedResult = Builder<ProfileData>.CreateNew().Build();
 
             //Init methods for mocks
-            _mockProfileDataProvider
+            _mockProfileProvider
                 .Setup(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
@@ -90,7 +87,7 @@ namespace ProfileService.BusinessLogicTests.Services
 
             //Assert
             //Verify method use
-            _mockProfileDataProvider
+            _mockProfileProvider
                 .Verify(_ => _.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
 
             Assert.Equal(expectedResult, actualResult);
@@ -154,22 +151,23 @@ namespace ProfileService.BusinessLogicTests.Services
         public async Task GetDiscounts_Should_Call_FindByProfileId_and_Return_Result()
         {
             //Arrange
+            var guid = Guid.NewGuid();
             var bonus = Builder<Bonus>.CreateNew().Build();
             List<Bonus> expectedResult = new List<Bonus>() { bonus };
 
             //Init methods for mocks
             _mockBonusFinder
-                .Setup(_ => _.FindByProfileId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .Setup(_ => _.FindBy(It.IsAny<Expression<Func<Bonus, bool>>>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(expectedResult));
 
             //Act
             //Call Service method
-            var actualResult = await _profileService.GetDiscounts(new Guid(), _ctoken);
+            var actualResult = await _profileService.GetDiscounts(guid, false, _ctoken);
 
             //Assert
             //Verify method use
             _mockBonusFinder
-                .Verify(_ => _.FindByProfileId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once());
+                .Verify(_ => _.FindBy(x=>x.ProfileId==guid, It.IsAny<CancellationToken>()), Times.Once());
 
             Assert.Equal(expectedResult, actualResult);
         }
