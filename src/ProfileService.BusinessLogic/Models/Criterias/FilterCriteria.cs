@@ -1,6 +1,4 @@
-﻿using ProfileService.BusinessLogic.Models.Enums;
-
-namespace ProfileService.BusinessLogic.Models.Criterias
+﻿namespace ProfileService.BusinessLogic.Models.Criterias
 {
     public class FilterCriteria : OrderCriteria
     {
