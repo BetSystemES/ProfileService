@@ -2,6 +2,8 @@
 
 option csharp_namespace = "ProfileService.GRPC";
 
+import "google/protobuf/timestamp.proto";
+
 package profile;
 
 // The ProfileService definition.
@@ -121,8 +123,10 @@ message DiscountFilter {
 	string column_name = 3;
 	OrderDirection order_direction = 4;
 	repeated string user_ids = 5;
-	string is_enabled = 6;
-	string search_criteria = 7;
+	google.protobuf.Timestamp start_date = 6;
+	google.protobuf.Timestamp end_date = 7;
+	string is_enabled = 8;
+	string search_criteria = 9;
 }
 
 message Discount {
@@ -132,5 +136,5 @@ message Discount {
 	bool is_enabled = 4;
 	DiscountType type = 5;
 	double amount = 6;
-	double discount_value = 7;	
+	google.protobuf.Timestamp create_date = 7;
 }

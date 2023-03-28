@@ -145,6 +145,8 @@ namespace ProfileService.BusinessLogic.Services
                     .Or(x => x.ProfileData.Email.ToLower().Contains(filter.SearchCriteria.ToLower()));
             }
 
+            predicate = predicate.FilterPredicateWithDateExtension(filter);
+
             return predicate;
         }
 

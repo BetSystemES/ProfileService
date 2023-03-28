@@ -23,7 +23,6 @@ namespace ProfileService.DataAccess.Configuration
             builder.Property(x => x.IsEnabled);
             builder.Property(x => x.DiscountType);
             builder.Property(x => x.Amount);
-            builder.Property(x => x.Discount);
 
             builder.ToTable("Bonus");
         }

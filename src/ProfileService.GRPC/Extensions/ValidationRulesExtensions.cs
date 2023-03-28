@@ -55,8 +55,8 @@ namespace ProfileService.GRPC.Extensions
                 default:
                     return false;
 
-                case DiscountType.Amount when discount.Amount > 0 && discount.DiscountValue == 0:
-                case DiscountType.Discount when discount.DiscountValue > 0 && discount.Amount == 0:
+                case DiscountType.Amount when discount.Amount > 0:
+                case DiscountType.Discount when discount.Amount > 0:
                     return true;
             }
         }

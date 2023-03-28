@@ -20,28 +20,19 @@ namespace ProfileService.TestDataGeneratorsAndExtensions.Extensions
             discount
                 .With(x => x.Type = discountType);
 
-            return discountType switch
-            {
-                DiscountType.Discount =>
-                    discount
-                        .With(x => x.DiscountValue = value)
-                        .With(x => x.Amount = 0),
-                DiscountType.Amount =>
-                    discount
-                        .With(x => x.Amount = value)
-                        .With(x => x.DiscountValue = 0),
-                DiscountType.Unspecified => discount
-                    .With(x => x.DiscountValue = 0)
-                    .With(x => x.Amount = 0),
-            };
+            if (discountType == DiscountType.Unspecified)
+                return discount
+                     .With(x => x.Amount = 0);
+
+            return discount
+                    .With(x => x.Amount = value);
         }
 
-        public static ISingleObjectBuilder<Discount> DiscountBuilderAllValue(this ISingleObjectBuilder<Discount> discount, DiscountType discountType, double amountValue, double discountValue)
+        public static ISingleObjectBuilder<Discount> DiscountBuilderAllValue(this ISingleObjectBuilder<Discount> discount, DiscountType discountType, double amount)
         {
             discount
                 .With(x => x.Type = discountType)
-                .With(x => x.Amount = amountValue)
-                .With(x => x.DiscountValue = discountValue);
+                .With(x => x.Amount = amount);
 
             return discount;
         }
