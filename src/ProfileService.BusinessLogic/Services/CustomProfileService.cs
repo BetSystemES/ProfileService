@@ -86,9 +86,9 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
-        public async Task DeleteDiscounts(List<Bonus> bonus, CancellationToken token)
+        public async Task DeleteDiscounts(IEnumerable<Bonus> bonuses, CancellationToken token)
         {
-            await _bonusRepository.RemoveRange(bonus, token);
+            await _bonusRepository.RemoveRange(bonuses, token);
             await _context.SaveChanges(token);
         }
 

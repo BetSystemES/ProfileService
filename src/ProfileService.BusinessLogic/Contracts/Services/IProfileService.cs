@@ -24,7 +24,7 @@ namespace ProfileService.BusinessLogic.Contracts.Services
 
         Task DeleteDiscount(Bonus bonus, CancellationToken token);
 
-        Task DeleteDiscounts(List<Bonus> bonus, CancellationToken token);
+        Task DeleteDiscounts(IEnumerable<Bonus> bonuses, CancellationToken token);
 
         Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken);
     }

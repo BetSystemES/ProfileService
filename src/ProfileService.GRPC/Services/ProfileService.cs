@@ -146,8 +146,6 @@ namespace ProfileService.GRPC.Services
             return new UpdateDiscountResponse();
         }
 
-        // TODO: Add delete request for admin
-
         public override async Task<DeleteProfileDataResponse> DeleteProfileData(DeleteProfileDataRequest request, ServerCallContext context)
         {
             var token = context.CancellationToken;
