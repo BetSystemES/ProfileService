@@ -154,12 +154,9 @@ namespace ProfileService.GRPC.Services
 
             //map
             ProfileData profileData = _mapper.Map<ProfileData>(request.UserProfile);
-
-            foreach (var bonus in profileData.Bonuses)
-            {
-                await _profileService.DeleteDiscount(bonus, token);
-            }
-
+            
+            await _profileService.DeleteDiscounts(profileData.Bonuses, token);
+            
             //profile service
             await _profileService.DeleteProfileData(profileData, token);
 

@@ -30,6 +30,13 @@ namespace ProfileService.DataAccess.Repositories
             return Task.CompletedTask;
         }
 
+        public virtual Task RemoveRange(IEnumerable<TEntity> entities, CancellationToken token)
+        {
+            ArgumentNullException.ThrowIfNull(entities, "entity");
+            _entities.RemoveRange(entities);
+            return Task.CompletedTask;
+        }
+
         public virtual Task Update(TEntity entity, CancellationToken token)
         {
             ArgumentNullException.ThrowIfNull(entity, "entity");

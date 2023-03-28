@@ -86,6 +86,12 @@ namespace ProfileService.BusinessLogic.Services
             await _context.SaveChanges(token);
         }
 
+        public async Task DeleteDiscounts(List<Bonus> bonus, CancellationToken token)
+        {
+            await _bonusRepository.RemoveRange(bonus, token);
+            await _context.SaveChanges(token);
+        }
+
         public async Task<PagedResponse<Bonus>> GetPagedDiscounts(FilterCriteria filterCriteria, CancellationToken cancellationToken)
         {
             var expression = GetFilterExpression(filterCriteria);

@@ -8,6 +8,8 @@
 
         Task Remove(TEntity entity, CancellationToken token);
 
+        Task RemoveRange(IEnumerable<TEntity> entities, CancellationToken token);
+
         Task Update(TEntity entity, CancellationToken token);
 
         Task UpdateRange(IEnumerable<TEntity> entities, CancellationToken token);
