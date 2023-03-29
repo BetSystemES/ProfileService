@@ -4,6 +4,8 @@
     {
         public List<Guid>? UserIds { get; set; }
         public bool? IsEnabled { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
         public string? SearchCriteria { get; set; }
     }
 }

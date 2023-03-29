@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
 using ProfileService.BusinessLogic.Entities;
 using ProfileService.BusinessLogic.Models.Criterias;
 
@@ -32,9 +33,9 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ForMember(dest => dest.BonusId,
                     opt =>
                         opt.MapFrom(src => Guid.Parse(src.Id)))
-                .ForMember(dest => dest.Discount,
+                .ForMember(dest => dest.CreateDate,
                     opt =>
-                        opt.MapFrom(src => src.DiscountValue))
+                        opt.MapFrom(src => src.CreateDate.ToDateTimeOffset()))
                 .ForMember(dest => dest.DiscountType,
                     opt =>
                         opt.MapFrom(src => src.Type))
@@ -44,9 +45,9 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                 .ForMember(dest => dest.Id,
                     opt =>
                         opt.MapFrom(src => src.BonusId.ToString()))
-                .ForMember(dest => dest.DiscountValue,
+                .ForMember(dest => dest.CreateDate,
                     opt =>
-                        opt.MapFrom(src => src.Discount))
+                        opt.MapFrom(src => Timestamp.FromDateTimeOffset(src.CreateDate)))
                 .ForMember(dest => dest.Type,
                     opt =>
                         opt.MapFrom(src => src.DiscountType));
@@ -61,7 +62,13 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
             CreateMap<FilterCriteria, DiscountFilter>()
                 .ForMember(dest => dest.UserIds,
                 opt =>
-                    opt.MapFrom(src => src.UserIds.Select(x => x.ToString())));
+                    opt.MapFrom(src => src.UserIds.Select(x => x.ToString())))
+                .ForMember(dest => dest.StartDate,
+                    opt =>
+                        opt.MapFrom(src => src.StartDate != null ? Timestamp.FromDateTimeOffset((DateTimeOffset)src.StartDate!) : Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue)))
+                .ForMember(dest => dest.EndDate,
+                    opt =>
+                        opt.MapFrom(src => src.EndDate != null ? Timestamp.FromDateTimeOffset((DateTimeOffset)src.EndDate!) : Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue)));
 
             CreateMap<DiscountFilter, FilterCriteria>()
                 .ForMember(dest => dest.UserIds,
@@ -72,7 +79,13 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                         opt.MapFrom(src => src.PageSize == -1 ? (int?)null : src.PageSize))
                 .ForMember(dest => dest.PageNumber,
                     opt =>
-                        opt.MapFrom(src => src.PageNumber == -1 ? (int?)null : src.PageNumber));
+                        opt.MapFrom(src => src.PageNumber == -1 ? (int?)null : src.PageNumber))
+                .ForMember(dest => dest.StartDate,
+                    opt =>
+                        opt.MapFrom(src => src.StartDate == Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue) ? (DateTimeOffset?) null : src.StartDate.ToDateTimeOffset()))
+                .ForMember(dest => dest.EndDate,
+                    opt =>
+                        opt.MapFrom(src => src.EndDate == Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue) ? (DateTimeOffset?) null : src.EndDate.ToDateTimeOffset()));
         }
     }
 }
