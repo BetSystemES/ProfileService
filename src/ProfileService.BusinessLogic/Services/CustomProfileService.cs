@@ -131,7 +131,7 @@ namespace ProfileService.BusinessLogic.Services
                 predicate = predicate.And(x => x.IsEnabled == filter.IsEnabled);
             }
 
-            if (filter.UserIds != null && filter.UserIds.Any())
+            if (filter.UserIds is not null && filter.UserIds.Any())
             {
                 predicate = predicate.And(x => filter.UserIds.Contains(x.ProfileId));
             }

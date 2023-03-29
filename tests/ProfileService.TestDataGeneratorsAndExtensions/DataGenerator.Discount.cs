@@ -24,7 +24,7 @@ namespace ProfileService.TestDataGeneratorsAndExtensions
                 .CreateNew()
                 .DiscountBuilderId(id, profileId)
                 .DiscountBuilderValue(discountType, value)
-                .With(x => x.CreateDate = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow))
+                .With(x => x.CreateDate = (DateTimeOffset.UtcNow).ToTimestamp())
                 .Build();
 
             return discount;

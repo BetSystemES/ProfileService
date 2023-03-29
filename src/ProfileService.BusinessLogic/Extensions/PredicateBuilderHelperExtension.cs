@@ -11,22 +11,17 @@ namespace ProfileService.BusinessLogic.Extensions
         {
             if (filter.StartDate.HasValue && filter.EndDate.HasValue)
             {
-                if (filter.StartDate.Value == filter.EndDate.Value)
-                {
-                    return predicate.And(x => x.CreateDate == filter.StartDate.Value);
-                }
-
                 return predicate.And(x => x.CreateDate.Between(filter.StartDate.Value, filter.EndDate.Value));
             }
 
-            if (filter.StartDate.HasValue && filter.EndDate == null)
+            if (filter.StartDate.HasValue && !filter.EndDate.HasValue)
             {
-                return predicate.And(x => x.CreateDate > filter.StartDate.Value);
+                return predicate.And(x => x.CreateDate.Date >= filter.StartDate.Value.Date);
             }
 
-            if (filter.EndDate.HasValue && filter.StartDate == null)
+            if (filter.EndDate.HasValue && !filter.StartDate.HasValue)
             {
-                return predicate.And(x => x.CreateDate < filter.EndDate.Value);
+                return predicate.And(x => x.CreateDate.Date <= filter.EndDate.Value.Date);
             }
 
             return predicate;
