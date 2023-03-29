@@ -45,7 +45,7 @@ namespace ProfileService.GRPC.Extensions
 
         private static bool CheckDiscount(Discount discount)
         {
-            if (discount == null)
+            if (discount is null)
             {
                 return false;
             }

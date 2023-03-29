@@ -47,7 +47,7 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                         opt.MapFrom(src => src.BonusId.ToString()))
                 .ForMember(dest => dest.CreateDate,
                     opt =>
-                        opt.MapFrom(src => Timestamp.FromDateTimeOffset(src.CreateDate)))
+                        opt.MapFrom(src => src.CreateDate.ToTimestamp()))
                 .ForMember(dest => dest.Type,
                     opt =>
                         opt.MapFrom(src => src.DiscountType));
@@ -65,10 +65,10 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                     opt.MapFrom(src => src.UserIds.Select(x => x.ToString())))
                 .ForMember(dest => dest.StartDate,
                     opt =>
-                        opt.MapFrom(src => src.StartDate != null ? Timestamp.FromDateTimeOffset((DateTimeOffset)src.StartDate!) : Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue)))
+                        opt.MapFrom(src => src.StartDate != null ? ((DateTimeOffset)src.StartDate!).ToTimestamp() : (DateTimeOffset.MinValue).ToTimestamp()))
                 .ForMember(dest => dest.EndDate,
                     opt =>
-                        opt.MapFrom(src => src.EndDate != null ? Timestamp.FromDateTimeOffset((DateTimeOffset)src.EndDate!) : Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue)));
+                        opt.MapFrom(src => src.EndDate != null ? ((DateTimeOffset)src.EndDate!).ToTimestamp() : (DateTimeOffset.MinValue).ToTimestamp()));
 
             CreateMap<DiscountFilter, FilterCriteria>()
                 .ForMember(dest => dest.UserIds,
@@ -82,10 +82,10 @@ namespace ProfileService.GRPC.Infrastructure.Mappings
                         opt.MapFrom(src => src.PageNumber == -1 ? (int?)null : src.PageNumber))
                 .ForMember(dest => dest.StartDate,
                     opt =>
-                        opt.MapFrom(src => src.StartDate == Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue) ? (DateTimeOffset?) null : src.StartDate.ToDateTimeOffset()))
+                        opt.MapFrom(src => src.StartDate == (DateTimeOffset.MinValue).ToTimestamp() ? (DateTimeOffset?) null : src.StartDate.ToDateTimeOffset()))
                 .ForMember(dest => dest.EndDate,
                     opt =>
-                        opt.MapFrom(src => src.EndDate == Timestamp.FromDateTimeOffset(DateTimeOffset.MinValue) ? (DateTimeOffset?) null : src.EndDate.ToDateTimeOffset()));
+                        opt.MapFrom(src => src.EndDate == (DateTimeOffset.MinValue).ToTimestamp() ? (DateTimeOffset?) null : src.EndDate.ToDateTimeOffset()));
         }
     }
 }

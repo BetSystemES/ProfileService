@@ -167,7 +167,7 @@ namespace ProfileService.GRPC.Services
                 .FindFirst(ClaimTypes.Role)?.Value.Split(',')
                 .Select(x => x.GetEnumItem<AuthRole>());
 
-            if (authRoles == null) return true;
+            if (authRoles is null) return true;
 
             return !authRoles.Contains(AuthRole.Admin);
         }
