@@ -6,7 +6,7 @@ namespace ProfileService.DataAccess.Repositories
 {
     public class BonusesRepository : SqlRepository<Bonus>, IBonusRepository
     {
-        public BonusesRepository(DbSet<Bonus> entities) : base(entities)
+        public BonusesRepository(ProfileDbContext dbContext) : base(dbContext)
         {
         }
     }
