@@ -11,18 +11,18 @@ namespace ProfileService.DataAccess.Configuration
         public void Configure(EntityTypeBuilder<ProfileData> builder)
         {
             builder.HasKey(x => x.ProfileId);
-            builder.Property(x => x.ProfileId).ValueGeneratedNever();
+            builder.Property(x => x.ProfileId).ValueGeneratedNever().HasColumnName("profile_id");
 
-            builder.Property(x => x.FirstName);
-            builder.Property(x => x.LastName);
-            builder.Property(x => x.PhoneNumber);
-            builder.Property(x => x.Email).IsRequired();
+            builder.Property(x => x.FirstName).HasColumnName("first_name");
+            builder.Property(x => x.LastName).HasColumnName("last_name");
+            builder.Property(x => x.PhoneNumber).HasColumnName("phone_number");
+            builder.Property(x => x.Email).IsRequired().HasColumnName("email");
 
             builder.HasMany(x => x.Bonuses)
                 .WithOne(y => y.ProfileData)
                 .HasForeignKey(z => z.ProfileId);
 
-            builder.ToTable("ProfileData");
+            builder.ToTable("ProfileDatas");
         }
     }
 }

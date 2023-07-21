@@ -11,20 +11,20 @@ namespace ProfileService.DataAccess.Configuration
         public void Configure(EntityTypeBuilder<Bonus> builder)
         {
             builder.HasKey(x => x.BonusId);
-            builder.Property(x => x.BonusId).ValueGeneratedNever();
+            builder.Property(x => x.BonusId).ValueGeneratedNever().HasColumnName("bonus_id");
 
-            builder.Property(x => x.ProfileId).IsRequired();
+            builder.Property(x => x.ProfileId).IsRequired().HasColumnName("profile_id");
 
             builder.HasOne(x => x.ProfileData)
                 .WithMany(y => y.Bonuses)
                 .HasForeignKey(z => z.ProfileId);
 
-            builder.Property(x => x.IsAlreadyUsed);
-            builder.Property(x => x.IsEnabled);
-            builder.Property(x => x.DiscountType);
-            builder.Property(x => x.Amount);
+            builder.Property(x => x.IsAlreadyUsed).HasColumnName("is_already_used");
+            builder.Property(x => x.IsEnabled).HasColumnName("is_enabled");
+            builder.Property(x => x.DiscountType).HasColumnName("discount_type");
+            builder.Property(x => x.Amount).HasColumnName("amount");
 
-            builder.ToTable("Bonus");
+            builder.ToTable("Bonuses");
         }
     }
 }

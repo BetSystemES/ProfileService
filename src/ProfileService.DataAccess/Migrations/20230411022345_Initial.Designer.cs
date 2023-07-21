@@ -12,8 +12,8 @@ using ProfileService.DataAccess;
 namespace ProfileService.DataAccess.Migrations
 {
     [DbContext(typeof(ProfileDbContext))]
-    [Migration("20230322135647_Init")]
-    partial class Init
+    [Migration("20230411022345_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,54 +27,65 @@ namespace ProfileService.DataAccess.Migrations
             modelBuilder.Entity("ProfileService.BusinessLogic.Entities.Bonus", b =>
                 {
                     b.Property<Guid>("BonusId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("bonus_id");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("amount");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("numeric");
+                    b.Property<DateTimeOffset>("CreateDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("DiscountType")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("discount_type");
 
                     b.Property<bool>("IsAlreadyUsed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_already_used");
 
                     b.Property<bool>("IsEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_enabled");
 
                     b.Property<Guid>("ProfileId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("profile_id");
 
                     b.HasKey("BonusId");
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("Bonus", (string)null);
+                    b.ToTable("Bonuses", (string)null);
                 });
 
             modelBuilder.Entity("ProfileService.BusinessLogic.Entities.ProfileData", b =>
                 {
                     b.Property<Guid>("ProfileId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("profile_id");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
 
                     b.HasKey("ProfileId");
 
-                    b.ToTable("ProfileData", (string)null);
+                    b.ToTable("ProfileDatas", (string)null);
                 });
 
             modelBuilder.Entity("ProfileService.BusinessLogic.Entities.Bonus", b =>
